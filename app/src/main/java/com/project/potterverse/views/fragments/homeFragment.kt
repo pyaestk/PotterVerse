@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,6 +15,7 @@ import com.project.potterverse.data.BookData
 import com.project.potterverse.data.movies.MovieData
 import com.project.potterverse.databinding.FragmentHomeBinding
 import com.project.potterverse.viewModel.MainViewModel
+import com.project.potterverse.views.MainActivity
 
 class homeFragment : Fragment() {
 
@@ -24,9 +26,11 @@ class homeFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(this)[MainViewModel::class.java]
+//        viewModel = ViewModelProvider(this)[MainViewModel::class.java]
+        viewModel = (activity as MainActivity).viewModel
         movieAdapter = MovieListsAdapter()
         bookAdapter = BookListAdapter()
+
     }
 
     override fun onCreateView(
@@ -35,13 +39,14 @@ class homeFragment : Fragment() {
     ): View? {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
+
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.homeFragmentLayout.visibility = View.INVISIBLE
-        binding.progressBar.visibility = View.VISIBLE
+        showProgressBar()
         //for movies
         binding.MovieRecycler.apply {
             layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
@@ -50,9 +55,7 @@ class homeFragment : Fragment() {
         viewModel.getMovies()
         viewModel.getMovieListLiveData().observe(viewLifecycleOwner) {movie ->
             movieAdapter.setMovies(movie as ArrayList<MovieData>)
-
-            binding.homeFragmentLayout.visibility = View.VISIBLE
-            binding.progressBar.visibility = View.INVISIBLE
+            hideProgressBar()
         }
 
         //for books
@@ -63,7 +66,25 @@ class homeFragment : Fragment() {
         viewModel.getBooks()
         viewModel.getBookListLiveData().observe(viewLifecycleOwner) {book ->
             bookAdapter.setBooks(book as ArrayList<BookData>)
+            hideProgressBar()
         }
+
+        //for error
+        viewModel.getErrorLiveData().observe(viewLifecycleOwner) { errorMessage ->
+            errorMessage?.let {
+                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+            }
+        }
+
+    }
+
+    private fun showProgressBar(){
+        binding.progressBar2.visibility = View.VISIBLE
+        binding.homeFragmentLayout.visibility = View.INVISIBLE
+    }
+    private fun hideProgressBar(){
+        binding.progressBar2.visibility = View.GONE
+        binding.homeFragmentLayout.visibility = View.VISIBLE
     }
 
 }

@@ -5,12 +5,14 @@ import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.project.potterverse.data.BookData
 import com.project.potterverse.data.BooksList
 import com.project.potterverse.data.movies.MovieAttributes
 import com.project.potterverse.data.movies.MovieData
 import com.project.potterverse.data.movies.MovieList
 import com.project.potterverse.data.retrofit.RetrofitInstance
+import com.project.potterverse.views.fragments.homeFragment
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -19,6 +21,12 @@ class MainViewModel : ViewModel() {
 
     private var movieListLiveData = MutableLiveData<List<MovieData>>()
     private var bookListLiveData = MutableLiveData<List<BookData>>()
+
+    private val errorLiveData = MutableLiveData<String>()
+
+    fun getErrorLiveData(): LiveData<String> {
+        return errorLiveData
+    }
 
     //for movies list home screen
     fun getMovies() {
@@ -51,12 +59,21 @@ class MainViewModel : ViewModel() {
             }
 
             override fun onFailure(call: Call<BooksList>, t: Throwable) {
-                TODO("Not yet implemented")
+                Log.e("ErrorFetch", t.toString())
+                val errorMessage = "Failed to fetch movie list. Check your internet connection."
             }
 
         })
     }
     fun getBookListLiveData(): LiveData<List<BookData>> {
         return bookListLiveData
+    }
+
+
+}
+
+class MainViewModelFactory(): ViewModelProvider.Factory {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        return MainViewModel() as T
     }
 }

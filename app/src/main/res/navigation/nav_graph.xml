@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/mainFragment">
+    app:startDestination="@id/homeFragment">
 
     <fragment
         android:id="@+id/searchFragment"
@@ -11,7 +11,7 @@
         android:label="fragment_books"
         tools:layout="@layout/fragment_search" />
     <fragment
-        android:id="@+id/mainFragment"
+        android:id="@+id/homeFragment"
         android:name="com.project.potterverse.views.fragments.homeFragment"
         android:label="fragment_movie"
         tools:layout="@layout/fragment_home" />

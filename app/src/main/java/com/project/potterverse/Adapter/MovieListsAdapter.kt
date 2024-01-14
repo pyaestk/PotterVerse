@@ -32,6 +32,5 @@ class MovieListsAdapter: RecyclerView.Adapter<MovieListsAdapter.MovieListViewHol
              .load(movieList[position].attributes.poster)
              .into(holder.binding.movieImageView)
 
-        holder.binding.movieTitle.text = movieList[position].attributes.title
     }
 }
