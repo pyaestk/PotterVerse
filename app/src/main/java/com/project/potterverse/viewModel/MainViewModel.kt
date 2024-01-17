@@ -1,18 +1,17 @@
 package com.project.potterverse.viewModel
 
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.project.potterverse.data.BookData
 import com.project.potterverse.data.BooksList
-import com.project.potterverse.data.movies.MovieAttributes
+import com.project.potterverse.data.CharactersData
+import com.project.potterverse.data.CharactersList
 import com.project.potterverse.data.movies.MovieData
 import com.project.potterverse.data.movies.MovieList
 import com.project.potterverse.data.retrofit.RetrofitInstance
-import com.project.potterverse.views.fragments.homeFragment
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -21,6 +20,7 @@ class MainViewModel : ViewModel() {
 
     private var movieListLiveData = MutableLiveData<List<MovieData>>()
     private var bookListLiveData = MutableLiveData<List<BookData>>()
+    private var characterListLiveData = MutableLiveData<List<CharactersData>>()
 
     private val errorLiveData = MutableLiveData<String>()
 
@@ -67,6 +67,30 @@ class MainViewModel : ViewModel() {
     }
     fun getBookListLiveData(): LiveData<List<BookData>> {
         return bookListLiveData
+    }
+
+    //for characters list
+
+    fun getCharacters(pageNumber: Int) {
+        RetrofitInstance.api.getCharacterLists(pageNumber).enqueue(object : Callback<CharactersList> {
+            override fun onResponse(
+                call: Call<CharactersList>,
+                response: Response<CharactersList>
+            ) {
+                val characterList = response.body()?.data
+                characterList?.let {
+                    characterListLiveData.postValue(it)
+                }
+            }
+
+            override fun onFailure(call: Call<CharactersList>, t: Throwable) {
+                Log.e("ErrorFetch", t.toString())
+                val errorMessage = "Failed to fetch character list. Check your internet connection."
+            }
+        })
+    }
+    fun getCharacterListLiveData(): LiveData<List<CharactersData>> {
+        return characterListLiveData
     }
 
 

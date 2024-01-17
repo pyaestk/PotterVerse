@@ -10,7 +10,7 @@ import com.project.potterverse.databinding.FragmentHomeBinding
 import com.project.potterverse.databinding.ItemBookBinding
 
 class BookListAdapter: RecyclerView.Adapter<BookListAdapter.BookListViewHolder>() {
-
+    lateinit var onItemClick: ((BookData) -> Unit)
     private var bookList = ArrayList<BookData>()
     fun setBooks(bookList: ArrayList<BookData>) {
         this.bookList = bookList
@@ -36,5 +36,8 @@ class BookListAdapter: RecyclerView.Adapter<BookListAdapter.BookListViewHolder>(
         holder.binding.bookDate.text = bookList[position].attributes.release_date
         holder.binding.bookAuthor.text = bookList[position].attributes.author
         holder.binding.bookChapter.text = bookList[position].relationships.chapters.data.size.toString()
+        holder.itemView.setOnClickListener {
+            onItemClick.invoke(bookList[position])
+        }
     }
 }

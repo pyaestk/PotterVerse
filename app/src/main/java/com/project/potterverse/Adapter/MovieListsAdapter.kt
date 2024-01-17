@@ -10,7 +10,7 @@ import com.project.potterverse.data.movies.MovieList
 import com.project.potterverse.databinding.ItemMovieBinding
 
 class MovieListsAdapter: RecyclerView.Adapter<MovieListsAdapter.MovieListViewHolder>() {
-
+    lateinit var onItemClick: ((MovieData) -> Unit)
     private var movieList = ArrayList<MovieData>()
     fun setMovies(movieList: ArrayList<MovieData>) {
         this.movieList = movieList
@@ -31,6 +31,10 @@ class MovieListsAdapter: RecyclerView.Adapter<MovieListsAdapter.MovieListViewHol
         Glide.with(holder.itemView)
              .load(movieList[position].attributes.poster)
              .into(holder.binding.movieImageView)
+        holder.itemView.setOnClickListener {
+            onItemClick.invoke(movieList[position])
+        }
 
     }
+
 }

@@ -1,5 +1,6 @@
 package com.project.potterverse.views.fragments.subFragments
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -15,6 +16,8 @@ import com.project.potterverse.data.movies.MovieData
 import com.project.potterverse.databinding.FragmentMoviesBinding
 import com.project.potterverse.viewModel.MainViewModel
 import com.project.potterverse.views.MainActivity
+import com.project.potterverse.views.activities.MovieDetailsActivity
+import com.project.potterverse.views.fragments.homeFragment
 
 class MoviesFragment : Fragment() {
 
@@ -47,6 +50,17 @@ class MoviesFragment : Fragment() {
         viewModel.getMovieListLiveData().observe(viewLifecycleOwner) { movie ->
             movieAdapter.setMovies(movie as ArrayList<MovieData>)
         }
-    }
 
+        movieAdapter.onItemClick = { movie ->
+            val intent = Intent(activity, MovieDetailsActivity::class.java)
+            intent.putExtra(homeFragment.movieID, movie.id)
+            intent.putExtra(homeFragment.movieTitle, movie.attributes.title)
+            intent.putExtra(homeFragment.movieImage, movie.attributes.poster)
+            intent.putExtra(homeFragment.movieDate, movie.attributes.release_date)
+            intent.putExtra(homeFragment.movieRating, movie.attributes.rating)
+            intent.putExtra(homeFragment.movieBo, movie.attributes.box_office)
+            intent.putExtra(homeFragment.movieDirector, movie.attributes.directors[0])
+            startActivity(intent)
+        }
+    }
 }

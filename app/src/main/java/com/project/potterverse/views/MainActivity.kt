@@ -5,14 +5,13 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.Navigation
+import androidx.navigation.findNavController
+import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.project.potterverse.R
-import androidx.navigation.ui.NavigationUI
 import com.google.android.material.tabs.TabLayoutMediator
 import com.project.potterverse.Adapter.ViewPagerAdapter
 import com.project.potterverse.databinding.ActivityMainBinding
-import com.project.potterverse.databinding.FragmentFavoritesBinding
 import com.project.potterverse.viewModel.MainViewModel
 import com.project.potterverse.viewModel.MainViewModelFactory
 import com.project.potterverse.views.fragments.CategoryFragment
@@ -82,9 +81,9 @@ class MainActivity : AppCompatActivity() {
         TabLayoutMediator(binding.tabLayout, binding.viewPager2) { tab, pos ->
             tab.text = when(pos) {
                 0 -> "All Items"
-                1 -> "Characters"
-                2 -> "Movies"
-                3 -> "Books"
+                1 -> "Movies"
+                2 -> "Books"
+                3 -> "Characters"
                 else -> ""
             }
         }.attach()

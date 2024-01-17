@@ -15,6 +15,9 @@
             android:id="@+id/bookCardViewImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
             app:cardBackgroundColor="@color/main_color"
             app:cardUseCompatPadding="true"
             app:layout_constraintEnd_toEndOf="parent"
@@ -44,7 +47,6 @@
             android:text="TextView"
             android:textColor="@color/white"
             android:textSize="14sp"
-            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="@+id/bookCardViewImage"
             app:layout_constraintStart_toStartOf="@+id/bookCardViewImage"
             app:layout_constraintTop_toBottomOf="@+id/bookCardViewImage" />

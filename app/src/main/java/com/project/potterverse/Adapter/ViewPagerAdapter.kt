@@ -16,9 +16,9 @@ class ViewPagerAdapter(fragmentActivity: FragmentActivity): FragmentStateAdapter
     override fun createFragment(position: Int): Fragment {
         return when (position) {
             0 -> homeFragment()
-            1 -> CharactersFragment()
-            2 -> MoviesFragment()
-            3 -> BooksFragment()
+            1 -> MoviesFragment()
+            2 -> BooksFragment()
+            3 -> CharactersFragment()
             else -> homeFragment()
         }
     }

@@ -3,7 +3,7 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="145dp"
+    android:layout_width="165dp"
     android:layout_height="wrap_content"
     app:cardBackgroundColor="@color/black"
     app:cardUseCompatPadding="true">
@@ -15,7 +15,7 @@
         <ImageView
             android:id="@+id/movieImageView"
             android:layout_width="0dp"
-            android:layout_height="210dp"
+            android:layout_height="240dp"
             android:scaleType="centerCrop"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
