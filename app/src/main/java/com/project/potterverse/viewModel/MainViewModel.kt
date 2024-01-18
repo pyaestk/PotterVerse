@@ -1,6 +1,10 @@
 package com.project.potterverse.viewModel
 
+import android.app.Application
+import android.content.Context
 import android.util.Log
+import android.widget.Toast
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -11,23 +15,20 @@ import com.project.potterverse.data.CharactersData
 import com.project.potterverse.data.CharactersList
 import com.project.potterverse.data.movies.MovieData
 import com.project.potterverse.data.movies.MovieList
-import com.project.potterverse.data.retrofit.RetrofitInstance
+import com.project.potterverse.retrofit.RetrofitInstance
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MainViewModel : ViewModel() {
+class MainViewModel() : ViewModel() {
 
     private var movieListLiveData = MutableLiveData<List<MovieData>>()
     private var bookListLiveData = MutableLiveData<List<BookData>>()
     private var characterListLiveData = MutableLiveData<List<CharactersData>>()
 
-    private val errorLiveData = MutableLiveData<String>()
-
-    fun getErrorLiveData(): LiveData<String> {
-        return errorLiveData
-    }
-
+    
+    private val _toastMessage = MutableLiveData<String>()
+    val toastMessage: LiveData<String> get() = _toastMessage
     //for movies list home screen
     fun getMovies() {
         RetrofitInstance.api.getMovieLists().enqueue(object : Callback<MovieList> {
@@ -40,6 +41,8 @@ class MainViewModel : ViewModel() {
 
             override fun onFailure(call: Call<MovieList>, t: Throwable) {
                 Log.e("ErrorFetch", t.toString())
+                val errorMessage = "Failed to fetch movie list."
+                _toastMessage.postValue(errorMessage)
             }
         })
     }
@@ -60,7 +63,8 @@ class MainViewModel : ViewModel() {
 
             override fun onFailure(call: Call<BooksList>, t: Throwable) {
                 Log.e("ErrorFetch", t.toString())
-                val errorMessage = "Failed to fetch movie list. Check your internet connection."
+                val errorMessage = "Failed to fetch Book list."
+                _toastMessage.postValue(errorMessage)
             }
 
         })
@@ -85,14 +89,15 @@ class MainViewModel : ViewModel() {
 
             override fun onFailure(call: Call<CharactersList>, t: Throwable) {
                 Log.e("ErrorFetch", t.toString())
-                val errorMessage = "Failed to fetch character list. Check your internet connection."
+                val errorMessage = "Failed to fetch character list."
+                _toastMessage.postValue(errorMessage)
             }
         })
     }
     fun getCharacterListLiveData(): LiveData<List<CharactersData>> {
         return characterListLiveData
     }
-
+    
 
 }
 

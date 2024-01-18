@@ -14,7 +14,7 @@
 
         <ImageView
             android:id="@+id/movieImageView"
-            android:layout_width="180dp"
+            android:layout_width="185dp"
             android:layout_height="280dp"
             android:scaleType="center"
             app:layout_constraintStart_toStartOf="parent"
@@ -25,13 +25,14 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:elegantTextHeight="false"
             android:ellipsize="end"
             android:lineSpacingExtra="8dp"
             android:text="Harry Potter and the Chamber of Secrets "
             android:textColor="@color/white"
-            android:textSize="16sp"
+            android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/movieImageView"
             app:layout_constraintTop_toTopOf="parent" />
@@ -43,7 +44,7 @@
             android:layout_marginStart="8dp"
             android:text="11/15/2002"
             android:textColor="@color/white"
-            android:textSize="14sp"
+            android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="@+id/imageView5"
             app:layout_constraintEnd_toEndOf="@+id/movie_title"
             app:layout_constraintStart_toEndOf="@+id/imageView5"
@@ -56,7 +57,7 @@
             android:layout_marginStart="8dp"
             android:text="$893 million"
             android:textColor="@color/white"
-            android:textSize="14sp"
+            android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="@+id/imageView6"
             app:layout_constraintEnd_toEndOf="@+id/release_date"
             app:layout_constraintStart_toEndOf="@+id/imageView6"
@@ -69,7 +70,7 @@
             android:layout_marginStart="8dp"
             android:text="$125 million"
             android:textColor="@color/white"
-            android:textSize="14sp"
+            android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="@+id/imageView7"
             app:layout_constraintEnd_toEndOf="@+id/director"
             app:layout_constraintStart_toEndOf="@+id/imageView7"
@@ -77,9 +78,9 @@
 
         <ImageView
             android:id="@+id/imageView5"
-            android:layout_width="20dp"
+            android:layout_width="15dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="16dp"
             android:tint="@color/white"
             app:layout_constraintStart_toStartOf="@+id/movie_title"
             app:layout_constraintTop_toBottomOf="@+id/movie_title"
@@ -87,9 +88,9 @@
 
         <ImageView
             android:id="@+id/imageView6"
-            android:layout_width="20dp"
+            android:layout_width="15dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="5dp"
             android:tint="@color/white"
             app:layout_constraintStart_toStartOf="@+id/imageView5"
             app:layout_constraintTop_toBottomOf="@+id/imageView5"
@@ -97,9 +98,9 @@
 
         <ImageView
             android:id="@+id/imageView7"
-            android:layout_width="20dp"
+            android:layout_width="15dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="5dp"
             android:tint="@color/white"
             app:layout_constraintStart_toStartOf="@+id/imageView6"
             app:layout_constraintTop_toBottomOf="@+id/imageView6"
@@ -107,9 +108,9 @@
 
         <ImageView
             android:id="@+id/imageView8"
-            android:layout_width="20dp"
+            android:layout_width="15dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="5dp"
             android:tint="@color/white"
             app:layout_constraintStart_toStartOf="@+id/imageView7"
             app:layout_constraintTop_toBottomOf="@+id/imageView7"
@@ -122,10 +123,29 @@
             android:layout_marginStart="8dp"
             android:text="TextView"
             android:textColor="@color/white"
+            android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="@+id/imageView8"
             app:layout_constraintEnd_toEndOf="@+id/release_date"
             app:layout_constraintStart_toEndOf="@+id/imageView8"
             app:layout_constraintTop_toTopOf="@+id/imageView8" />
+
+        <Button
+            android:id="@+id/buttonSeeMore"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:text="SEE MORE"
+            android:textColor="@color/white"
+            android:textSize="13sp"
+            app:icon="@drawable/ic_arrow_right_baseline"
+            app:iconGravity="textEnd"
+            app:iconPadding="0dp"
+            app:iconSize="27dp"
+            app:iconTint="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/imageView8"
+            app:layout_constraintTop_toBottomOf="@+id/imageView8" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

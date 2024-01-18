@@ -39,5 +39,8 @@ class MovieAdapter: RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
         holder.itemView.setOnClickListener {
             onItemClick.invoke(movieList[position])
         }
+        holder.binding.buttonSeeMore.setOnClickListener{
+            onItemClick.invoke(movieList[position])
+        }
     }
 }

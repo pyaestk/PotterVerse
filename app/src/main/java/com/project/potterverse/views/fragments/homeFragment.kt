@@ -88,14 +88,9 @@ class homeFragment : Fragment() {
         //for characters
         forCharacters()
 
-        //for error
-        viewModel.getErrorLiveData().observe(viewLifecycleOwner) { errorMessage ->
-            errorMessage?.let {
-                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
-            }
+        viewModel.toastMessage.observe(viewLifecycleOwner) { message ->
+            Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
         }
-
-
 
     }
 

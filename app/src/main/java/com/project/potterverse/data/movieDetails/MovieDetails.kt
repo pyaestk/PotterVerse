@@ -1,4 +1,4 @@
-package com.project.potterverse.data
+package com.project.potterverse.data.movieDetails
 
 data class MovieDetailAttributes(
     val box_office: String,

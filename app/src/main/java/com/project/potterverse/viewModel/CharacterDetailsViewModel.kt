@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.project.potterverse.data.CharacterDetails.CharacterDetails
 import com.project.potterverse.data.CharacterDetails.CharacterDetailsData
-import com.project.potterverse.data.retrofit.RetrofitInstance
+import com.project.potterverse.retrofit.RetrofitInstance
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

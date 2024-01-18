@@ -1,4 +1,4 @@
-package com.project.potterverse.data.retrofit
+package com.project.potterverse.retrofit
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

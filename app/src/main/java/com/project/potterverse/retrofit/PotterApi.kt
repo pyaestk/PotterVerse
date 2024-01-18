@@ -1,9 +1,9 @@
-package com.project.potterverse.data.retrofit
+package com.project.potterverse.retrofit
 
 import com.project.potterverse.data.BooksList
 import com.project.potterverse.data.CharacterDetails.CharacterDetails
 import com.project.potterverse.data.CharactersList
-import com.project.potterverse.data.MovieDetails
+import com.project.potterverse.data.movieDetails.MovieDetails
 import com.project.potterverse.data.bookDetails.BookDetails
 import com.project.potterverse.data.movies.MovieList
 import retrofit2.Call
