@@ -26,9 +26,6 @@ class MainViewModel() : ViewModel() {
     private var bookListLiveData = MutableLiveData<List<BookData>>()
     private var characterListLiveData = MutableLiveData<List<CharactersData>>()
 
-    
-    private val _toastMessage = MutableLiveData<String>()
-    val toastMessage: LiveData<String> get() = _toastMessage
     //for movies list home screen
     fun getMovies() {
         RetrofitInstance.api.getMovieLists().enqueue(object : Callback<MovieList> {
@@ -41,8 +38,6 @@ class MainViewModel() : ViewModel() {
 
             override fun onFailure(call: Call<MovieList>, t: Throwable) {
                 Log.e("ErrorFetch", t.toString())
-                val errorMessage = "Failed to fetch movie list."
-                _toastMessage.postValue(errorMessage)
             }
         })
     }
@@ -63,8 +58,6 @@ class MainViewModel() : ViewModel() {
 
             override fun onFailure(call: Call<BooksList>, t: Throwable) {
                 Log.e("ErrorFetch", t.toString())
-                val errorMessage = "Failed to fetch Book list."
-                _toastMessage.postValue(errorMessage)
             }
 
         })
@@ -89,8 +82,6 @@ class MainViewModel() : ViewModel() {
 
             override fun onFailure(call: Call<CharactersList>, t: Throwable) {
                 Log.e("ErrorFetch", t.toString())
-                val errorMessage = "Failed to fetch character list."
-                _toastMessage.postValue(errorMessage)
             }
         })
     }

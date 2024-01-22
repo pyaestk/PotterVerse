@@ -9,8 +9,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.project.potterverse.Adapter.MovieAdapter
-import com.project.potterverse.Adapter.MovieListsAdapter
+import com.project.potterverse.Adapter.BaseMovieAdapter
 import com.project.potterverse.R
 import com.project.potterverse.data.movies.MovieData
 import com.project.potterverse.databinding.FragmentMoviesBinding
@@ -23,11 +22,11 @@ class MoviesFragment : Fragment() {
 
     lateinit var binding: FragmentMoviesBinding
     lateinit var viewModel: MainViewModel
-    lateinit var movieAdapter: MovieAdapter
+    lateinit var movieAdapter: BaseMovieAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = (activity as MainActivity).viewModel
-        movieAdapter = MovieAdapter()
+        movieAdapter = BaseMovieAdapter(true)
     }
 
     override fun onCreateView(

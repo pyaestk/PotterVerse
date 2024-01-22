@@ -12,9 +12,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.project.potterverse.Adapter.BookListAdapter
-import com.project.potterverse.Adapter.CharacterListsAdapter
-import com.project.potterverse.Adapter.MovieListsAdapter
+import com.project.potterverse.Adapter.BaseBookAdapter
+import com.project.potterverse.Adapter.BaseCharacterAdapter
+import com.project.potterverse.Adapter.BaseMovieAdapter
 import com.project.potterverse.R
 import com.project.potterverse.data.BookData
 import com.project.potterverse.data.CharactersData
@@ -31,9 +31,9 @@ class homeFragment : Fragment() {
 
     lateinit var binding: FragmentHomeBinding
     lateinit var viewModel: MainViewModel
-    lateinit var movieAdapter: MovieListsAdapter
-    lateinit var bookAdapter: BookListAdapter
-    lateinit var characterAdapter: CharacterListsAdapter
+    lateinit var movieAdapter: BaseMovieAdapter
+    lateinit var bookAdapter: BaseBookAdapter
+    lateinit var characterAdapter: BaseCharacterAdapter
     private var pageNumber = 1
 
     companion object{
@@ -59,11 +59,11 @@ class homeFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        viewModel = ViewModelProvider(this)[MainViewModel::class.java]
+
         viewModel = (activity as MainActivity).viewModel
-        movieAdapter = MovieListsAdapter()
-        bookAdapter = BookListAdapter()
-        characterAdapter = CharacterListsAdapter()
+        movieAdapter = BaseMovieAdapter(false)
+        bookAdapter = BaseBookAdapter(false)
+        characterAdapter = BaseCharacterAdapter(false)
     }
 
     override fun onCreateView(
@@ -72,29 +72,19 @@ class homeFragment : Fragment() {
     ): View? {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
-        
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         showProgressBar()
-
         //for movies
         forMovies()
-
         //for books
         forBooks()
-
         //for characters
         forCharacters()
-
-        viewModel.toastMessage.observe(viewLifecycleOwner) { message ->
-            Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
-        }
-
     }
-
-
 
     private fun forCharacters() {
         var isLoading = false
@@ -102,7 +92,6 @@ class homeFragment : Fragment() {
         val layoutManager = GridLayoutManager(activity, 3, GridLayoutManager.HORIZONTAL, false)
         binding.characterRecycler.layoutManager = layoutManager
 
-        val characterAdapter = CharacterListsAdapter()
         binding.characterRecycler.adapter = characterAdapter
 
         binding.characterRecycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {

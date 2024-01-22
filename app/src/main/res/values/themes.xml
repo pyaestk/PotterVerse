@@ -8,4 +8,11 @@
     </style>
 
     <style name="Theme.PotterVerse" parent="Base.Theme.PotterVerse" />
+
+    <style name="SearchViewTheme" parent="Widget.AppCompat.SearchView">
+        <item name="android:textColorHint">@android:color/darker_gray</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:textSize">16sp</item>
+    </style>
 </resources>

@@ -1,20 +1,15 @@
 package com.project.potterverse.views.fragments.subFragments
 
 import android.content.Intent
-import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import com.project.potterverse.Adapter.BookAdapter
-import com.project.potterverse.Adapter.BookListAdapter
-import com.project.potterverse.R
+import com.project.potterverse.Adapter.BaseBookAdapter
 import com.project.potterverse.data.BookData
 import com.project.potterverse.databinding.FragmentBooksBinding
-import com.project.potterverse.databinding.FragmentHomeBinding
 import com.project.potterverse.viewModel.MainViewModel
 import com.project.potterverse.views.MainActivity
 import com.project.potterverse.views.activities.BookDetailsActivity
@@ -23,12 +18,12 @@ import com.project.potterverse.views.fragments.homeFragment
 class BooksFragment : Fragment() {
 
     lateinit var binding: FragmentBooksBinding
-    lateinit var bookAdapter: BookAdapter
+    lateinit var bookAdapter: BaseBookAdapter
     lateinit var viewModel: MainViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = (activity as MainActivity).viewModel
-        bookAdapter = BookAdapter()
+        bookAdapter = BaseBookAdapter(true)
     }
 
     override fun onCreateView(

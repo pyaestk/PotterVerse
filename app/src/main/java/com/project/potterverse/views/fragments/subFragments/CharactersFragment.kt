@@ -9,8 +9,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.project.potterverse.Adapter.CharacterAdapter
-import com.project.potterverse.Adapter.CharacterListsAdapter
+import com.project.potterverse.Adapter.BaseCharacterAdapter
 import com.project.potterverse.R
 import com.project.potterverse.data.CharactersData
 import com.project.potterverse.databinding.FragmentCharactersBinding
@@ -22,14 +21,14 @@ import com.project.potterverse.views.fragments.homeFragment
 
 class CharactersFragment : Fragment() {
 
-    lateinit var characterAdapter: CharacterAdapter
+    lateinit var characterAdapter: BaseCharacterAdapter
     lateinit var viewModel: MainViewModel
     lateinit var binding: FragmentCharactersBinding
     private var pageNumber = 1
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = (activity as MainActivity).viewModel
-        characterAdapter = CharacterAdapter()
+        characterAdapter = BaseCharacterAdapter(false)
     }
 
     override fun onCreateView(
@@ -48,7 +47,6 @@ class CharactersFragment : Fragment() {
         val layoutManager = GridLayoutManager(activity, 3, GridLayoutManager.VERTICAL, false)
         binding.characterRecycler.layoutManager = layoutManager
 
-        val characterAdapter = CharacterAdapter()
         binding.characterRecycler.adapter = characterAdapter
 
         binding.characterRecycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
