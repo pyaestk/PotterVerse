@@ -36,7 +36,7 @@ interface PotterApi {
     ): Call<CharacterDetails>
 
     //for search results
-    @GET("v1/characters")
+    @GET("characters")
     fun getCharactersResults(
         @Query("filter[name_cont]") nameFilter: String,
         @Query("page[number]") pageNumber: Int

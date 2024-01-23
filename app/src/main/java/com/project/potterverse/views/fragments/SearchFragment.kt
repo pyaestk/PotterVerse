@@ -9,27 +9,28 @@ import android.widget.SearchView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.project.potterverse.Adapter.BaseBookAdapter
 import com.project.potterverse.Adapter.BaseMovieAdapter
+import com.project.potterverse.Adapter.SearchResultsAdapter
 import com.project.potterverse.data.BookData
 import com.project.potterverse.data.movies.MovieData
 import com.project.potterverse.databinding.FragmentSearchBinding
 import com.project.potterverse.viewModel.MainViewModel
+import com.project.potterverse.viewModel.SearchViewModel
 import com.project.potterverse.views.MainActivity
 
 
 class SearchFragment : Fragment() {
 
     lateinit var binding: FragmentSearchBinding
-    lateinit var movieAdapter: BaseMovieAdapter
-    lateinit var bookAdapter: BaseBookAdapter
-    lateinit var viewModel: MainViewModel
+    lateinit var itemAdapter: SearchResultsAdapter
+    lateinit var viewModel: SearchViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(this)[MainViewModel::class.java]
-        movieAdapter = BaseMovieAdapter(3)
-        bookAdapter = BaseBookAdapter(3)
+        viewModel = ViewModelProvider(this)[SearchViewModel::class.java]
+        itemAdapter = SearchResultsAdapter()
     }
 
     override fun onCreateView(
@@ -43,22 +44,16 @@ class SearchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.movieResultRecycelr.apply {
-            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-            adapter = movieAdapter
-        }
-        viewModel.getMovies()
-        viewModel.getMovieListLiveData().observe(viewLifecycleOwner) { movie ->
-            movieAdapter.setMovies(movie as ArrayList<MovieData>)
+        binding.itemResultRecycler.apply {
+            layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
+            adapter = itemAdapter
         }
 
-        binding.bookResultRecycelr.apply {
-            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-            adapter = bookAdapter
-        }
         viewModel.getBooks()
-        viewModel.getBookListLiveData().observe(viewLifecycleOwner) { book ->
-            bookAdapter.setBooks(book as ArrayList<BookData>)
+        viewModel.getMovies()
+
+        viewModel.observeItemListLiveData().observe(viewLifecycleOwner) { item ->
+            itemAdapter.setItems(item as ArrayList<Any>)
         }
 
         binding. searchView.setOnQueryTextListener(object : androidx.appcompat.widget.SearchView.OnQueryTextListener {
@@ -67,8 +62,7 @@ class SearchFragment : Fragment() {
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                movieAdapter.filter.filter(newText)
-                bookAdapter.filter.filter(newText)
+                itemAdapter.filter.filter(newText)
                 return true
             }
 

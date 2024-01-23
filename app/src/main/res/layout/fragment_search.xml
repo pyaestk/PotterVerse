@@ -45,12 +45,7 @@
             android:orientation="vertical">
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/movie_result_recycelr"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/book_result_recycelr"
+                android:id="@+id/item_result_recycler"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
             
