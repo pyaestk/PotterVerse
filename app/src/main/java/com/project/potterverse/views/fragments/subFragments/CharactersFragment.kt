@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -27,8 +28,8 @@ class CharactersFragment : Fragment() {
     private var pageNumber = 1
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = (activity as MainActivity).viewModel
-        characterAdapter = BaseCharacterAdapter(false)
+        viewModel = ViewModelProvider(this)[MainViewModel::class.java]
+        characterAdapter = BaseCharacterAdapter(true)
     }
 
     override fun onCreateView(

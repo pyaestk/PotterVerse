@@ -25,8 +25,8 @@ class MoviesFragment : Fragment() {
     lateinit var movieAdapter: BaseMovieAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = (activity as MainActivity).viewModel
-        movieAdapter = BaseMovieAdapter(true)
+        viewModel = ViewModelProvider(this)[MainViewModel::class.java]
+        movieAdapter = BaseMovieAdapter(1)
     }
 
     override fun onCreateView(

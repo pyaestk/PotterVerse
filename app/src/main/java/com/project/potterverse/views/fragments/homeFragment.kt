@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -60,9 +61,9 @@ class homeFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel = (activity as MainActivity).viewModel
-        movieAdapter = BaseMovieAdapter(false)
-        bookAdapter = BaseBookAdapter(false)
+        viewModel = ViewModelProvider(this)[MainViewModel::class.java]
+        movieAdapter = BaseMovieAdapter(2)
+        bookAdapter = BaseBookAdapter(2)
         characterAdapter = BaseCharacterAdapter(false)
     }
 

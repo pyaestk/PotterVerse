@@ -26,6 +26,7 @@ class MainViewModel() : ViewModel() {
     private var bookListLiveData = MutableLiveData<List<BookData>>()
     private var characterListLiveData = MutableLiveData<List<CharactersData>>()
 
+    
     //for movies list home screen
     fun getMovies() {
         RetrofitInstance.api.getMovieLists().enqueue(object : Callback<MovieList> {
@@ -67,7 +68,6 @@ class MainViewModel() : ViewModel() {
     }
 
     //for characters list
-
     fun getCharacters(pageNumber: Int) {
         RetrofitInstance.api.getCharacterLists(pageNumber).enqueue(object : Callback<CharactersList> {
             override fun onResponse(
@@ -88,7 +88,6 @@ class MainViewModel() : ViewModel() {
     fun getCharacterListLiveData(): LiveData<List<CharactersData>> {
         return characterListLiveData
     }
-    
 
 }
 

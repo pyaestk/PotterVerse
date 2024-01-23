@@ -24,36 +24,29 @@ import com.project.potterverse.views.fragments.subFragments.MoviesFragment
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var homeFragment: homeFragment
-    lateinit var charactersFragment: CharactersFragment
-    lateinit var moviesFragment: MoviesFragment
-    lateinit var booksFragment: BooksFragment
+    private lateinit var homeFragment: homeFragment
+    private lateinit var charactersFragment: CharactersFragment
+    private lateinit var moviesFragment: MoviesFragment
+    private lateinit var booksFragment: BooksFragment
 
-    lateinit var categoryFragment: CategoryFragment
-    lateinit var searchFragment: SearchFragment
-    lateinit var favoritesFragment: FavoritesFragment
+    private lateinit var categoryFragment: CategoryFragment
+    private lateinit var searchFragment: SearchFragment
+    private lateinit var favoritesFragment: FavoritesFragment
 
-    lateinit var viewPagerAdapter: ViewPagerAdapter
+    private lateinit var viewPagerAdapter: ViewPagerAdapter
 
-    lateinit var binding: ActivityMainBinding
+    private lateinit var binding: ActivityMainBinding
 
-    val viewModel: MainViewModel by lazy {
-        val mainViewModelFactory = MainViewModelFactory()
-        ViewModelProvider(this, mainViewModelFactory)[MainViewModel::class.java]
-    }
+//    val viewModel: MainViewModel by lazy {
+//        val mainViewModelFactory = MainViewModelFactory()
+//        ViewModelProvider(this, mainViewModelFactory)[MainViewModel::class.java]
+//    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        homeFragment = homeFragment()
-        charactersFragment = CharactersFragment()
-        moviesFragment = MoviesFragment()
-        booksFragment = BooksFragment()
-
-        searchFragment = SearchFragment()
-        favoritesFragment = FavoritesFragment()
-        categoryFragment = CategoryFragment()
+        initializeFragments()
 
         viewPagerAdapter = ViewPagerAdapter(this)
         binding.viewPager2.adapter = viewPagerAdapter
@@ -61,6 +54,13 @@ class MainActivity : AppCompatActivity() {
         binding.viewPager2.isUserInputEnabled = false
 
 
+        setUPFragments()
+
+        setTabLayoutWithViewPager()
+        setBottomNavigation()
+    }
+
+    private fun setUPFragments() {
         supportFragmentManager.beginTransaction()
             .add(R.id.frameLayout, homeFragment).hide(homeFragment)
             .add(R.id.frameLayout, charactersFragment).hide(charactersFragment)
@@ -72,9 +72,17 @@ class MainActivity : AppCompatActivity() {
             .add(R.id.frameLayout, categoryFragment).hide(categoryFragment)
 
             .commit()
+    }
 
-        setTabLayoutWithViewPager()
-        setBottomNavigation()
+    private fun initializeFragments() {
+        homeFragment = homeFragment()
+        charactersFragment = CharactersFragment()
+        moviesFragment = MoviesFragment()
+        booksFragment = BooksFragment()
+
+        searchFragment = SearchFragment()
+        favoritesFragment = FavoritesFragment()
+        categoryFragment = CategoryFragment()
     }
 
     private fun setTabLayoutWithViewPager() {
