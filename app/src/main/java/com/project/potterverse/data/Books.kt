@@ -1,5 +1,7 @@
 package com.project.potterverse.data
 
+import androidx.room.PrimaryKey
+
 data class Relationships(
     val chapters: Chapters
 )
@@ -27,6 +29,7 @@ data class BookAttributes(
 
 data class BookData(
     val attributes: BookAttributes,
+    @PrimaryKey
     val id: String,
     val links: Links,
     val relationships: Relationships,

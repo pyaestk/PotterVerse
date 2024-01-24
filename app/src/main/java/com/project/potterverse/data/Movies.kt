@@ -1,5 +1,7 @@
 package com.project.potterverse.data.movies
 
+import androidx.room.PrimaryKey
+
 data class MovieAttributes(
     val box_office: String,
     val budget: String,
@@ -22,6 +24,7 @@ data class MovieAttributes(
 )
 data class MovieData(
     val attributes: MovieAttributes,
+    @PrimaryKey
     val id: String,
     val type: String
 )

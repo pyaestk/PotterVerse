@@ -1,5 +1,7 @@
 package com.project.potterverse.data
 
+import androidx.room.PrimaryKey
+
 data class Attributes(
     val alias_names: List<String>,
     val animagus: String,
@@ -30,6 +32,7 @@ data class Attributes(
 )
 data class CharactersData(
     val attributes: Attributes,
+    @PrimaryKey
     val id: String,
     val links: Links,
     val type: String
