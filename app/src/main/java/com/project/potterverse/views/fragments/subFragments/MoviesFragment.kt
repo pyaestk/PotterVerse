@@ -40,6 +40,7 @@ class MoviesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        showProgressBar()
         binding.movieRecycler.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             adapter = movieAdapter
@@ -48,6 +49,7 @@ class MoviesFragment : Fragment() {
         viewModel.getMovies()
         viewModel.getMovieListLiveData().observe(viewLifecycleOwner) { movie ->
             movieAdapter.setMovies(movie as ArrayList<MovieData>)
+            hideProgressBar()
         }
 
         movieAdapter.onItemClick = { movie ->
@@ -61,5 +63,14 @@ class MoviesFragment : Fragment() {
             intent.putExtra(homeFragment.movieDirector, movie.attributes.directors[0])
             startActivity(intent)
         }
+    }
+
+    private fun showProgressBar(){
+        binding.progressBarMovie.visibility = View.VISIBLE
+        binding.movieRecycler.visibility = View.INVISIBLE
+    }
+    private fun hideProgressBar(){
+        binding.progressBarMovie.visibility = View.GONE
+        binding.movieRecycler.visibility = View.VISIBLE
     }
 }

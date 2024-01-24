@@ -4,8 +4,10 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
+import com.project.potterverse.data.bookDetails.BookDetailsData
 import com.project.potterverse.databinding.ActivityBookDetailsBinding
 import com.project.potterverse.viewModel.BookDetailsViewModel
 import com.project.potterverse.views.fragments.homeFragment
@@ -24,6 +26,9 @@ class BookDetailsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityBookDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        showProgressBar()
+        
         viewModel = ViewModelProvider(this)[BookDetailsViewModel::class.java]
 
         val intent = intent
@@ -53,6 +58,17 @@ class BookDetailsActivity : AppCompatActivity() {
         viewModel.getBookDetailsLiveData().observe(this) { bookDetail ->
             binding.tvSummary.text = bookDetail.attributes.summary
             bookLink = bookDetail.attributes.wiki
+            hideProgressBar()
         }
+    }
+
+    private fun hideProgressBar() {
+        binding.summary.visibility = View.VISIBLE
+        binding.progressBar.visibility = View.GONE
+    }
+
+    private fun showProgressBar() {
+        binding.summary.visibility = View.GONE
+        binding.progressBar.visibility = View.VISIBLE
     }
 }

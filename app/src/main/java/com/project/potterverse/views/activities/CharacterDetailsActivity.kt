@@ -27,6 +27,8 @@ class CharacterDetailsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityCharacterDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        showProgressBar()
         viewModel = ViewModelProvider(this)[CharacterDetailsViewModel::class.java]
 
         val intent = intent
@@ -56,6 +58,8 @@ class CharacterDetailsActivity : AppCompatActivity() {
     private fun observerCharacterDetails() {
 
         viewModel.getCharacterDetails().observe(this) { chr ->
+            hideProgressBar()
+
             if (!chr.attributes.born.isNullOrEmpty()) {
                 binding.bornTextView.visibility = View.VISIBLE
                 binding.bornTextView.text = "Born: ${chr.attributes.born}"
@@ -105,5 +109,15 @@ class CharacterDetailsActivity : AppCompatActivity() {
 
         }
 
+    }
+
+    private fun hideProgressBar() {
+        binding.moreInfo.visibility = View.VISIBLE
+        binding.progressBar3.visibility = View.GONE
+    }
+
+    private fun showProgressBar() {
+        binding.moreInfo.visibility = View.GONE
+        binding.progressBar3.visibility = View.VISIBLE
     }
 }

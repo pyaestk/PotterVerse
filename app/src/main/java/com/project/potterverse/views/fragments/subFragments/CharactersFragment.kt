@@ -43,6 +43,7 @@ class CharactersFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        showProgressBar()
         var isLoading = false
 
         val layoutManager = GridLayoutManager(activity, 3, GridLayoutManager.VERTICAL, false)
@@ -76,6 +77,7 @@ class CharactersFragment : Fragment() {
         viewModel.getCharacterListLiveData().observe(viewLifecycleOwner) { character ->
             characterAdapter.addCharacters(character as ArrayList<CharactersData>)
             isLoading = false
+            hideProgressBar()
         }
 
         characterAdapter.onItemClick = { chr ->
@@ -87,6 +89,15 @@ class CharactersFragment : Fragment() {
             intent.putExtra(homeFragment.chrGender, chr.attributes.gender)
             startActivity(intent)
         }
+    }
+
+    private fun showProgressBar(){
+        binding.progressBar.visibility = View.VISIBLE
+        binding.characterRecycler.visibility = View.INVISIBLE
+    }
+    private fun hideProgressBar(){
+        binding.progressBar.visibility = View.GONE
+        binding.characterRecycler.visibility = View.VISIBLE
     }
     
     

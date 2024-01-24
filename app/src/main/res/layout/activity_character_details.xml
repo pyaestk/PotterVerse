@@ -7,6 +7,16 @@
     android:background="@color/black"
     tools:context=".views.activities.CharacterDetailsActivity">
 
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/progressBar3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:trackColor="@color/secondary_color"
+        android:indeterminate="true"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <LinearLayout
         android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
@@ -29,7 +39,7 @@
             android:backgroundTint="@color/primary_color_light"
             android:text="More Information"
             android:textColor="@color/white"
-            android:textSize="14sp"
+            android:textSize="16sp"
             app:icon="@drawable/ic_arrow_upward"
             app:iconGravity="textEnd"
             app:iconTint="@color/white" />
@@ -177,15 +187,16 @@
                     android:textSize="14sp" />
 
                 <LinearLayout
+                    android:id="@+id/more_info"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="16dp"
                     android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/bornTextView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
                         android:text="Born: Unknown"
                         android:textColor="@color/white"
                         android:textSize="14sp"
