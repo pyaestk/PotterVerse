@@ -56,6 +56,8 @@ class homeFragment : Fragment() {
         const val chrId = "CHARACTER_ID"
         const val chrImage = "CHARACTER_IMAGE"
         const val chrName = "CHARACTER_NAME"
+        const val chrSpecies = "CHARACTER_SPECIES"
+        const val chrGender = "CHARACTER_GENDER"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -127,6 +129,8 @@ class homeFragment : Fragment() {
             intent.putExtra(chrId, chr.id)
             intent.putExtra(chrName, chr.attributes.name)
             intent.putExtra(chrImage, chr.attributes.image)
+            intent.putExtra(chrSpecies, chr.attributes.species)
+            intent.putExtra(chrGender, chr.attributes.gender)
             startActivity(intent)
         }
     }

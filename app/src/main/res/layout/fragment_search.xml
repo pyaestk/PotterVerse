@@ -7,31 +7,50 @@
     android:background="@color/black"
     tools:context=".views.fragments.SearchFragment">
 
-    <EditText
-        android:id="@+id/searchbar"
+    <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/search_background"
-        android:hint="Search items"
-        android:paddingStart="20dp"
-        android:textColor="@color/white"
-        android:textColorHint="#A6A6A6"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-    </EditText>
+        <EditText
+            android:id="@+id/searchbar"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_weight="2"
+            android:background="@drawable/search_background"
+            android:hint="Search items"
+            android:paddingStart="20dp"
+            android:textColor="@color/white"
+            android:textColorHint="#A6A6A6">
+
+        </EditText>
+
+        <ImageView
+            android:id="@+id/searchButton"
+            android:layout_width="100dp"
+            android:layout_height="30dp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_weight="2"
+            android:src="@drawable/baseline_search_24" />
+
+    </LinearLayout>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         android:fillViewport="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchbar">
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -43,7 +62,7 @@
                 android:id="@+id/item_result_recycler"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
-            
+
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 

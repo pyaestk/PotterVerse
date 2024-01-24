@@ -83,6 +83,8 @@ class CharactersFragment : Fragment() {
             intent.putExtra(homeFragment.chrId, chr.id)
             intent.putExtra(homeFragment.chrName, chr.attributes.name)
             intent.putExtra(homeFragment.chrImage, chr.attributes.image)
+            intent.putExtra(homeFragment.chrSpecies, chr.attributes.species)
+            intent.putExtra(homeFragment.chrGender, chr.attributes.gender)
             startActivity(intent)
         }
     }

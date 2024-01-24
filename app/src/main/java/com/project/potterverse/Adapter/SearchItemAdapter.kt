@@ -22,6 +22,8 @@ sealed class SearchItem {
 }
 class SearchItemAdapter : RecyclerView.Adapter<SearchItemAdapter.SearchResultViewHolder>() {
 
+    lateinit var onItemClick: ((SearchItem) -> Unit)
+
     private val diffCallback = object : DiffUtil.ItemCallback<SearchItem>() {
         override fun areItemsTheSame(oldItem: SearchItem, newItem: SearchItem): Boolean {
             return oldItem.javaClass == newItem.javaClass && getItemId(oldItem) == getItemId(newItem)
@@ -48,12 +50,14 @@ class SearchItemAdapter : RecyclerView.Adapter<SearchItemAdapter.SearchResultVie
                         .load(item.data.attributes.cover)
                         .into(binding.itemImage)
                     binding.itemTitle.text = item.data.attributes.title
+                    binding.itemType.text = "Book"
                 }
                 is SearchItem.Movie -> {
                     Glide.with(itemView)
                         .load(item.data.attributes.poster)
                         .into(binding.itemImage)
                     binding.itemTitle.text = item.data.attributes.title
+                    binding.itemType.text = "Movie"
                 }
                 is SearchItem.Character -> {
                     if (item.data.attributes.image.isNullOrEmpty()) {
@@ -64,9 +68,11 @@ class SearchItemAdapter : RecyclerView.Adapter<SearchItemAdapter.SearchResultVie
                             .into(binding.itemImage)
                     }
                     binding.itemTitle.text = item.data.attributes.name
+                    binding.itemType.text = "Character"
                 }
             }
         }
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchResultViewHolder {
@@ -81,6 +87,9 @@ class SearchItemAdapter : RecyclerView.Adapter<SearchItemAdapter.SearchResultVie
 
     override fun onBindViewHolder(holder: SearchResultViewHolder, position: Int) {
         val currentItem = differ.currentList[position]
+        holder.itemView.setOnClickListener {
+            onItemClick.invoke(currentItem)
+        }
         holder.bind(currentItem)
     }
 

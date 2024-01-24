@@ -33,6 +33,8 @@ class CharacterDetailsActivity : AppCompatActivity() {
         chrId = intent.getStringExtra(homeFragment.chrId)!!
         chrImg = intent.getStringExtra(homeFragment.chrImage)
         binding.chrName.text = intent.getStringExtra(homeFragment.chrName)
+        binding.speciesTextView.text = intent.getStringExtra(homeFragment.chrSpecies)
+        binding.genderTextView.text = intent.getStringExtra(homeFragment.chrGender)
 
         if (chrImg == null) {
             binding.chrImage.setImageResource(R.drawable.witchhat)
@@ -57,16 +59,6 @@ class CharacterDetailsActivity : AppCompatActivity() {
             if (!chr.attributes.born.isNullOrEmpty()) {
                 binding.bornTextView.visibility = View.VISIBLE
                 binding.bornTextView.text = "Born: ${chr.attributes.born}"
-            }
-
-            if (!chr.attributes.gender.isNullOrEmpty()) {
-                binding.genderTextView.visibility = View.VISIBLE
-                binding.genderTextView.text = "Gender: ${chr.attributes.gender}"
-            }
-
-            if (!chr.attributes.species.isNullOrEmpty()) {
-                binding.speciesTextView.visibility = View.VISIBLE
-                binding.speciesTextView.text = "Species: ${chr.attributes.species}"
             }
 
             if (!chr.attributes.nationality.isNullOrEmpty()) {

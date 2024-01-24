@@ -16,7 +16,7 @@ import com.project.potterverse.databinding.ItemMovieFragmentBinding
 import com.project.potterverse.databinding.ItemSearchMovieResultBinding
 
 
-class BaseBookAdapter(var useFragmentBinding: Int): RecyclerView.Adapter<BaseBookAdapter.BaseBookViewHolder>(), Filterable {
+class BaseBookAdapter(var useFragmentBinding: Int): RecyclerView.Adapter<BaseBookAdapter.BaseBookViewHolder>() {
 
     lateinit var onItemClick: ((BookData) -> Unit)
 
@@ -45,11 +45,6 @@ class BaseBookAdapter(var useFragmentBinding: Int): RecyclerView.Adapter<BaseBoo
             3 -> ItemSearchMovieResultBinding.inflate(inflater, parent, false)
             else -> throw IllegalArgumentException("error")
         }
-//        val binding = if (useFragmentBinding) {
-//            ItemBookFragmentBinding.inflate(inflater, parent, false)
-//        } else {
-//            ItemBookBinding.inflate(inflater, parent, false)
-//        }
         return BaseBookViewHolder(binding)
     }
 
@@ -93,36 +88,5 @@ class BaseBookAdapter(var useFragmentBinding: Int): RecyclerView.Adapter<BaseBoo
         }
 
     }
-    
-    override fun getFilter(): Filter {
-        return object : Filter() {
-            override fun performFiltering(constraint: CharSequence?): FilterResults {
-                val filteredList = ArrayList<BookData>()
 
-                if (constraint.isNullOrBlank()){
-                    filteredList.addAll(originalBookLists)
-                } else {
-                    val filterPattern = constraint.toString().trim { it <= '-'}.toLowerCase()
-
-                    for (book in originalBookLists) {
-                        if (book.attributes.slug.contains(filterPattern)) {
-                            filteredList.add(book)
-                        }
-                    }
-                }
-
-                val results = FilterResults()
-                results.values = filteredList
-
-                return results
-
-            }
-
-            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-                bookList = results?.values as ArrayList<BookData>
-                notifyDataSetChanged()
-            }
-
-        }
-    }
 }
