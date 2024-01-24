@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.project.potterverse.Adapter.SearchItem
 import com.project.potterverse.data.BookData
 import com.project.potterverse.data.BooksList
 import com.project.potterverse.data.CharactersData
@@ -86,32 +87,36 @@ class SearchViewModel : ViewModel() {
 
     }
 
-    fun observeItemListLiveData(): LiveData<List<Any>> {
-        val combinedLiveData = MediatorLiveData<List<Any>>()
-
+    fun observeItemListLiveData(): LiveData<List<SearchItem>> {
+        val combinedLiveData = MediatorLiveData<List<SearchItem>>()
 
         combinedLiveData.addSource(movieListLiveData) { movieList ->
-            val combinedList = ArrayList<Any>()
-            combinedList.addAll(movieList)
-            bookListLiveData.value?.let { combinedList.addAll(it) }
+            val combinedList = ArrayList<SearchItem>().apply {
+                addAll(movieList?.map { SearchItem.Movie(it) } ?: emptyList())
+                addAll(bookListLiveData.value?.map { SearchItem.Book(it) } ?: emptyList())
+                addAll(characterListLiveData.value?.map { SearchItem.Character(it) } ?: emptyList())
+            }
             combinedLiveData.value = combinedList
-
         }
 
         combinedLiveData.addSource(bookListLiveData) { bookList ->
-            val combinedList = ArrayList<Any>()
-            combinedList.addAll(bookList)
-            movieListLiveData.value?.let { combinedList.addAll(it) }
+            val combinedList = ArrayList<SearchItem>().apply {
+                addAll(bookList?.map { SearchItem.Book(it) } ?: emptyList())
+                addAll(movieListLiveData.value?.map { SearchItem.Movie(it) } ?: emptyList())
+                addAll(characterListLiveData.value?.map { SearchItem.Character(it) } ?: emptyList())
+            }
             combinedLiveData.value = combinedList
-
         }
 
         combinedLiveData.addSource(characterListLiveData) { characterList ->
-            val combinedList = ArrayList<Any>()
-            combinedList.addAll(characterList)
-            characterListLiveData.value?.let { combinedList.addAll(it) }
+            val combinedList = ArrayList<SearchItem>().apply {
+                addAll(characterList?.map { SearchItem.Character(it) } ?: emptyList())
+                addAll(movieListLiveData.value?.map { SearchItem.Movie(it) } ?: emptyList())
+                addAll(bookListLiveData.value?.map { SearchItem.Book(it) } ?: emptyList())
+            }
             combinedLiveData.value = combinedList
         }
+
         return combinedLiveData
     }
 }

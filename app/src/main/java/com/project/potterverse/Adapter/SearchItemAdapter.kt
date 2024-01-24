@@ -14,35 +14,60 @@ import com.project.potterverse.data.movies.MovieData
 import com.project.potterverse.databinding.ItemSearchMovieResultBinding
 import java.lang.IllegalArgumentException
 
+
+sealed class SearchItem {
+    data class Book(val data: BookData) : SearchItem()
+    data class Movie(val data: MovieData) : SearchItem()
+    data class Character(val data: CharactersData) : SearchItem()
+}
 class SearchItemAdapter : RecyclerView.Adapter<SearchItemAdapter.SearchResultViewHolder>() {
 
-    // Define your callback for DiffUtil
-    private val diffCallback = object : DiffUtil.ItemCallback<Any>() {
-        override fun areItemsTheSame(oldItem: Any, newItem: Any): Boolean {
+    private val diffCallback = object : DiffUtil.ItemCallback<SearchItem>() {
+        override fun areItemsTheSame(oldItem: SearchItem, newItem: SearchItem): Boolean {
             return oldItem.javaClass == newItem.javaClass && getItemId(oldItem) == getItemId(newItem)
         }
 
-        @SuppressLint("DiffUtilEquals")
-        override fun areContentsTheSame(oldItem: Any, newItem: Any): Boolean {
-            return when {
-                oldItem is BookData && newItem is BookData -> oldItem == newItem
-                oldItem is MovieData && newItem is MovieData -> oldItem == newItem
-                oldItem is CharactersData && newItem is CharactersData -> oldItem == newItem
-                else -> false
-            }
+        override fun areContentsTheSame(oldItem: SearchItem, newItem: SearchItem): Boolean {
+            return oldItem == newItem
         }
     }
 
-    // Initialize AsyncListDiffer
     private val differ = AsyncListDiffer(this, diffCallback)
 
-    // Set new items using AsyncListDiffer
-    fun setItems(newItemList: List<Any>) {
+    fun setItems(newItemList: List<SearchItem>) {
         differ.submitList(newItemList)
     }
 
-    inner class SearchResultViewHolder(val binding: ItemSearchMovieResultBinding) :
-        RecyclerView.ViewHolder(binding.root)
+    inner class SearchResultViewHolder(private val binding: ItemSearchMovieResultBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+
+        fun bind(item: SearchItem) {
+            when (item) {
+                is SearchItem.Book -> {
+                    Glide.with(itemView)
+                        .load(item.data.attributes.cover)
+                        .into(binding.itemImage)
+                    binding.itemTitle.text = item.data.attributes.title
+                }
+                is SearchItem.Movie -> {
+                    Glide.with(itemView)
+                        .load(item.data.attributes.poster)
+                        .into(binding.itemImage)
+                    binding.itemTitle.text = item.data.attributes.title
+                }
+                is SearchItem.Character -> {
+                    if (item.data.attributes.image.isNullOrEmpty()) {
+                        binding.itemImage.setImageResource(R.drawable.witchhat)
+                    } else {
+                        Glide.with(itemView)
+                            .load(item.data.attributes.image)
+                            .into(binding.itemImage)
+                    }
+                    binding.itemTitle.text = item.data.attributes.name
+                }
+            }
+        }
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchResultViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -56,40 +81,14 @@ class SearchItemAdapter : RecyclerView.Adapter<SearchItemAdapter.SearchResultVie
 
     override fun onBindViewHolder(holder: SearchResultViewHolder, position: Int) {
         val currentItem = differ.currentList[position]
-
-        if (currentItem is BookData) {
-            Glide.with(holder.itemView)
-                .load(currentItem.attributes.cover)
-                .into(holder.binding.itemImage)
-            holder.binding.itemTitle.text = currentItem.attributes.title
-        }
-
-        if (currentItem is MovieData) {
-            Glide.with(holder.itemView)
-                .load(currentItem.attributes.poster)
-                .into(holder.binding.itemImage)
-            holder.binding.itemTitle.text = currentItem.attributes.title
-        }
-
-        // Example:
-        if (currentItem is CharactersData) {
-            if (currentItem.attributes.image.isNullOrEmpty()) {
-                holder.binding.itemImage.setImageResource(R.drawable.witchhat)
-            } else {
-                Glide.with(holder.itemView)
-                    .load(currentItem.attributes.image)
-                    .into(holder.binding.itemImage)
-            }
-            holder.binding.itemTitle.text = currentItem.attributes.name
-        }
+        holder.bind(currentItem)
     }
 
-    private fun getItemId(item: Any): Long {
+    private fun getItemId(item: SearchItem): Long {
         return when (item) {
-            is BookData -> item.id.hashCode().toLong()
-            is MovieData -> item.id.hashCode().toLong()
-            is CharactersData -> item.id.hashCode().toLong()
-            else -> throw IllegalArgumentException("Unsupported item type")
+            is SearchItem.Book -> item.data.id.hashCode().toLong()
+            is SearchItem.Movie -> item.data.id.hashCode().toLong()
+            is SearchItem.Character -> item.data.id.hashCode().toLong()
         }
     }
 }

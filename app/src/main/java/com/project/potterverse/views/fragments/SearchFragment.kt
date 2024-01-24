@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.project.potterverse.Adapter.BaseBookAdapter
 import com.project.potterverse.Adapter.BaseMovieAdapter
+import com.project.potterverse.Adapter.SearchItem
 import com.project.potterverse.Adapter.SearchItemAdapter
 import com.project.potterverse.databinding.FragmentSearchBinding
 import com.project.potterverse.viewModel.MainViewModel
@@ -53,7 +54,7 @@ class SearchFragment : Fragment() {
         }
 
         viewModel.observeItemListLiveData().observe(viewLifecycleOwner) { item ->
-            itemAdapter.setItems(item as ArrayList<Any>)
+            itemAdapter.setItems(item as List<SearchItem>)
         }
 
 
@@ -65,12 +66,13 @@ class SearchFragment : Fragment() {
             }  else {
                 binding.itemResultRecycler.visibility = View.VISIBLE
             }
-            searchJob?.cancel()
+           searchJob?.cancel()
             searchJob = lifecycleScope.launch {
-                delay(500)
+                delay(200)
                 viewModel.getBooks(searchQuery.toString())
                 viewModel.getMovies(searchQuery.toString())
                 viewModel.searchCharacters(searchQuery.toString())
+
             }
         }
 
