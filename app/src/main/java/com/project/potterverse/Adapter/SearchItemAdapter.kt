@@ -40,6 +40,10 @@ class SearchItemAdapter : RecyclerView.Adapter<SearchItemAdapter.SearchResultVie
         differ.submitList(newItemList)
     }
 
+    fun clearItem(){
+        differ.currentList.clear()
+    }
+
     inner class SearchResultViewHolder(private val binding: ItemSearchMovieResultBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
@@ -93,11 +97,19 @@ class SearchItemAdapter : RecyclerView.Adapter<SearchItemAdapter.SearchResultVie
         holder.bind(currentItem)
     }
 
-    private fun getItemId(item: SearchItem): Long {
+//    private fun getItemId(item: SearchItem): Long {
+//        return when (item) {
+//            is SearchItem.Book -> item.data.id.hashCode().toLong()
+//            is SearchItem.Movie -> item.data.id.hashCode().toLong()
+//            is SearchItem.Character -> item.data.id.hashCode().toLong()
+//        }
+//    }
+
+    private fun getItemId(item: SearchItem): String {
         return when (item) {
-            is SearchItem.Book -> item.data.id.hashCode().toLong()
-            is SearchItem.Movie -> item.data.id.hashCode().toLong()
-            is SearchItem.Character -> item.data.id.hashCode().toLong()
+            is SearchItem.Book -> item.data.id
+            is SearchItem.Movie -> item.data.id
+            is SearchItem.Character -> item.data.id
         }
     }
 }

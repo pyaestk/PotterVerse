@@ -44,7 +44,7 @@ class BaseCharacterAdapter(var useFragmentBinding: Boolean): RecyclerView.Adapte
 
         when(val binding = holder.binding) {
             is ItemCharacterBinding -> {
-                if (characterList[position].attributes.image != null) {
+                if (currentCharacter.attributes.image != null) {
                     Glide.with(holder.itemView)
                         .load(characterList[position].attributes.image)
                         .into(binding.characterImageView)
@@ -54,20 +54,20 @@ class BaseCharacterAdapter(var useFragmentBinding: Boolean): RecyclerView.Adapte
 
                 binding.characterName.text = characterList[position].attributes.name
 
-                if (characterList[position].attributes.species != null){
+                if (currentCharacter.attributes.species != null){
                     binding.species.text = characterList[position].attributes.species
                 } else {
                     binding.species.text = "unknown"
                 }
 
-                if (characterList[position].attributes.gender != null){
+                if (currentCharacter.attributes.gender != null){
                     binding.gender.text = characterList[position].attributes.gender
                 }  else {
                     binding.species.text = "unknown"
                 }
             }
             is ItemCharacterFragmentBinding -> {
-                if (characterList[position].attributes.image != null) {
+                if (currentCharacter.attributes.image != null) {
                     Glide.with(holder.itemView)
                         .load(characterList[position].attributes.image)
                         .into(binding.characterImageView)
@@ -77,13 +77,13 @@ class BaseCharacterAdapter(var useFragmentBinding: Boolean): RecyclerView.Adapte
 
                 binding.characterName.text = characterList[position].attributes.name
 
-                if (characterList[position].attributes.species != null){
+                if (currentCharacter.attributes.species != null){
                     binding.species.text = characterList[position].attributes.species
                 } else {
                     binding.species.text = "unknown"
                 }
 
-                if (characterList[position].attributes.gender != null){
+                if (currentCharacter.attributes.gender != null){
                     binding.gender.text = characterList[position].attributes.gender
                 }  else {
                     binding.species.text = "unknown"

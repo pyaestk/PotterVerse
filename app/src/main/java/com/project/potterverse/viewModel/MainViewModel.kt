@@ -20,13 +20,12 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MainViewModel() : ViewModel() {
+class MainViewModel: ViewModel() {
 
     private var movieListLiveData = MutableLiveData<List<MovieData>>()
     private var bookListLiveData = MutableLiveData<List<BookData>>()
     private var characterListLiveData = MutableLiveData<List<CharactersData>>()
 
-    
     //for movies list home screen
     fun getMovies() {
         RetrofitInstance.api.getMovieLists().enqueue(object : Callback<MovieList> {

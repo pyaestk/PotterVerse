@@ -1,5 +1,6 @@
 package com.project.potterverse.data.movies
 
+import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 data class MovieAttributes(
@@ -22,6 +23,8 @@ data class MovieAttributes(
     val trailer: String,
     val wiki: String
 )
+
+
 data class MovieData(
     val attributes: MovieAttributes,
     @PrimaryKey

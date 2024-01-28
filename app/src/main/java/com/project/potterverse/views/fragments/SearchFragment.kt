@@ -15,6 +15,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.room.util.query
 import com.project.potterverse.Adapter.BaseBookAdapter
 import com.project.potterverse.Adapter.BaseMovieAdapter
 import com.project.potterverse.Adapter.SearchItem
@@ -60,26 +61,33 @@ class SearchFragment : Fragment() {
             adapter = itemAdapter
         }
 
+        binding.itemResultRecycler.visibility = View.GONE
+
         viewModel.observeItemListLiveData().observe(viewLifecycleOwner) { item ->
-            itemAdapter.setItems(item as List<SearchItem>)
-        }
-
-
-        binding.searchButton.setOnClickListener {
-            val searchQuery = binding.searchbar.text.toString()
             binding.itemResultRecycler.visibility = View.VISIBLE
-            if (searchQuery.isNotEmpty()) {
-                viewModel.getMovies(searchQuery)
-                viewModel.getBooks(searchQuery)
-                viewModel.searchCharacters(searchQuery)
-            }
+            itemAdapter.setItems(item as List<SearchItem>)
+
         }
 
-        binding.searchbar.addTextChangedListener { searchQuery ->
-            if (searchQuery!!.isEmpty()) {
-                binding.itemResultRecycler.visibility = View.GONE
+        binding.searchbar.setOnQueryTextListener(object : androidx.appcompat.widget.SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                if (query!!.isNotEmpty()){
+                    viewModel.searchCharacters(query)
+                    viewModel.getMovies(query)
+                    viewModel.getBooks(query)
+
+                    binding.itemResultRecycler.visibility = View.VISIBLE
+                }
+                return true
             }
-        }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                if (newText!!.isEmpty()) {
+                    binding.itemResultRecycler.visibility = View.GONE
+                }
+                return true
+            }
+        })
 
         itemAdapter.onItemClick = { selectedItem ->
             when (selectedItem) {

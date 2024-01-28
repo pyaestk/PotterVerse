@@ -9,6 +9,8 @@ android {
     namespace = "com.project.potterverse"
     compileSdk = 34
 
+
+
     defaultConfig {
         applicationId = "com.project.potterverse"
         minSdk = 24
@@ -80,4 +82,8 @@ dependencies {
 
     //gif
     implementation("pl.droidsonroids.gif:android-gif-drawable:1.2.17")
+    //paging
+    val paging_version = "3.2.1"
+
+    implementation("androidx.paging:paging-runtime:$paging_version")
 }

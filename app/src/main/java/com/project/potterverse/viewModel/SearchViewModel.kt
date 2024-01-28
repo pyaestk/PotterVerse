@@ -28,7 +28,7 @@ class SearchViewModel : ViewModel() {
             override fun onResponse(call: Call<MovieList>, response: Response<MovieList>) {
                 val movieList = response.body()?.data
                 movieList?.let {
-                    val filteredMovies = if (!query.isNullOrBlank()) {
+                    val filteredMovies = if (query.isNotBlank()) {
                         it.filter { movieData ->
                             movieData.attributes.title.contains(query, ignoreCase = true)
                         }
@@ -50,7 +50,7 @@ class SearchViewModel : ViewModel() {
             override fun onResponse(call: Call<BooksList>, response: Response<BooksList>) {
                 val bookList = response.body()?.data
                 bookList?.let {
-                    val filteredBooks = if (!query.isNullOrBlank()) {
+                    val filteredBooks = if (query.isNotBlank()) {
                         it.filter { bookData ->
                             bookData.attributes.title.contains(query, ignoreCase = true)
                         }
