@@ -57,7 +57,7 @@
             app:iconTint="@color/white" />
 
         <ImageView
-            android:id="@+id/imageButton"
+            android:id="@+id/btn_bookmark"
             android:layout_width="20dp"
             android:layout_height="40dp"
             android:layout_gravity="center"

@@ -44,12 +44,6 @@ class BaseMovieAdapter(var useFragmentBinding: Int): RecyclerView.Adapter<BaseMo
             else -> throw IllegalArgumentException("error")
         }
 
-//        val binding = if (useFragmentBinding) {
-//            ItemMovieFragmentBinding.inflate(inflater, parent, false)
-//        } else {
-//            ItemMovieBinding.inflate(inflater, parent, false)
-//        }
-
         return BaseMovieViewHolder(binding)
 
     }
@@ -73,13 +67,15 @@ class BaseMovieAdapter(var useFragmentBinding: Int): RecyclerView.Adapter<BaseMo
                     .into(binding.movieImageView)
                 binding.movieTitle.text = movieList[position].attributes.title
                 binding.rating.text = movieList[position].attributes.rating
-                binding.director.text = movieList[position].attributes.directors[0]
+                binding.director.text = movieList[position].attributes.directors!![0]
                 binding.boxOffice.text = movieList[position].attributes.box_office
                 binding.releaseDate.text = movieList[position].attributes.release_date
 
                 binding.buttonSeeMore.setOnClickListener{
                     onItemClick.invoke(movieList[position])
                 }
+
+
             }
             is ItemSearchMovieResultBinding -> {
                 Glide.with(holder.itemView)
@@ -106,7 +102,7 @@ class BaseMovieAdapter(var useFragmentBinding: Int): RecyclerView.Adapter<BaseMo
                     val filterPattern = constraint.toString().trim { it <= '-'}.toLowerCase()
 
                     for (movie in originalMovieLists) {
-                        if (movie.attributes.slug.contains(filterPattern)) {
+                        if (movie.attributes.slug!!.contains(filterPattern)) {
                             filteredList.add(movie)
                         }
                     }

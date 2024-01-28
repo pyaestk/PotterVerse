@@ -21,14 +21,15 @@ data class MovieDetailAttributes(
     val summary: String?,
     val title: String?,
     val trailer: String?,
-    val wiki: String
+    val wiki: String?
 )
 @Entity("movieInformation")
 data class MovieDetailData(
-    val attributes: MovieDetailAttributes?,
+    val attributes: MovieDetailAttributes,
     @PrimaryKey
     val id: String,
-    val type: String?
+    val type: String?,
+    val bookmarked: Boolean
 )
 data class MovieDetails(
     val data: MovieDetailData,

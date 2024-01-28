@@ -30,7 +30,7 @@ class SearchViewModel : ViewModel() {
                 movieList?.let {
                     val filteredMovies = if (query.isNotBlank()) {
                         it.filter { movieData ->
-                            movieData.attributes.title.contains(query, ignoreCase = true)
+                            movieData.attributes.title!!.contains(query, ignoreCase = true)
                         }
                     } else {
                         return

@@ -12,6 +12,7 @@ import com.project.potterverse.R
 import com.google.android.material.tabs.TabLayoutMediator
 import com.project.potterverse.Adapter.ViewPagerAdapter
 import com.project.potterverse.databinding.ActivityMainBinding
+import com.project.potterverse.room.MovieDatabase
 import com.project.potterverse.viewModel.MainViewModel
 import com.project.potterverse.viewModel.MainViewModelFactory
 import com.project.potterverse.views.fragments.CategoryFragment
@@ -37,10 +38,11 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
-//    val viewModel: MainViewModel by lazy {
-//        val mainViewModelFactory = MainViewModelFactory()
-//        ViewModelProvider(this, mainViewModelFactory)[MainViewModel::class.java]
-//    }
+    val viewModel: MainViewModel by lazy {
+        val movieDatabase = MovieDatabase.getInstance(this)
+        val mainViewModelFactory = MainViewModelFactory(movieDatabase)
+        ViewModelProvider(this, mainViewModelFactory)[MainViewModel::class.java]
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)

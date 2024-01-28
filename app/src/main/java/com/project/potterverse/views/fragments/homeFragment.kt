@@ -6,9 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,6 +20,7 @@ import com.project.potterverse.data.BookData
 import com.project.potterverse.data.CharactersData
 import com.project.potterverse.data.movies.MovieData
 import com.project.potterverse.databinding.FragmentHomeBinding
+import com.project.potterverse.room.MovieDatabase
 import com.project.potterverse.viewModel.CharacterDetailsViewModel
 import com.project.potterverse.viewModel.MainViewModel
 import com.project.potterverse.views.MainActivity
@@ -63,7 +63,7 @@ class homeFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel = ViewModelProvider(this)[MainViewModel::class.java]
+        viewModel = (activity as MainActivity).viewModel
         movieAdapter = BaseMovieAdapter(2)
         bookAdapter = BaseBookAdapter(2)
         characterAdapter = BaseCharacterAdapter(false)
@@ -176,7 +176,7 @@ class homeFragment : Fragment() {
             intent.putExtra(movieDate, movie.attributes.release_date)
             intent.putExtra(movieRating, movie.attributes.rating)
             intent.putExtra(movieBo, movie.attributes.box_office)
-            intent.putExtra(movieDirector, movie.attributes.directors[0])
+            intent.putExtra(movieDirector, movie.attributes.directors?.get(0))
             startActivity(intent)
         }
 

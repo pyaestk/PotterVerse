@@ -25,7 +25,7 @@ class MoviesFragment : Fragment() {
     lateinit var movieAdapter: BaseMovieAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(this)[MainViewModel::class.java]
+        viewModel = (activity as MainActivity).viewModel
         movieAdapter = BaseMovieAdapter(1)
     }
 
@@ -60,7 +60,7 @@ class MoviesFragment : Fragment() {
             intent.putExtra(homeFragment.movieDate, movie.attributes.release_date)
             intent.putExtra(homeFragment.movieRating, movie.attributes.rating)
             intent.putExtra(homeFragment.movieBo, movie.attributes.box_office)
-            intent.putExtra(homeFragment.movieDirector, movie.attributes.directors[0])
+            intent.putExtra(homeFragment.movieDirector, movie.attributes.directors!![0])
             startActivity(intent)
         }
     }

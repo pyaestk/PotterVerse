@@ -121,7 +121,7 @@ class SearchFragment : Fragment() {
                     intent.putExtra(homeFragment.movieBo, selectedItem.data.attributes.box_office)
                     intent.putExtra(
                         homeFragment.movieDirector,
-                        selectedItem.data.attributes.directors[0]
+                        selectedItem.data.attributes.directors!![0]
                     )
                     startActivity(intent)
                 }

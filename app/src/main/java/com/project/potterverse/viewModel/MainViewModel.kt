@@ -9,22 +9,29 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import com.project.potterverse.data.BookData
 import com.project.potterverse.data.BooksList
 import com.project.potterverse.data.CharactersData
 import com.project.potterverse.data.CharactersList
+import com.project.potterverse.data.movieDetails.MovieDetailData
+import com.project.potterverse.data.movieDetails.MovieDetails
 import com.project.potterverse.data.movies.MovieData
 import com.project.potterverse.data.movies.MovieList
 import com.project.potterverse.retrofit.RetrofitInstance
+import com.project.potterverse.room.MovieDatabase
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MainViewModel: ViewModel() {
+class MainViewModel(private val movieDatabase: MovieDatabase): ViewModel() {
 
     private var movieListLiveData = MutableLiveData<List<MovieData>>()
     private var bookListLiveData = MutableLiveData<List<BookData>>()
     private var characterListLiveData = MutableLiveData<List<CharactersData>>()
+
+    private var favMovieLiveData = movieDatabase.movieDao().getAllMovies()
 
     //for movies list home screen
     fun getMovies() {
@@ -88,10 +95,16 @@ class MainViewModel: ViewModel() {
         return characterListLiveData
     }
 
+    //for fav-movie
+    fun observerFavMovieLiveData(): LiveData<List<MovieDetailData>>{
+        return favMovieLiveData
+    }
+
+
 }
 
-class MainViewModelFactory(): ViewModelProvider.Factory {
+class MainViewModelFactory(private val movieDatabase: MovieDatabase): ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return MainViewModel() as T
+        return MainViewModel(movieDatabase) as T
     }
 }

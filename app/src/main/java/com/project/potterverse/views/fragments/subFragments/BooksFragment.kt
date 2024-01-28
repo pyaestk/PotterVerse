@@ -23,7 +23,7 @@ class BooksFragment : Fragment() {
     lateinit var viewModel: MainViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(this)[MainViewModel::class.java]
+        viewModel = (activity as MainActivity).viewModel
         bookAdapter = BaseBookAdapter(1)
     }
 
