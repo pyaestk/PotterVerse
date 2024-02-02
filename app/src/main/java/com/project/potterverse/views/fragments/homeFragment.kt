@@ -6,22 +6,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewModelScope
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.project.potterverse.Adapter.BaseBookAdapter
 import com.project.potterverse.Adapter.BaseCharacterAdapter
 import com.project.potterverse.Adapter.BaseMovieAdapter
-import com.project.potterverse.R
-import com.project.potterverse.data.BookData
-import com.project.potterverse.data.CharactersData
-import com.project.potterverse.data.movies.MovieData
+import com.project.potterverse.data.CharacterDetails.CharacterDetailsData
+import com.project.potterverse.data.bookDetails.BookDetailsData
+import com.project.potterverse.data.movieDetails.MovieDetailData
 import com.project.potterverse.databinding.FragmentHomeBinding
-import com.project.potterverse.room.MovieDatabase
-import com.project.potterverse.viewModel.CharacterDetailsViewModel
 import com.project.potterverse.viewModel.MainViewModel
 import com.project.potterverse.views.MainActivity
 import com.project.potterverse.views.activities.BookDetailsActivity
@@ -119,7 +113,7 @@ class homeFragment : Fragment() {
 
         viewModel.getCharacters(pageNumber)
         viewModel.getCharacterListLiveData().observe(viewLifecycleOwner) { character ->
-            characterAdapter.addCharacters(character as ArrayList<CharactersData>)
+            characterAdapter.addCharacters(character as ArrayList<CharacterDetailsData>)
             hideProgressBar()
             isLoading = false
         }
@@ -142,7 +136,7 @@ class homeFragment : Fragment() {
         }
         viewModel.getBooks()
         viewModel.getBookListLiveData().observe(viewLifecycleOwner) {book ->
-            bookAdapter.setBooks(book as ArrayList<BookData>)
+            bookAdapter.setBooks(book as ArrayList<BookDetailsData>)
             hideProgressBar()
         }
         bookAdapter.onItemClick = { book ->
@@ -165,7 +159,7 @@ class homeFragment : Fragment() {
         }
         viewModel.getMovies()
         viewModel.getMovieListLiveData().observe(viewLifecycleOwner) {movie ->
-            movieAdapter.setMovies(movie as ArrayList<MovieData>)
+            movieAdapter.setMovies(movie as ArrayList<MovieDetailData>)
             hideProgressBar()
         }
         movieAdapter.onItemClick = { movie ->

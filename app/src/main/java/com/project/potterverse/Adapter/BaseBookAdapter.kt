@@ -8,8 +8,7 @@ import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import com.bumptech.glide.Glide
-import com.project.potterverse.data.BookData
-import com.project.potterverse.data.movies.MovieData
+import com.project.potterverse.data.bookDetails.BookDetailsData
 import com.project.potterverse.databinding.ItemBookBinding
 import com.project.potterverse.databinding.ItemBookFragmentBinding
 import com.project.potterverse.databinding.ItemMovieFragmentBinding
@@ -18,17 +17,17 @@ import com.project.potterverse.databinding.ItemSearchMovieResultBinding
 
 class BaseBookAdapter(var useFragmentBinding: Int): RecyclerView.Adapter<BaseBookAdapter.BaseBookViewHolder>() {
 
-    lateinit var onItemClick: ((BookData) -> Unit)
+    lateinit var onItemClick: ((BookDetailsData) -> Unit)
 
-    private var bookList = ArrayList<BookData>()
+    private var bookList = ArrayList<BookDetailsData>()
 
-    private var originalBookLists = ArrayList<BookData>()
+    private var originalBookLists = ArrayList<BookDetailsData>()
     init {
         // Initialize originalBookLists with the initial data
         originalBookLists.addAll(bookList)
     }
 
-    fun setBooks(bookList: ArrayList<BookData>) {
+    fun setBooks(bookList: ArrayList<BookDetailsData>) {
         this.bookList = bookList
 
         originalBookLists.clear()

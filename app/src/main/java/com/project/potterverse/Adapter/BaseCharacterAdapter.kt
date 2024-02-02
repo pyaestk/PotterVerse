@@ -6,15 +6,15 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import com.bumptech.glide.Glide
 import com.project.potterverse.R
-import com.project.potterverse.data.CharactersData
+import com.project.potterverse.data.CharacterDetails.CharacterDetailsData
 import com.project.potterverse.databinding.ItemCharacterBinding
 import com.project.potterverse.databinding.ItemCharacterFragmentBinding
 
 class BaseCharacterAdapter(var useFragmentBinding: Boolean): RecyclerView.Adapter<BaseCharacterAdapter.BaseCharacterViewHolder>() {
 
-    lateinit var onItemClick: ((CharactersData) -> Unit)
-    private var characterList = ArrayList<CharactersData>()
-    fun addCharacters(newCharacters: ArrayList<CharactersData>) {
+    lateinit var onItemClick: ((CharacterDetailsData) -> Unit)
+    private var characterList = ArrayList<CharacterDetailsData>()
+    fun addCharacters(newCharacters: ArrayList<CharacterDetailsData>) {
         val uniqueNewCharacters = newCharacters.filterNot { newCharacter ->
             characterList.any { existingCharacter ->
                 newCharacter.id == existingCharacter.id

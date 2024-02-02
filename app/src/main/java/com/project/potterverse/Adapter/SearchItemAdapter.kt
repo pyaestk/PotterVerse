@@ -8,17 +8,17 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.project.potterverse.R
-import com.project.potterverse.data.BookData
-import com.project.potterverse.data.CharactersData
-import com.project.potterverse.data.movies.MovieData
+import com.project.potterverse.data.CharacterDetails.CharacterDetailsData
+import com.project.potterverse.data.bookDetails.BookDetailsData
+import com.project.potterverse.data.movieDetails.MovieDetailData
 import com.project.potterverse.databinding.ItemSearchMovieResultBinding
 import java.lang.IllegalArgumentException
 
 
 sealed class SearchItem {
-    data class Book(val data: BookData) : SearchItem()
-    data class Movie(val data: MovieData) : SearchItem()
-    data class Character(val data: CharactersData) : SearchItem()
+    data class Book(val data: BookDetailsData) : SearchItem()
+    data class Movie(val data: MovieDetailData) : SearchItem()
+    data class Character(val data: CharacterDetailsData) : SearchItem()
 }
 class SearchItemAdapter : RecyclerView.Adapter<SearchItemAdapter.SearchResultViewHolder>() {
 

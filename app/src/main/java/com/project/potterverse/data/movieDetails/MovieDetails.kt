@@ -34,3 +34,7 @@ data class MovieDetailData(
 data class MovieDetails(
     val data: MovieDetailData,
 )
+
+data class MovieList(
+    val data: List<MovieDetailData>,
+)

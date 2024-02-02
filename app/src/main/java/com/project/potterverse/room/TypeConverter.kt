@@ -5,7 +5,6 @@ import androidx.room.TypeConverters
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.project.potterverse.data.movieDetails.MovieDetailAttributes
-import com.project.potterverse.data.movies.MovieAttributes
 
 @TypeConverters
 class TypeConverter {

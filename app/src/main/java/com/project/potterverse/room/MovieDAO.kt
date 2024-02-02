@@ -7,8 +7,6 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.project.potterverse.data.movieDetails.MovieDetailData
-import com.project.potterverse.data.movieDetails.MovieDetails
-import com.project.potterverse.data.movies.MovieData
 
 @Dao
 interface MovieDAO {

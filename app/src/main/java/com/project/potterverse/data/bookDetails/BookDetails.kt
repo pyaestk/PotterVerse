@@ -31,3 +31,7 @@ data class BookDetailsData(
 data class BookDetails(
     val data: BookDetailsData,
 )
+
+data class BooksList(
+    val data: List<BookDetailsData>,
+)

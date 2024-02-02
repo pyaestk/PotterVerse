@@ -6,12 +6,13 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.project.potterverse.Adapter.SearchItem
-import com.project.potterverse.data.BookData
-import com.project.potterverse.data.BooksList
-import com.project.potterverse.data.CharactersData
-import com.project.potterverse.data.CharactersList
-import com.project.potterverse.data.movies.MovieData
-import com.project.potterverse.data.movies.MovieList
+import com.project.potterverse.data.CharacterDetails.CharacterDetailsData
+import com.project.potterverse.data.CharacterDetails.CharactersList
+import com.project.potterverse.data.bookDetails.BookDetailsData
+import com.project.potterverse.data.bookDetails.BooksList
+import com.project.potterverse.data.movieDetails.MovieDetailData
+import com.project.potterverse.data.movieDetails.MovieList
+
 import com.project.potterverse.retrofit.RetrofitInstance
 import retrofit2.Call
 import retrofit2.Callback
@@ -19,9 +20,9 @@ import retrofit2.Response
 
 class SearchViewModel : ViewModel() {
 
-    private var movieListLiveData = MutableLiveData<List<MovieData>>()
-    private var bookListLiveData = MutableLiveData<List<BookData>>()
-    private var characterListLiveData = MutableLiveData<List<CharactersData>>()
+    private var movieListLiveData = MutableLiveData<List<MovieDetailData>>()
+    private var bookListLiveData = MutableLiveData<List<BookDetailsData>>()
+    private var characterListLiveData = MutableLiveData<List<CharacterDetailsData>>()
 
     fun getMovies(query: String) {
         RetrofitInstance.api.getMovieLists().enqueue(object : Callback<MovieList> {

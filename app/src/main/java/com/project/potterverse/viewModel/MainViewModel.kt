@@ -9,15 +9,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewModelScope
-import com.project.potterverse.data.BookData
-import com.project.potterverse.data.BooksList
-import com.project.potterverse.data.CharactersData
-import com.project.potterverse.data.CharactersList
+import com.project.potterverse.data.CharacterDetails.CharacterDetailsData
+import com.project.potterverse.data.CharacterDetails.CharactersList
+import com.project.potterverse.data.bookDetails.BookDetailsData
+import com.project.potterverse.data.bookDetails.BooksList
 import com.project.potterverse.data.movieDetails.MovieDetailData
-import com.project.potterverse.data.movieDetails.MovieDetails
-import com.project.potterverse.data.movies.MovieData
-import com.project.potterverse.data.movies.MovieList
+import com.project.potterverse.data.movieDetails.MovieList
 import com.project.potterverse.retrofit.RetrofitInstance
 import com.project.potterverse.room.MovieDatabase
 import kotlinx.coroutines.launch
@@ -27,9 +24,9 @@ import retrofit2.Response
 
 class MainViewModel(private val movieDatabase: MovieDatabase): ViewModel() {
 
-    private var movieListLiveData = MutableLiveData<List<MovieData>>()
-    private var bookListLiveData = MutableLiveData<List<BookData>>()
-    private var characterListLiveData = MutableLiveData<List<CharactersData>>()
+    private var movieListLiveData = MutableLiveData<List<MovieDetailData>>()
+    private var bookListLiveData = MutableLiveData<List<BookDetailsData>>()
+    private var characterListLiveData = MutableLiveData<List<CharacterDetailsData>>()
 
     private var favMovieLiveData = movieDatabase.movieDao().getAllMovies()
 
@@ -49,7 +46,7 @@ class MainViewModel(private val movieDatabase: MovieDatabase): ViewModel() {
         })
     }
     
-    fun getMovieListLiveData(): LiveData<List<MovieData>> {
+    fun getMovieListLiveData(): LiveData<List<MovieDetailData>> {
         return movieListLiveData
     }
 
@@ -69,7 +66,7 @@ class MainViewModel(private val movieDatabase: MovieDatabase): ViewModel() {
 
         })
     }
-    fun getBookListLiveData(): LiveData<List<BookData>> {
+    fun getBookListLiveData(): LiveData<List<BookDetailsData>> {
         return bookListLiveData
     }
 
@@ -91,7 +88,7 @@ class MainViewModel(private val movieDatabase: MovieDatabase): ViewModel() {
             }
         })
     }
-    fun getCharacterListLiveData(): LiveData<List<CharactersData>> {
+    fun getCharacterListLiveData(): LiveData<List<CharacterDetailsData>> {
         return characterListLiveData
     }
 

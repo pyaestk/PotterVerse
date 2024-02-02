@@ -5,10 +5,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.project.potterverse.data.movieDetails.MovieDetailData
-import com.project.potterverse.data.movieDetails.MovieDetails
-import com.project.potterverse.data.movies.MovieData
-import com.project.potterverse.databinding.FragmentFavoritesBinding
-import com.project.potterverse.databinding.ItemMovieBinding
 import com.project.potterverse.databinding.ItemMovieFavBinding
 
 class FavMovieAdapter: RecyclerView.Adapter<FavMovieAdapter.FavMovieViewHolder>() {

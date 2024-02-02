@@ -8,8 +8,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.project.potterverse.data.movieDetails.MovieDetailData
 import com.project.potterverse.data.movieDetails.MovieDetails
-import com.project.potterverse.data.movies.MovieData
-import com.project.potterverse.data.movies.MovieList
 import com.project.potterverse.retrofit.RetrofitInstance
 import com.project.potterverse.room.MovieDatabase
 import kotlinx.coroutines.launch

@@ -11,7 +11,6 @@ import com.project.potterverse.Adapter.BaseMovieAdapter
 import com.project.potterverse.Adapter.FavMovieAdapter
 import com.project.potterverse.R
 import com.project.potterverse.data.movieDetails.MovieDetailData
-import com.project.potterverse.data.movies.MovieData
 import com.project.potterverse.databinding.FragmentFavoritesBinding
 import com.project.potterverse.viewModel.MainViewModel
 import com.project.potterverse.views.MainActivity

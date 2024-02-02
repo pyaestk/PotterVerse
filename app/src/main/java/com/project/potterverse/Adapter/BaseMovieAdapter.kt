@@ -7,25 +7,24 @@ import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import com.bumptech.glide.Glide
-import com.project.potterverse.data.movies.MovieData
-import com.project.potterverse.data.movies.MovieList
+import com.project.potterverse.data.movieDetails.MovieDetailData
 import com.project.potterverse.databinding.ItemMovieBinding
 import com.project.potterverse.databinding.ItemMovieFragmentBinding
 import com.project.potterverse.databinding.ItemSearchMovieResultBinding
 import java.lang.IllegalArgumentException
 
 class BaseMovieAdapter(var useFragmentBinding: Int): RecyclerView.Adapter<BaseMovieAdapter.BaseMovieViewHolder>(), Filterable {
-    lateinit var onItemClick: ((MovieData) -> Unit)
+    lateinit var onItemClick: ((MovieDetailData) -> Unit)
 
-    private var movieList = ArrayList<MovieData>()
+    private var movieList = ArrayList<MovieDetailData>()
 
-    private var originalMovieLists = ArrayList<MovieData>()
+    private var originalMovieLists = ArrayList<MovieDetailData>()
 
     init {
         // Initialize originalBookLists with the initial data
         originalMovieLists.addAll(movieList)
     }
-    fun setMovies(movieList: ArrayList<MovieData>) {
+    fun setMovies(movieList: ArrayList<MovieDetailData>) {
         this.movieList = movieList
 
         originalMovieLists.clear()
@@ -94,7 +93,7 @@ class BaseMovieAdapter(var useFragmentBinding: Int): RecyclerView.Adapter<BaseMo
     override fun getFilter(): Filter {
         return object : Filter() {
             override fun performFiltering(constraint: CharSequence?): FilterResults {
-                val filteredList = ArrayList<MovieData>()
+                val filteredList = ArrayList<MovieDetailData>()
 
                 if (constraint.isNullOrBlank()){
                     filteredList.addAll(originalMovieLists)
@@ -116,7 +115,7 @@ class BaseMovieAdapter(var useFragmentBinding: Int): RecyclerView.Adapter<BaseMo
             }
 
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-                movieList = results?.values as ArrayList<MovieData>
+                movieList = results?.values as ArrayList<MovieDetailData>
                 notifyDataSetChanged()
             }
 

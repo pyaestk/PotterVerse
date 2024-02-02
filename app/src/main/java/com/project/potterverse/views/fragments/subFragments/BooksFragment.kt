@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.project.potterverse.Adapter.BaseBookAdapter
-import com.project.potterverse.data.BookData
+import com.project.potterverse.data.bookDetails.BookDetailsData
 import com.project.potterverse.databinding.FragmentBooksBinding
 import com.project.potterverse.viewModel.MainViewModel
 import com.project.potterverse.views.MainActivity
@@ -57,7 +57,7 @@ class BooksFragment : Fragment() {
 
         viewModel.getBooks()
         viewModel.getBookListLiveData().observe(viewLifecycleOwner) { book ->
-            bookAdapter.setBooks(book as ArrayList<BookData>)
+            bookAdapter.setBooks(book as ArrayList<BookDetailsData>)
             hideProgressBar()
         }
     }

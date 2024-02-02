@@ -13,8 +13,6 @@ import androidx.navigation.findNavController
 import com.bumptech.glide.Glide
 import com.project.potterverse.R
 import com.project.potterverse.data.movieDetails.MovieDetailData
-import com.project.potterverse.data.movieDetails.MovieDetails
-import com.project.potterverse.data.movies.MovieData
 import com.project.potterverse.databinding.ActivityMovieDetailsBinding
 import com.project.potterverse.room.MovieDatabase
 import com.project.potterverse.viewModel.MovieDetailViewModelFactory

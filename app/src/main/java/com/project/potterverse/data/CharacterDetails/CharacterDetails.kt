@@ -46,3 +46,7 @@ data class CharacterDetails(
     val links: LinksX,
     val meta: Meta
 )
+
+data class CharactersList(
+    val data: List<CharacterDetailsData>
+)

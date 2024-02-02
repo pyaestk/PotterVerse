@@ -6,8 +6,6 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.project.potterverse.data.movieDetails.MovieDetailData
-import com.project.potterverse.data.movies.MovieData
-import com.project.potterverse.views.fragments.homeFragment
 
 @Database(entities = [MovieDetailData::class], version = 1)
 @TypeConverters(TypeConverter::class)
