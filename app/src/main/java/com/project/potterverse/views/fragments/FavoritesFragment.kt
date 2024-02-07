@@ -34,7 +34,7 @@ class FavoritesFragment : Fragment() {
         viewModel = (activity as MainActivity).viewModel
         movieAdapter = FavMovieAdapter()
         bookAdapter = FavBookAdapter()
-        charAdapter = BaseCharacterAdapter(false)
+        charAdapter = BaseCharacterAdapter(true)
     }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -59,7 +59,7 @@ class FavoritesFragment : Fragment() {
         }
 
         binding.charFavRecycler.apply {
-            layoutManager = GridLayoutManager(activity, 3, GridLayoutManager.HORIZONTAL, false)
+            layoutManager = GridLayoutManager(activity, 3, GridLayoutManager.VERTICAL, false)
             adapter = charAdapter
         }
 
