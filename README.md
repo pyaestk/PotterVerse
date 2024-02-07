@@ -10,9 +10,4 @@ Potter Verse is an Android application that provides users with information abou
 
 4. **Bookmarking**: Bookmark items of interest to save and revisit them later.
 
-## Tech Stack
-- **Language**: Kotlin
-- **Architecture**: MVVM (Model-View-ViewModel)
-- **Networking**: Retrofit for making network requests
-- **Database**: Room for local database storage
-- **API**: PotterDB API for fetching Harry Potter-related data
+
