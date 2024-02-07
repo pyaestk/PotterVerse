@@ -1,4 +1,4 @@
-package com.project.potterverse.room
+package com.project.potterverse.room.movieDb
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao

@@ -160,7 +160,6 @@ class homeFragment : Fragment() {
         viewModel.getMovies()
         viewModel.getMovieListLiveData().observe(viewLifecycleOwner) {movie ->
             movieAdapter.setMovies(movie as ArrayList<MovieDetailData>)
-            hideProgressBar()
         }
         movieAdapter.onItemClick = { movie ->
             val intent = Intent(activity, MovieDetailsActivity::class.java)

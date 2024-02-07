@@ -15,6 +15,9 @@
         android:theme="@style/Theme.PotterVerse"
         tools:targetApi="31">
         <activity
+            android:name=".views.activities.SeeAllFavoritesMovieActivity"
+            android:exported="false" />
+        <activity
             android:name=".views.activities.CharacterDetailsActivity"
             android:exported="false"
             android:label="@string/title_activity_character_details"
@@ -27,9 +30,9 @@
             android:exported="false" />
         <activity
             android:name=".views.MainActivity"
-            android:windowSoftInputMode="adjustPan"
             android:configChanges="orientation|screenSize"
-            android:exported="true">
+            android:exported="true"
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

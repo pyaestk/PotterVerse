@@ -3,6 +3,7 @@ package com.project.potterverse.Adapter
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -57,9 +58,25 @@ class SearchItemAdapter : RecyclerView.Adapter<SearchItemAdapter.SearchResultVie
                     binding.itemType.text = "Book"
                 }
                 is SearchItem.Movie -> {
-                    Glide.with(itemView)
-                        .load(item.data.attributes.poster)
-                        .into(binding.itemImage)
+
+                    val resourceId = when(item.data.attributes.title) {
+                        "Harry Potter and the Philosopher's Stone" -> R.drawable.h1
+                        "Harry Potter and the Chamber of Secrets" -> R.drawable.h2
+                        "Harry Potter and the Prisoner of Azkaban" -> R.drawable.h3
+                        "Harry Potter and the Goblet of Fire" -> R.drawable.h4
+                        "Harry Potter and the Order of the Phoenix" -> R.drawable.h5
+                        "Harry Potter and the Half-Blood Prince" -> R.drawable.h6
+                        "Harry Potter and the Deathly Hallows - Part 1" -> R.drawable.h7
+                        "Harry Potter and the Deathly Hallows – Part 2" -> R.drawable.h8
+                        "Fantastic Beasts and Where to Find Them" -> R.drawable.f1
+                        "Fantastic Beasts: The Crimes of Grindelwald" -> R.drawable.f2
+                        "Fantastic Beasts: The Secrets of Dumbledore" -> R.drawable.f3
+                        else -> 0
+                    }
+
+                    if (resourceId != 0) {
+                        binding.itemImage.setImageResource(resourceId)
+                    }
                     binding.itemTitle.text = item.data.attributes.title
                     binding.itemType.text = "Movie"
                 }
@@ -76,7 +93,28 @@ class SearchItemAdapter : RecyclerView.Adapter<SearchItemAdapter.SearchResultVie
                 }
             }
         }
+    }
 
+    private fun setMovieImageResource(itemImageView: ImageView, title: String?) {
+        title?.let {
+            val resourceId = when(it) {
+                "Harry Potter and the Philosopher's Stone" -> R.drawable.h1
+                "Harry Potter and the Chamber of Secrets" -> R.drawable.h2
+                "Harry Potter and the Prisoner of Azkaban" -> R.drawable.h3
+                "Harry Potter and the Goblet of Fire" -> R.drawable.h4
+                "Harry Potter and the Order of the Phoenix" -> R.drawable.h5
+                "Harry Potter and the Half-Blood Prince" -> R.drawable.h6
+                "Harry Potter and the Deathly Hallows - Part 1" -> R.drawable.h7
+                "Harry Potter and the Deathly Hallows – Part 2" -> R.drawable.h8
+                "Fantastic Beasts and Where to Find Them" -> R.drawable.f1
+                "Fantastic Beasts: The Crimes of Grindelwald" -> R.drawable.f2
+                "Fantastic Beasts: The Secrets of Dumbledore" -> R.drawable.f3
+                else -> 0
+            }
+            if (resourceId != 0) {
+                itemImageView.setImageResource(resourceId)
+            }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchResultViewHolder {

@@ -4,9 +4,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
+import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import com.bumptech.glide.Glide
+import com.project.potterverse.R
 import com.project.potterverse.data.movieDetails.MovieDetailData
 import com.project.potterverse.databinding.ItemMovieBinding
 import com.project.potterverse.databinding.ItemMovieFragmentBinding
@@ -39,7 +41,6 @@ class BaseMovieAdapter(var useFragmentBinding: Int): RecyclerView.Adapter<BaseMo
         val binding = when(useFragmentBinding) {
             1 -> ItemMovieFragmentBinding.inflate(inflater, parent, false)
             2 -> ItemMovieBinding.inflate(inflater, parent, false)
-            3 -> ItemSearchMovieResultBinding.inflate(inflater, parent, false)
             else -> throw IllegalArgumentException("error")
         }
 
@@ -53,40 +54,45 @@ class BaseMovieAdapter(var useFragmentBinding: Int): RecyclerView.Adapter<BaseMo
 
     override fun onBindViewHolder(holder: BaseMovieViewHolder, position: Int) {
         val currentMovie = movieList[position]
+        val binding = holder.binding
 
-        when(val binding = holder.binding) {
-            is ItemMovieBinding -> {
-                Glide.with(holder.itemView)
-                    .load(movieList[position].attributes.poster)
-                    .into(binding.movieImageView)
-            }
+        when(binding) {
+            is ItemMovieBinding -> setMovieImageResource(binding.itemImageView, currentMovie.attributes.title)
             is ItemMovieFragmentBinding -> {
-                Glide.with(holder.itemView)
-                    .load(movieList[position].attributes.poster)
-                    .into(binding.movieImageView)
-                binding.movieTitle.text = movieList[position].attributes.title
-                binding.rating.text = movieList[position].attributes.rating
-                binding.director.text = movieList[position].attributes.directors!![0]
-                binding.boxOffice.text = movieList[position].attributes.box_office
-                binding.releaseDate.text = movieList[position].attributes.release_date
-
-                binding.buttonSeeMore.setOnClickListener{
-                    onItemClick.invoke(movieList[position])
-                }
-
-
-            }
-            is ItemSearchMovieResultBinding -> {
-                Glide.with(holder.itemView)
-                    .load(movieList[position].attributes.poster)
-                    .into(binding.itemImage)
-                binding.itemTitle.text = currentMovie.attributes.title
+                setMovieImageResource(binding.itemImageView, currentMovie.attributes.title)
+                binding.movieTitle.text = currentMovie.attributes.title
+                binding.rating.text = currentMovie.attributes.rating
+                binding.director.text = currentMovie.attributes.directors?.getOrNull(0) ?: ""
+                binding.boxOffice.text = currentMovie.attributes.box_office
+                binding.releaseDate.text = currentMovie.attributes.release_date
             }
         }
         holder.itemView.setOnClickListener {
             onItemClick.invoke(movieList[position])
         }
 
+    }
+
+    private fun setMovieImageResource(itemImageView: ImageView, title: String?) {
+        title?.let {
+            val resourceId = when(it) {
+                "Harry Potter and the Philosopher's Stone" -> R.drawable.h1
+                "Harry Potter and the Chamber of Secrets" -> R.drawable.h2
+                "Harry Potter and the Prisoner of Azkaban" -> R.drawable.h3
+                "Harry Potter and the Goblet of Fire" -> R.drawable.h4
+                "Harry Potter and the Order of the Phoenix" -> R.drawable.h5
+                "Harry Potter and the Half-Blood Prince" -> R.drawable.h6
+                "Harry Potter and the Deathly Hallows - Part 1" -> R.drawable.h7
+                "Harry Potter and the Deathly Hallows – Part 2" -> R.drawable.h8
+                "Fantastic Beasts and Where to Find Them" -> R.drawable.f1
+                "Fantastic Beasts: The Crimes of Grindelwald" -> R.drawable.f2
+                "Fantastic Beasts: The Secrets of Dumbledore" -> R.drawable.f3
+                else -> 0
+            }
+            if (resourceId != 0) {
+                itemImageView.setImageResource(resourceId)
+            }
+        }
     }
 
 

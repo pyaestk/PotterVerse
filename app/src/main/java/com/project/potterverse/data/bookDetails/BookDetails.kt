@@ -1,5 +1,8 @@
 package com.project.potterverse.data.bookDetails
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
 data class BookDetailsDataX(
     val id: String,
     val type: String
@@ -11,22 +14,26 @@ data class BookDetailsChapters(
     val data: List<BookDetailsDataX>
 )
 
-data class Attributes(
-    val author: String,
-    val cover: String,
-    val dedication: String,
-    val pages: Int,
-    val release_date: String,
-    val slug: String,
-    val summary: String,
-    val title: String,
-    val wiki: String
+data class BookDetailsAttributes(
+    val author: String?,
+    val cover: String?,
+    val dedication: String?,
+    val pages: Int?,
+    val release_date: String?,
+    val slug: String?,
+    val summary: String?,
+    val title: String?,
+    val wiki: String?
 )
+
+@Entity("bookInformation")
 data class BookDetailsData(
-    val attributes: Attributes,
+    val attributes: BookDetailsAttributes,
+    @PrimaryKey
     val id: String,
     val relationships: BookDetailsRelationships,
-    val type: String
+    val type: String,
+    var bookmark: Boolean,
 )
 data class BookDetails(
     val data: BookDetailsData,

@@ -19,10 +19,4 @@
         android:layout_height="wrap_content"
         android:icon="@drawable/ic_marked"
         android:title="Favorites" />
-    <item
-        android:id="@+id/categoryFragment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:icon="@drawable/ic_category"
-        android:title="Category" />
 </menu>

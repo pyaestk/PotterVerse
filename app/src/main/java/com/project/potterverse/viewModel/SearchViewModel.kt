@@ -53,7 +53,7 @@ class SearchViewModel : ViewModel() {
                 bookList?.let {
                     val filteredBooks = if (query.isNotBlank()) {
                         it.filter { bookData ->
-                            bookData.attributes.title.contains(query, ignoreCase = true)
+                            bookData.attributes.title!!.contains(query, ignoreCase = true)
                         }
                     } else {
                         return

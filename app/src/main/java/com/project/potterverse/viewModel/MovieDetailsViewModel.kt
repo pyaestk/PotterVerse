@@ -9,7 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.project.potterverse.data.movieDetails.MovieDetailData
 import com.project.potterverse.data.movieDetails.MovieDetails
 import com.project.potterverse.retrofit.RetrofitInstance
-import com.project.potterverse.room.MovieDatabase
+import com.project.potterverse.room.movieDb.MovieDatabase
 import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
@@ -17,7 +17,9 @@ import retrofit2.Response
 
 
 class MovieDetailsViewModel(private val movieDatabase: MovieDatabase): ViewModel() {
+
     private var movieDetailLiveData = MutableLiveData<MovieDetailData>()
+    private var favMovieLiveData = movieDatabase.movieDao().getAllMovies()
 
     fun fetchMovieDetails(id: String) {
         RetrofitInstance.api.getMovieDetails(id).enqueue(object : Callback<MovieDetails> {
@@ -47,6 +49,10 @@ class MovieDetailsViewModel(private val movieDatabase: MovieDatabase): ViewModel
         viewModelScope.launch {
             movieDatabase.movieDao().deleteMovie(movie)
         }
+    }
+
+    fun getAllMovies(): LiveData<List<MovieDetailData>> {
+        return favMovieLiveData
     }
 }
 class MovieDetailViewModelFactory(private val movieDatabase: MovieDatabase): ViewModelProvider.Factory {

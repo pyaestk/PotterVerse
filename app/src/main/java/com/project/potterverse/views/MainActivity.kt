@@ -5,14 +5,13 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.findNavController
-import androidx.navigation.ui.setupWithNavController
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.project.potterverse.R
 import com.google.android.material.tabs.TabLayoutMediator
 import com.project.potterverse.Adapter.ViewPagerAdapter
 import com.project.potterverse.databinding.ActivityMainBinding
-import com.project.potterverse.room.MovieDatabase
+import com.project.potterverse.room.bookDb.BookDatabase
+import com.project.potterverse.room.characterDb.CharacterDatabase
+import com.project.potterverse.room.movieDb.MovieDatabase
 import com.project.potterverse.viewModel.MainViewModel
 import com.project.potterverse.viewModel.MainViewModelFactory
 import com.project.potterverse.views.fragments.CategoryFragment
@@ -40,7 +39,9 @@ class MainActivity : AppCompatActivity() {
 
     val viewModel: MainViewModel by lazy {
         val movieDatabase = MovieDatabase.getInstance(this)
-        val mainViewModelFactory = MainViewModelFactory(movieDatabase)
+        val bookDatabase = BookDatabase.getInstance(this)
+        val charDatabase = CharacterDatabase.getInstance(this)
+        val mainViewModelFactory = MainViewModelFactory(movieDatabase, bookDatabase, charDatabase)
         ViewModelProvider(this, mainViewModelFactory)[MainViewModel::class.java]
     }
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -114,11 +115,6 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.favoritesFragment -> {
                     showFragment(favoritesFragment)
-                    hideTabLayout()
-                    true
-                }
-                R.id.categoryFragment -> {
-                    showFragment(categoryFragment)
                     hideTabLayout()
                     true
                 }

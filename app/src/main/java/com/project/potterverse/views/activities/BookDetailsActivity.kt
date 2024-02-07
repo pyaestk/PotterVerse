@@ -5,11 +5,18 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
+import com.project.potterverse.R
 import com.project.potterverse.data.bookDetails.BookDetailsData
 import com.project.potterverse.databinding.ActivityBookDetailsBinding
+import com.project.potterverse.room.bookDb.BookDatabase
+import com.project.potterverse.room.movieDb.MovieDatabase
+import com.project.potterverse.viewModel.BookDetailViewModelFactory
 import com.project.potterverse.viewModel.BookDetailsViewModel
+import com.project.potterverse.viewModel.MovieDetailViewModelFactory
+import com.project.potterverse.viewModel.MovieDetailsViewModel
 import com.project.potterverse.views.fragments.homeFragment
 
 class BookDetailsActivity : AppCompatActivity() {
@@ -21,6 +28,7 @@ class BookDetailsActivity : AppCompatActivity() {
     private lateinit var bookImage: String
 
     private lateinit var bookLink: String
+    private var isSaved: Boolean? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,8 +36,10 @@ class BookDetailsActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         showProgressBar()
-        
-        viewModel = ViewModelProvider(this)[BookDetailsViewModel::class.java]
+
+        val bookDatabase = BookDatabase.getInstance(this)
+        val viewModelFactory = BookDetailViewModelFactory(bookDatabase)
+        viewModel = ViewModelProvider(this, viewModelFactory)[BookDetailsViewModel::class.java]
 
         val intent = intent
 
@@ -43,8 +53,6 @@ class BookDetailsActivity : AppCompatActivity() {
         bookImage = intent.getStringExtra(homeFragment.bookImage)!!
         Glide.with(applicationContext).load(bookImage).into(binding.bookImageView)
 
-        viewModel.fetchBookDetails(bookId)
-        observerBookDetails()
         binding.backButton.setOnClickListener {
             finish()
         }
@@ -52,13 +60,45 @@ class BookDetailsActivity : AppCompatActivity() {
         binding.linkbutton.setOnClickListener {
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(bookLink)))
         }
+
+        viewModel.fetchBookDetails(bookId)
+        observerBookDetails()
+        onBookmarekdClick()
+    }
+
+    private var bookToSave: BookDetailsData? = null
+    private fun onBookmarekdClick() {
+        binding.btnBookmark.setOnClickListener {
+           bookToSave?.let { book ->
+               if (isSaved == true){
+                   viewModel.deleteBook(book)
+                   binding.btnBookmark.setImageResource(R.drawable.ic_bookmark_border)
+                   Toast.makeText(this, "Removed", Toast.LENGTH_SHORT).show()
+               } else {
+                   book.bookmark = false
+                   viewModel.insertBook(book)
+                   binding.btnBookmark.setImageResource(R.drawable.ic_bookmarked)
+                   Toast.makeText(this, "Added", Toast.LENGTH_SHORT).show()
+               }
+           }
+        }
     }
 
     private fun observerBookDetails() {
         viewModel.getBookDetailsLiveData().observe(this) { bookDetail ->
+            bookToSave = bookDetail
             binding.tvSummary.text = bookDetail.attributes.summary
-            bookLink = bookDetail.attributes.wiki
+            bookLink = bookDetail.attributes.wiki!!
             hideProgressBar()
+        }
+
+        viewModel.getAllBooks().observe(this) { bookList ->
+            isSaved = bookList.any { it.id == bookId}
+            if (isSaved == true) {
+                binding.btnBookmark.setImageResource(R.drawable.ic_bookmarked)
+            } else {
+                binding.btnBookmark.setImageResource(R.drawable.ic_bookmark_border)
+            }
         }
     }
 

@@ -6,12 +6,12 @@
 
     <ImageView
         android:id="@+id/item_image"
-        android:layout_width="80dp"
-        android:layout_height="110dp"
+        android:layout_width="90dp"
+        android:layout_height="125dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
-        android:background="@color/secondary_color"
+        android:background="@color/primary_color_light"
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"

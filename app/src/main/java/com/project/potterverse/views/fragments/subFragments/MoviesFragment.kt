@@ -42,7 +42,7 @@ class MoviesFragment : Fragment() {
 
         showProgressBar()
         binding.movieRecycler.apply {
-            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            layoutManager = GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false)
             adapter = movieAdapter
         }
 

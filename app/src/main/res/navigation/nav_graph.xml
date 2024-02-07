@@ -33,11 +33,6 @@
         android:name="com.project.potterverse.views.fragments.FavoritesFragment"
         android:label="fragment_favorites"
         tools:layout="@layout/fragment_favorites" />
-    <fragment
-        android:id="@+id/categoryFragment"
-        android:name="com.project.potterverse.views.fragments.CategoryFragment"
-        android:label="fragment_category"
-        tools:layout="@layout/fragment_category" />
     <activity
         android:id="@+id/movieDetailsActivity"
         android:name="com.project.potterverse.views.activities.MovieDetailsActivity"

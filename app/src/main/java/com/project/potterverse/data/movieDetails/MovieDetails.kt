@@ -28,8 +28,8 @@ data class MovieDetailData(
     val attributes: MovieDetailAttributes,
     @PrimaryKey
     val id: String,
-    val type: String?,
-    val bookmarked: Boolean
+    val type: String,
+    var bookmark: Boolean,
 )
 data class MovieDetails(
     val data: MovieDetailData,
