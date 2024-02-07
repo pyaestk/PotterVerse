@@ -6,7 +6,7 @@ Potter Verse is an Android application that provides users with information abou
 
 2. **Characters**: Explore various characters from the Harry Potter series, each with their own unique traits and background.
 
-3. **Search Functionality**: Users can easily search for their favorite movies, books, or characters within the app.
+3. **Search Functionality**: Users can easily search for movies, books, or characters within the app.
 
 4. **Bookmarking**: Bookmark items of interest to save and revisit them later.
 
