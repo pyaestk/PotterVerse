@@ -9,8 +9,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.project.potterverse.Adapter.BaseCharacterAdapter
-import com.project.potterverse.Adapter.FavBookAdapter
-import com.project.potterverse.Adapter.FavMovieAdapter
+import com.project.potterverse.Adapter.bookmark.FavBookAdapter
+import com.project.potterverse.Adapter.bookmark.FavCharacterAdapter
+import com.project.potterverse.Adapter.bookmark.FavMovieAdapter
 import com.project.potterverse.data.CharacterDetails.CharacterDetailsData
 import com.project.potterverse.data.bookDetails.BookDetailsData
 import com.project.potterverse.data.movieDetails.MovieDetailData
@@ -28,13 +29,13 @@ class FavoritesFragment : Fragment() {
     private lateinit var viewModel: MainViewModel
     private lateinit var movieAdapter: FavMovieAdapter
     private lateinit var bookAdapter: FavBookAdapter
-    private lateinit var charAdapter: BaseCharacterAdapter
+    private lateinit var charAdapter: FavCharacterAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = (activity as MainActivity).viewModel
         movieAdapter = FavMovieAdapter()
         bookAdapter = FavBookAdapter()
-        charAdapter = BaseCharacterAdapter(true)
+        charAdapter = FavCharacterAdapter()
     }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -136,7 +137,7 @@ class FavoritesFragment : Fragment() {
         }
 
         viewModel.observerFavCharLiveData().observe(requireActivity()) { char ->
-            charAdapter.addCharacters(char as ArrayList<CharacterDetailsData>)
+            charAdapter.setFavChars(char as ArrayList<CharacterDetailsData>)
             if (charAdapter.itemCount < 1){
                 binding.seeAllFavChar.visibility = View.GONE
                 binding.charFavRecycler.visibility = View.GONE
