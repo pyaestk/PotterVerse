@@ -6,14 +6,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.project.potterverse.Adapter.BaseCharacterAdapter
-import com.project.potterverse.R
 import com.project.potterverse.data.CharacterDetails.CharacterDetailsData
 import com.project.potterverse.databinding.FragmentCharactersBinding
+import com.project.potterverse.utils.Constant
 import com.project.potterverse.viewModel.MainViewModel
 import com.project.potterverse.views.MainActivity
 import com.project.potterverse.views.activities.CharacterDetailsActivity
@@ -82,11 +80,11 @@ class CharactersFragment : Fragment() {
 
         characterAdapter.onItemClick = { chr ->
             val intent = Intent(activity, CharacterDetailsActivity::class.java)
-            intent.putExtra(homeFragment.chrId, chr.id)
-            intent.putExtra(homeFragment.chrName, chr.attributes.name)
-            intent.putExtra(homeFragment.chrImage, chr.attributes.image)
-            intent.putExtra(homeFragment.chrSpecies, chr.attributes.species)
-            intent.putExtra(homeFragment.chrGender, chr.attributes.gender)
+            intent.putExtra(Constant.chrId, chr.id)
+            intent.putExtra(Constant.chrName, chr.attributes.name)
+            intent.putExtra(Constant.chrImage, chr.attributes.image)
+            intent.putExtra(Constant.chrSpecies, chr.attributes.species)
+            intent.putExtra(Constant.chrGender, chr.attributes.gender)
             startActivity(intent)
         }
     }

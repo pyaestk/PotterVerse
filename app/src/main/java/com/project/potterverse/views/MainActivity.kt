@@ -14,7 +14,6 @@ import com.project.potterverse.room.characterDb.CharacterDatabase
 import com.project.potterverse.room.movieDb.MovieDatabase
 import com.project.potterverse.viewModel.MainViewModel
 import com.project.potterverse.viewModel.MainViewModelFactory
-import com.project.potterverse.views.fragments.CategoryFragment
 import com.project.potterverse.views.fragments.FavoritesFragment
 import com.project.potterverse.views.fragments.SearchFragment
 import com.project.potterverse.views.fragments.homeFragment
@@ -28,8 +27,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var charactersFragment: CharactersFragment
     private lateinit var moviesFragment: MoviesFragment
     private lateinit var booksFragment: BooksFragment
-
-    private lateinit var categoryFragment: CategoryFragment
+    
     private lateinit var searchFragment: SearchFragment
     private lateinit var favoritesFragment: FavoritesFragment
 
@@ -72,7 +70,6 @@ class MainActivity : AppCompatActivity() {
 
             .add(R.id.frameLayout, searchFragment).hide(searchFragment)
             .add(R.id.frameLayout, favoritesFragment).hide(favoritesFragment)
-            .add(R.id.frameLayout, categoryFragment).hide(categoryFragment)
 
             .commit()
     }
@@ -85,7 +82,6 @@ class MainActivity : AppCompatActivity() {
 
         searchFragment = SearchFragment()
         favoritesFragment = FavoritesFragment()
-        categoryFragment = CategoryFragment()
     }
 
     private fun setTabLayoutWithViewPager() {
@@ -139,15 +135,12 @@ class MainActivity : AppCompatActivity() {
             .hide(booksFragment)
             .hide(searchFragment)
             .hide(favoritesFragment)
-            .hide(categoryFragment)
 
             .show(fragment).commitNow()
 
         binding.viewPager2.visibility = if (fragment == searchFragment) {
             View.GONE
         } else if (fragment == favoritesFragment) {
-            View.GONE
-        } else if (fragment == categoryFragment) {
             View.GONE
         } else {
             View.VISIBLE
@@ -157,9 +150,7 @@ class MainActivity : AppCompatActivity() {
             View.VISIBLE
         } else if (fragment == favoritesFragment) {
             View.VISIBLE
-        } else if (fragment == categoryFragment) {
-            View.VISIBLE
-        } else {
+        }else {
             View.GONE
         }
 

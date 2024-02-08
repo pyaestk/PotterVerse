@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.project.potterverse.Adapter.BaseCharacterAdapter
 import com.project.potterverse.Adapter.bookmark.FavBookAdapter
 import com.project.potterverse.Adapter.bookmark.FavCharacterAdapter
 import com.project.potterverse.Adapter.bookmark.FavMovieAdapter
@@ -16,6 +15,7 @@ import com.project.potterverse.data.CharacterDetails.CharacterDetailsData
 import com.project.potterverse.data.bookDetails.BookDetailsData
 import com.project.potterverse.data.movieDetails.MovieDetailData
 import com.project.potterverse.databinding.FragmentFavoritesBinding
+import com.project.potterverse.utils.Constant
 import com.project.potterverse.viewModel.MainViewModel
 import com.project.potterverse.views.MainActivity
 import com.project.potterverse.views.activities.BookDetailsActivity
@@ -50,12 +50,18 @@ class FavoritesFragment : Fragment() {
 
 
         binding.movieFavRecycler.apply {
-            layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+//            layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+//            adapter = movieAdapter
+
+            layoutManager = GridLayoutManager(activity, 3, GridLayoutManager.VERTICAL, false)
             adapter = movieAdapter
         }
 
         binding.bookFavRecycler.apply {
-            layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+//            layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+//            adapter = bookAdapter
+
+            layoutManager = GridLayoutManager(activity, 3, GridLayoutManager.VERTICAL, false)
             adapter = bookAdapter
         }
 
@@ -77,36 +83,36 @@ class FavoritesFragment : Fragment() {
     private fun onFavBookClick() {
         bookAdapter.onItemClick = { book ->
             val intent = Intent(activity, BookDetailsActivity::class.java)
-            intent.putExtra(homeFragment.bookID, book.id)
-            intent.putExtra(homeFragment.bookAuthor, book.attributes.author)
-            intent.putExtra(homeFragment.bookImage, book.attributes.cover)
-            intent.putExtra(homeFragment.bookDate, book.attributes.release_date)
-            intent.putExtra(homeFragment.bookTitle, book.attributes.title)
-            intent.putExtra(homeFragment.bookChapter, book.relationships.chapters.data.size.toString())
+            intent.putExtra(Constant.bookID, book.id)
+            intent.putExtra(Constant.bookAuthor, book.attributes.author)
+            intent.putExtra(Constant.bookImage, book.attributes.cover)
+            intent.putExtra(Constant.bookDate, book.attributes.release_date)
+            intent.putExtra(Constant.bookTitle, book.attributes.title)
+            intent.putExtra(Constant.bookChapter, book.relationships.chapters.data.size.toString())
             startActivity(intent)
         }
     }
     private fun onFavMovieClick() {
         movieAdapter.onItemClick = { movie ->
             val intent = Intent(requireContext(), MovieDetailsActivity::class.java)
-            intent.putExtra(homeFragment.movieID, movie.id)
-            intent.putExtra(homeFragment.movieTitle, movie.attributes.title)
-            intent.putExtra(homeFragment.movieImage, movie.attributes.poster)
-            intent.putExtra(homeFragment.movieDate, movie.attributes.release_date)
-            intent.putExtra(homeFragment.movieRating, movie.attributes.rating)
-            intent.putExtra(homeFragment.movieBo, movie.attributes.box_office)
-            intent.putExtra(homeFragment.movieDirector, movie.attributes.directors?.get(0))
+            intent.putExtra(Constant.movieID, movie.id)
+            intent.putExtra(Constant.movieTitle, movie.attributes.title)
+            intent.putExtra(Constant.movieImage, movie.attributes.poster)
+            intent.putExtra(Constant.movieDate, movie.attributes.release_date)
+            intent.putExtra(Constant.movieRating, movie.attributes.rating)
+            intent.putExtra(Constant.movieBo, movie.attributes.box_office)
+            intent.putExtra(Constant.movieDirector, movie.attributes.directors?.get(0))
             startActivity(intent)
         }
     }
     private fun onFavCharClick() {
         charAdapter.onItemClick = { chr ->
             val intent = Intent(activity, CharacterDetailsActivity::class.java)
-            intent.putExtra(homeFragment.chrId, chr.id)
-            intent.putExtra(homeFragment.chrName, chr.attributes.name)
-            intent.putExtra(homeFragment.chrImage, chr.attributes.image)
-            intent.putExtra(homeFragment.chrSpecies, chr.attributes.species)
-            intent.putExtra(homeFragment.chrGender, chr.attributes.gender)
+            intent.putExtra(Constant.chrId, chr.id)
+            intent.putExtra(Constant.chrName, chr.attributes.name)
+            intent.putExtra(Constant.chrImage, chr.attributes.image)
+            intent.putExtra(Constant.chrSpecies, chr.attributes.species)
+            intent.putExtra(Constant.chrGender, chr.attributes.gender)
             startActivity(intent)
         }
     }

@@ -16,6 +16,7 @@ import com.project.potterverse.data.CharacterDetails.CharacterDetailsData
 import com.project.potterverse.data.bookDetails.BookDetailsData
 import com.project.potterverse.data.movieDetails.MovieDetailData
 import com.project.potterverse.databinding.FragmentHomeBinding
+import com.project.potterverse.utils.Constant
 import com.project.potterverse.viewModel.MainViewModel
 import com.project.potterverse.views.MainActivity
 import com.project.potterverse.views.activities.BookDetailsActivity
@@ -30,29 +31,6 @@ class homeFragment : Fragment() {
     lateinit var bookAdapter: BaseBookAdapter
     lateinit var characterAdapter: BaseCharacterAdapter
     private var pageNumber = 1
-
-    companion object{
-        const val movieID = "MOVIE_ID"
-        const val movieDate = "MOVIE_DATE"
-        const val movieTitle = "MOVIE_TITLE"
-        const val movieImage = "MOVIE_POSTER"
-        const val movieDirector = "MOVIE_DIR"
-        const val movieRating = "MOVIE_RATING"
-        const val movieBo = "MOVIE_BOX_OFFICE"
-
-        const val bookID = "BOOK_ID"
-        const val bookTitle = "BOOK_TITLE"
-        const val bookDate = "BOOK_DATE"
-        const val bookAuthor = "BOOK_AUTHOR"
-        const val bookChapter = "BOOK_CHAPTER"
-        const val bookImage = "BOOK_IMAGE"
-
-        const val chrId = "CHARACTER_ID"
-        const val chrImage = "CHARACTER_IMAGE"
-        const val chrName = "CHARACTER_NAME"
-        const val chrSpecies = "CHARACTER_SPECIES"
-        const val chrGender = "CHARACTER_GENDER"
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -120,11 +98,11 @@ class homeFragment : Fragment() {
 
         characterAdapter.onItemClick = { chr ->
             val intent = Intent(activity, CharacterDetailsActivity::class.java)
-            intent.putExtra(chrId, chr.id)
-            intent.putExtra(chrName, chr.attributes.name)
-            intent.putExtra(chrImage, chr.attributes.image)
-            intent.putExtra(chrSpecies, chr.attributes.species)
-            intent.putExtra(chrGender, chr.attributes.gender)
+            intent.putExtra(Constant.chrId, chr.id)
+            intent.putExtra(Constant.chrName, chr.attributes.name)
+            intent.putExtra(Constant.chrImage, chr.attributes.image)
+            intent.putExtra(Constant.chrSpecies, chr.attributes.species)
+            intent.putExtra(Constant.chrGender, chr.attributes.gender)
             startActivity(intent)
         }
     }
@@ -141,12 +119,12 @@ class homeFragment : Fragment() {
         }
         bookAdapter.onItemClick = { book ->
             val intent = Intent(activity, BookDetailsActivity::class.java)
-            intent.putExtra(bookID, book.id)
-            intent.putExtra(bookAuthor, book.attributes.author)
-            intent.putExtra(bookImage, book.attributes.cover)
-            intent.putExtra(bookDate, book.attributes.release_date)
-            intent.putExtra(bookTitle, book.attributes.title)
-            intent.putExtra(bookChapter, book.relationships.chapters.data.size.toString())
+            intent.putExtra(Constant.bookID, book.id)
+            intent.putExtra(Constant.bookAuthor, book.attributes.author)
+            intent.putExtra(Constant.bookImage, book.attributes.cover)
+            intent.putExtra(Constant.bookDate, book.attributes.release_date)
+            intent.putExtra(Constant.bookTitle, book.attributes.title)
+            intent.putExtra(Constant.bookChapter, book.relationships.chapters.data.size.toString())
             startActivity(intent)
         }
     }
@@ -163,13 +141,13 @@ class homeFragment : Fragment() {
         }
         movieAdapter.onItemClick = { movie ->
             val intent = Intent(activity, MovieDetailsActivity::class.java)
-            intent.putExtra(movieID, movie.id)
-            intent.putExtra(movieTitle, movie.attributes.title)
-            intent.putExtra(movieImage, movie.attributes.poster)
-            intent.putExtra(movieDate, movie.attributes.release_date)
-            intent.putExtra(movieRating, movie.attributes.rating)
-            intent.putExtra(movieBo, movie.attributes.box_office)
-            intent.putExtra(movieDirector, movie.attributes.directors?.get(0))
+            intent.putExtra(Constant.movieID, movie.id)
+            intent.putExtra(Constant.movieTitle, movie.attributes.title)
+            intent.putExtra(Constant.movieImage, movie.attributes.poster)
+            intent.putExtra(Constant.movieDate, movie.attributes.release_date)
+            intent.putExtra(Constant.movieRating, movie.attributes.rating)
+            intent.putExtra(Constant.movieBo, movie.attributes.box_office)
+            intent.putExtra(Constant.movieDirector, movie.attributes.directors?.get(0))
             startActivity(intent)
         }
 

@@ -13,6 +13,7 @@ import com.project.potterverse.R
 import com.project.potterverse.data.CharacterDetails.CharacterDetailsData
 import com.project.potterverse.databinding.ActivityCharacterDetailsBinding
 import com.project.potterverse.room.characterDb.CharacterDatabase
+import com.project.potterverse.utils.Constant
 import com.project.potterverse.viewModel.CharacterDetailViewModelFactory
 import com.project.potterverse.viewModel.CharacterDetailsViewModel
 import com.project.potterverse.views.fragments.homeFragment
@@ -41,11 +42,11 @@ class CharacterDetailsActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this, viewModelFactory)[CharacterDetailsViewModel::class.java]
 
         val intent = intent
-        chrId = intent.getStringExtra(homeFragment.chrId)!!
-        chrImg = intent.getStringExtra(homeFragment.chrImage)
-        binding.chrName.text = intent.getStringExtra(homeFragment.chrName)
-        binding.speciesTextView.text = intent.getStringExtra(homeFragment.chrSpecies)
-        binding.genderTextView.text = intent.getStringExtra(homeFragment.chrGender)
+        chrId = intent.getStringExtra(Constant.chrId)!!
+        chrImg = intent.getStringExtra(Constant.chrImage)
+        binding.chrName.text = intent.getStringExtra(Constant.chrName)
+        binding.speciesTextView.text = intent.getStringExtra(Constant.chrSpecies)
+        binding.genderTextView.text = intent.getStringExtra(Constant.chrGender)
 
         if (chrImg == null) {
             binding.chrImage.setImageResource(R.drawable.witchhat)
@@ -93,12 +94,12 @@ class CharacterDetailsActivity : AppCompatActivity() {
                 if (isSaved == true){
                     viewModel.deleteChar(char)
                     binding.btnBookmark.setImageResource(R.drawable.ic_bookmark_border)
-                    Toast.makeText(this, "Removed", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Removed from Bookmark section", Toast.LENGTH_SHORT).show()
                 } else {
                     char.bookmark = false
                     viewModel.insertChar(char)
                     binding.btnBookmark.setImageResource(R.drawable.ic_bookmarked)
-                    Toast.makeText(this, "Added", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Added to Bookmark section", Toast.LENGTH_SHORT).show()
                 }
             }
         }

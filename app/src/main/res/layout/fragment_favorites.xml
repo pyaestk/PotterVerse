@@ -12,7 +12,8 @@
         android:background="@color/black"
         android:orientation="vertical"
         tools:context=".views.fragments.FavoritesFragment"
-        android:paddingTop="16dp">
+        android:paddingTop="16dp"
+        android:paddingBottom="20dp">
 
         <TextView
             android:id="@+id/see_all_fav_movie"
