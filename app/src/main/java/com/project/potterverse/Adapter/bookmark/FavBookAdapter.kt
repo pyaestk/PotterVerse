@@ -1,11 +1,10 @@
-package com.project.potterverse.Adapter
+package com.project.potterverse.Adapter.bookmark
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.project.potterverse.data.bookDetails.BookDetailsData
-import com.project.potterverse.data.movieDetails.MovieDetailData
 import com.project.potterverse.databinding.ItemFavBinding
 
 

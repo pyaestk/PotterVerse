@@ -82,6 +82,7 @@ class CharacterDetailsActivity : AppCompatActivity() {
             } else {
                 binding.btnBookmark.setImageResource(R.drawable.ic_bookmark_border)
             }
+            onBookmarkedClick()
         }
 
     }
