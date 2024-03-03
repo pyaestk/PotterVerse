@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.project.potterverse.R
@@ -33,6 +34,8 @@ class MovieDetailsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMovieDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        showProgressBar()
 
         val movieDatabase = MovieDatabase.getInstance(this)
         val viewModelFactory = MovieDetailViewModelFactory(movieDatabase)
@@ -108,6 +111,7 @@ class MovieDetailsActivity : AppCompatActivity() {
             movieToSave = movieDetail
             binding.tvSummary.text = movieDetail.attributes.summary
             movieLink = movieDetail.attributes.wiki!!
+            hideProgressBar()
         }
 
         viewModel.getAllMovies().observe(this) { movieList ->
@@ -119,6 +123,16 @@ class MovieDetailsActivity : AppCompatActivity() {
             }
             onBookMarkedClick()
         }
+    }
+
+    private fun hideProgressBar() {
+        binding.tvSummary.visibility = View.VISIBLE
+        binding.progressBar.visibility = View.GONE
+    }
+
+    private fun showProgressBar() {
+        binding.tvSummary.visibility = View.GONE
+        binding.progressBar.visibility = View.VISIBLE
     }
 
 }

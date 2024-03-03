@@ -7,6 +7,17 @@
     android:background="@color/black"
     tools:context=".views.activities.MovieDetailsActivity">
 
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/progress_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:trackColor="@color/secondary_color" />
+
     <LinearLayout
         android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
