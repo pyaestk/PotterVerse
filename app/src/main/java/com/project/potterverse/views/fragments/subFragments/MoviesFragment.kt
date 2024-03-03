@@ -6,13 +6,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.project.potterverse.Adapter.BaseMovieAdapter
-import com.project.potterverse.R
 import com.project.potterverse.data.movieDetails.MovieDetailData
 import com.project.potterverse.databinding.FragmentMoviesBinding
+import com.project.potterverse.utils.Constant
 import com.project.potterverse.viewModel.MainViewModel
 import com.project.potterverse.views.MainActivity
 import com.project.potterverse.views.activities.MovieDetailsActivity
@@ -54,13 +52,13 @@ class MoviesFragment : Fragment() {
 
         movieAdapter.onItemClick = { movie ->
             val intent = Intent(activity, MovieDetailsActivity::class.java)
-            intent.putExtra(homeFragment.movieID, movie.id)
-            intent.putExtra(homeFragment.movieTitle, movie.attributes.title)
-            intent.putExtra(homeFragment.movieImage, movie.attributes.poster)
-            intent.putExtra(homeFragment.movieDate, movie.attributes.release_date)
-            intent.putExtra(homeFragment.movieRating, movie.attributes.rating)
-            intent.putExtra(homeFragment.movieBo, movie.attributes.box_office)
-            intent.putExtra(homeFragment.movieDirector, movie.attributes.directors!![0])
+            intent.putExtra(Constant.movieID, movie.id)
+            intent.putExtra(Constant.movieTitle, movie.attributes.title)
+            intent.putExtra(Constant.movieImage, movie.attributes.poster)
+            intent.putExtra(Constant.movieDate, movie.attributes.release_date)
+            intent.putExtra(Constant.movieRating, movie.attributes.rating)
+            intent.putExtra(Constant.movieBo, movie.attributes.box_office)
+            intent.putExtra(Constant.movieDirector, movie.attributes.directors!![0])
             startActivity(intent)
         }
     }

@@ -7,11 +7,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
-import com.bumptech.glide.Glide
 import com.project.potterverse.R
 import com.project.potterverse.data.movieDetails.MovieDetailData
 import com.project.potterverse.databinding.ActivityMovieDetailsBinding
 import com.project.potterverse.room.movieDb.MovieDatabase
+import com.project.potterverse.utils.Constant
 import com.project.potterverse.viewModel.MovieDetailViewModelFactory
 import com.project.potterverse.viewModel.MovieDetailsViewModel
 import com.project.potterverse.views.fragments.homeFragment
@@ -39,15 +39,15 @@ class MovieDetailsActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this, viewModelFactory)[MovieDetailsViewModel::class.java]
 
         val intent = intent
-        movieId = intent.getStringExtra(homeFragment.movieID)!!
-        movieTitle = intent.getStringExtra(homeFragment.movieTitle)!!
+        movieId = intent.getStringExtra(Constant.movieID)!!
+        movieTitle = intent.getStringExtra(Constant.movieTitle)!!
         binding.Title.text = movieTitle
-        binding.movieRating.text = " Rating: ${intent.getStringExtra(homeFragment.movieRating)}"
-        binding.movieBoxOffice.text = " Box office: ${intent.getStringExtra(homeFragment.movieBo)}"
-        binding.movieReleaseDate.text = " Release Date: ${intent.getStringExtra(homeFragment.movieDate)}"
-        binding.movieDirector.text = " Directed By: ${intent.getStringExtra(homeFragment.movieDirector)}"
+        binding.movieRating.text = " Rating: ${intent.getStringExtra(Constant.movieRating)}"
+        binding.movieBoxOffice.text = " Box office: ${intent.getStringExtra(Constant.movieBo)}"
+        binding.movieReleaseDate.text = " Release Date: ${intent.getStringExtra(Constant.movieDate)}"
+        binding.movieDirector.text = " Directed By: ${intent.getStringExtra(Constant.movieDirector)}"
 
-        moviePoster = intent.getStringExtra(homeFragment.movieImage)!!
+        moviePoster = intent.getStringExtra(Constant.movieImage)!!
 
         val resourceId = when(movieTitle) {
             "Harry Potter and the Philosopher's Stone" -> R.drawable.h1
@@ -91,13 +91,13 @@ class MovieDetailsActivity : AppCompatActivity() {
                     // Movie is already saved, delete it
                     viewModel.deleteMovies(movieDetailData)
                     binding.btnBookmark.setImageResource(R.drawable.ic_bookmark_border)
-                    Toast.makeText(this, "Removed", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Removed from Bookmark section", Toast.LENGTH_SHORT).show()
                 } else {
                     // Movie is not saved, insert it
                     movieDetailData.bookmark = false
                     viewModel.insertMovie(movieDetailData)
                     binding.btnBookmark.setImageResource(R.drawable.ic_bookmarked)
-                    Toast.makeText(this, "Added", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Added to Bookmark section", Toast.LENGTH_SHORT).show()
                 }
             }
         }

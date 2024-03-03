@@ -21,6 +21,7 @@ import com.project.potterverse.Adapter.BaseMovieAdapter
 import com.project.potterverse.Adapter.SearchItem
 import com.project.potterverse.Adapter.SearchItemAdapter
 import com.project.potterverse.databinding.FragmentSearchBinding
+import com.project.potterverse.utils.Constant
 import com.project.potterverse.viewModel.MainViewModel
 import com.project.potterverse.viewModel.SearchViewModel
 import com.project.potterverse.views.MainActivity
@@ -56,19 +57,14 @@ class SearchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        //adapter
         binding.itemResultRecycler.apply {
             layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
             adapter = itemAdapter
         }
-
         binding.itemResultRecycler.visibility = View.GONE
 
-        viewModel.observeItemListLiveData().observe(viewLifecycleOwner) { item ->
-            binding.itemResultRecycler.visibility = View.VISIBLE
-            itemAdapter.setItems(item as List<SearchItem>)
-
-        }
-
+        //for searchbar
         binding.searchbar.setOnQueryTextListener(object : androidx.appcompat.widget.SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if (query!!.isNotEmpty()){
@@ -89,20 +85,35 @@ class SearchFragment : Fragment() {
             }
         })
 
+        itemObserver()
+
+        OnItemClicked()
+    }
+
+    //observer
+    private fun itemObserver() {
+        viewModel.observeItemListLiveData().observe(viewLifecycleOwner) { item ->
+            binding.itemResultRecycler.visibility = View.VISIBLE
+            itemAdapter.setItems(item as List<SearchItem>)
+        }
+    }
+
+    //OnItemClick
+    private fun OnItemClicked() {
         itemAdapter.onItemClick = { selectedItem ->
             when (selectedItem) {
                 is SearchItem.Book -> {
                     val intent = Intent(activity, BookDetailsActivity::class.java)
-                    intent.putExtra(homeFragment.bookID, selectedItem.data.id)
-                    intent.putExtra(homeFragment.bookAuthor, selectedItem.data.attributes.author)
-                    intent.putExtra(homeFragment.bookImage, selectedItem.data.attributes.cover)
+                    intent.putExtra(Constant.bookID, selectedItem.data.id)
+                    intent.putExtra(Constant.bookAuthor, selectedItem.data.attributes.author)
+                    intent.putExtra(Constant.bookImage, selectedItem.data.attributes.cover)
                     intent.putExtra(
-                        homeFragment.bookDate,
+                        Constant.bookDate,
                         selectedItem.data.attributes.release_date
                     )
-                    intent.putExtra(homeFragment.bookTitle, selectedItem.data.attributes.title)
+                    intent.putExtra(Constant.bookTitle, selectedItem.data.attributes.title)
                     intent.putExtra(
-                        homeFragment.bookChapter,
+                        Constant.bookChapter,
                         selectedItem.data.relationships.chapters.data.size.toString()
                     )
                     startActivity(intent)
@@ -110,17 +121,17 @@ class SearchFragment : Fragment() {
 
                 is SearchItem.Movie -> {
                     val intent = Intent(activity, MovieDetailsActivity::class.java)
-                    intent.putExtra(homeFragment.movieID, selectedItem.data.id)
-                    intent.putExtra(homeFragment.movieTitle, selectedItem.data.attributes.title)
-                    intent.putExtra(homeFragment.movieImage, selectedItem.data.attributes.poster)
+                    intent.putExtra(Constant.movieID, selectedItem.data.id)
+                    intent.putExtra(Constant.movieTitle, selectedItem.data.attributes.title)
+                    intent.putExtra(Constant.movieImage, selectedItem.data.attributes.poster)
                     intent.putExtra(
-                        homeFragment.movieDate,
+                        Constant.movieDate,
                         selectedItem.data.attributes.release_date
                     )
-                    intent.putExtra(homeFragment.movieRating, selectedItem.data.attributes.rating)
-                    intent.putExtra(homeFragment.movieBo, selectedItem.data.attributes.box_office)
+                    intent.putExtra(Constant.movieRating, selectedItem.data.attributes.rating)
+                    intent.putExtra(Constant.movieBo, selectedItem.data.attributes.box_office)
                     intent.putExtra(
-                        homeFragment.movieDirector,
+                        Constant.movieDirector,
                         selectedItem.data.attributes.directors!![0]
                     )
                     startActivity(intent)
@@ -128,18 +139,17 @@ class SearchFragment : Fragment() {
 
                 is SearchItem.Character -> {
                     val intent = Intent(activity, CharacterDetailsActivity::class.java)
-                    intent.putExtra(homeFragment.chrId, selectedItem.data.id)
-                    intent.putExtra(homeFragment.chrName, selectedItem.data.attributes.name)
-                    intent.putExtra(homeFragment.chrImage, selectedItem.data.attributes.image)
-                    intent.putExtra(homeFragment.chrSpecies, selectedItem.data.attributes.species)
-                    intent.putExtra(homeFragment.chrGender, selectedItem.data.attributes.gender)
+                    intent.putExtra(Constant.chrId, selectedItem.data.id)
+                    intent.putExtra(Constant.chrName, selectedItem.data.attributes.name)
+                    intent.putExtra(Constant.chrImage, selectedItem.data.attributes.image)
+                    intent.putExtra(Constant.chrSpecies, selectedItem.data.attributes.species)
+                    intent.putExtra(Constant.chrGender, selectedItem.data.attributes.gender)
 
                     startActivity(intent)
                 }
             }
 
         }
-
     }
 }
 

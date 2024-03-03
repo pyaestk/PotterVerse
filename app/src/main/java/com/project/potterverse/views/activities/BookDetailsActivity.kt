@@ -12,11 +12,9 @@ import com.project.potterverse.R
 import com.project.potterverse.data.bookDetails.BookDetailsData
 import com.project.potterverse.databinding.ActivityBookDetailsBinding
 import com.project.potterverse.room.bookDb.BookDatabase
-import com.project.potterverse.room.movieDb.MovieDatabase
+import com.project.potterverse.utils.Constant
 import com.project.potterverse.viewModel.BookDetailViewModelFactory
 import com.project.potterverse.viewModel.BookDetailsViewModel
-import com.project.potterverse.viewModel.MovieDetailViewModelFactory
-import com.project.potterverse.viewModel.MovieDetailsViewModel
 import com.project.potterverse.views.fragments.homeFragment
 
 class BookDetailsActivity : AppCompatActivity() {
@@ -43,14 +41,14 @@ class BookDetailsActivity : AppCompatActivity() {
 
         val intent = intent
 
-        bookId = intent.getStringExtra(homeFragment.bookID)!!
+        bookId = intent.getStringExtra(Constant.bookID)!!
 
-        binding.bookTitle.text = intent.getStringExtra(homeFragment.bookTitle)
-        binding.bookReleaseDate.text = " Release Date: ${intent.getStringExtra(homeFragment.bookDate)}"
-        binding.author.text = " Author: ${intent.getStringExtra(homeFragment.bookAuthor)}"
-        binding.bookchapter.text = " Chapters: ${intent.getStringExtra(homeFragment.bookChapter)}"
+        binding.bookTitle.text = intent.getStringExtra(Constant.bookTitle)
+        binding.bookReleaseDate.text = " Release Date: ${intent.getStringExtra(Constant.bookDate)}"
+        binding.author.text = " Author: ${intent.getStringExtra(Constant.bookAuthor)}"
+        binding.bookchapter.text = " Chapters: ${intent.getStringExtra(Constant.bookChapter)}"
 
-        bookImage = intent.getStringExtra(homeFragment.bookImage)!!
+        bookImage = intent.getStringExtra(Constant.bookImage)!!
         Glide.with(applicationContext).load(bookImage).into(binding.bookImageView)
 
         binding.backButton.setOnClickListener {
@@ -73,12 +71,12 @@ class BookDetailsActivity : AppCompatActivity() {
                if (isSaved == true){
                    viewModel.deleteBook(book)
                    binding.btnBookmark.setImageResource(R.drawable.ic_bookmark_border)
-                   Toast.makeText(this, "Removed", Toast.LENGTH_SHORT).show()
+                   Toast.makeText(this, "Removed from Bookmark section", Toast.LENGTH_SHORT).show()
                } else {
                    book.bookmark = false
                    viewModel.insertBook(book)
                    binding.btnBookmark.setImageResource(R.drawable.ic_bookmarked)
-                   Toast.makeText(this, "Added", Toast.LENGTH_SHORT).show()
+                   Toast.makeText(this, "Added to Bookmark section", Toast.LENGTH_SHORT).show()
                }
            }
         }
