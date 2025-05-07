@@ -26,7 +26,7 @@ abstract class BookDatabase: RoomDatabase(){
                     context,
                     BookDatabase::class.java,
                     "book.db"
-                ).fallbackToDestructiveMigration().build()
+                ).build()
             }
             return INSTANCE as BookDatabase
         }

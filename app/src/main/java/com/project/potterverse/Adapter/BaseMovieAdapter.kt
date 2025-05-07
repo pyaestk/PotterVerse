@@ -104,7 +104,7 @@ class BaseMovieAdapter(var useFragmentBinding: Int): RecyclerView.Adapter<BaseMo
                 if (constraint.isNullOrBlank()){
                     filteredList.addAll(originalMovieLists)
                 } else {
-                    val filterPattern = constraint.toString().trim { it <= '-'}.toLowerCase()
+                    val filterPattern = constraint.toString().trim { it <= '-'}.lowercase()
 
                     for (movie in originalMovieLists) {
                         if (movie.attributes.slug!!.contains(filterPattern)) {
