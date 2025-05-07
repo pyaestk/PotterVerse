@@ -1,10 +1,10 @@
 package com.project.potterverse.retrofit
 
-import com.project.potterverse.data.CharacterDetails.CharacterDetails
-import com.project.potterverse.data.CharacterDetails.CharactersList
+import com.project.potterverse.data.model.CharacterDetails
+import com.project.potterverse.data.model.CharactersList
 import com.project.potterverse.data.movieDetails.MovieDetails
-import com.project.potterverse.data.bookDetails.BookDetails
-import com.project.potterverse.data.bookDetails.BooksList
+import com.project.potterverse.data.model.BookDetails
+import com.project.potterverse.data.model.BooksList
 import com.project.potterverse.data.movieDetails.MovieList
 import retrofit2.Call
 import retrofit2.http.GET

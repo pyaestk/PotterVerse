@@ -15,18 +15,21 @@
         android:theme="@style/Theme.PotterVerse"
         tools:targetApi="31">
         <activity
-            android:name=".views.activities.CharacterDetailsActivity"
+            android:name=".view.fragments.TestActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.activities.CharacterDetailsActivity"
             android:exported="false"
             android:label="@string/title_activity_character_details"
             android:theme="@style/Theme.PotterVerse" />
         <activity
-            android:name=".views.activities.BookDetailsActivity"
+            android:name=".view.activities.BookDetailsActivity"
             android:exported="false" />
         <activity
-            android:name=".views.activities.MovieDetailsActivity"
+            android:name=".view.activities.MovieDetailsActivity"
             android:exported="false" />
         <activity
-            android:name=".views.MainActivity"
+            android:name=".view.MainActivity"
             android:configChanges="orientation|screenSize"
             android:exported="true"
             android:windowSoftInputMode="adjustPan">
