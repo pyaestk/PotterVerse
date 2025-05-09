@@ -10,4 +10,5 @@ Potter Verse is an Android application that provides users with information abou
 
 4. **Bookmarking**: Bookmark items of interest to save and revisit them later.
 
-
+## API
+https://docs.potterdb.com
