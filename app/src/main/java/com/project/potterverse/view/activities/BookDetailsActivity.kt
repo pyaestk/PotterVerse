@@ -11,9 +11,13 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.project.potterverse.R
-import com.project.potterverse.data.model.BookDetailsData
+import com.project.potterverse.data.datasource.PotterLocalDatasource
+import com.project.potterverse.data.datasource.PotterRemoteDataSource
+import com.project.potterverse.model.BookDetailsData
+import com.project.potterverse.data.db.AppDatabase
+import com.project.potterverse.data.repository.PotterRepository
+import com.project.potterverse.data.service.RetrofitInstance
 import com.project.potterverse.databinding.ActivityBookDetailsBinding
-import com.project.potterverse.data.room.bookDb.BookDatabase
 import com.project.potterverse.utils.Constant
 import com.project.potterverse.view.viewModel.BookDetailViewModelFactory
 import com.project.potterverse.view.viewModel.BookDetailsViewModel
@@ -41,8 +45,15 @@ class BookDetailsActivity : AppCompatActivity() {
 
         showProgressBar()
 
-        val bookDatabase = BookDatabase.getInstance(this)
-        val viewModelFactory = BookDetailViewModelFactory(bookDatabase)
+        val potterRepository = PotterRepository(
+            remoteDataSource = PotterRemoteDataSource(
+                RetrofitInstance.api
+            ),
+            localDataSource = PotterLocalDatasource(
+                AppDatabase.getInstance(this)
+            )
+        )
+        val viewModelFactory = BookDetailViewModelFactory(potterRepository)
         viewModel = ViewModelProvider(this, viewModelFactory)[BookDetailsViewModel::class.java]
 
         val intent = intent
@@ -96,7 +107,7 @@ class BookDetailsActivity : AppCompatActivity() {
             hideProgressBar()
         }
 
-        viewModel.getAllBooks().observe(this) { bookList ->
+        viewModel.getAllFavBook().observe(this) { bookList ->
             isSaved = bookList.any { it.id == bookId}
             if (isSaved == true) {
                 binding.btnBookmark.setImageResource(R.drawable.ic_bookmarked)

@@ -10,8 +10,8 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.project.potterverse.view.Adapter.bookmark.FavBookAdapter
 import com.project.potterverse.view.Adapter.bookmark.FavCharacterAdapter
 import com.project.potterverse.view.Adapter.bookmark.FavMovieAdapter
-import com.project.potterverse.data.model.CharacterDetailsData
-import com.project.potterverse.data.model.BookDetailsData
+import com.project.potterverse.model.CharacterDetailsData
+import com.project.potterverse.model.BookDetailsData
 import com.project.potterverse.data.movieDetails.MovieDetailData
 import com.project.potterverse.databinding.FragmentFavoritesBinding
 import com.project.potterverse.utils.Constant
@@ -49,17 +49,11 @@ class FavoritesFragment : Fragment() {
 
 
         binding.movieFavRecycler.apply {
-//            layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-//            adapter = movieAdapter
-
             layoutManager = GridLayoutManager(activity, 3, GridLayoutManager.VERTICAL, false)
             adapter = movieAdapter
         }
 
         binding.bookFavRecycler.apply {
-//            layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-//            adapter = bookAdapter
-
             layoutManager = GridLayoutManager(activity, 3, GridLayoutManager.VERTICAL, false)
             adapter = bookAdapter
         }
@@ -118,7 +112,7 @@ class FavoritesFragment : Fragment() {
 
     //observer
     private fun observeFavitem() {
-        viewModel.observerFavMovieLiveData().observe(requireActivity()){ movie ->
+        viewModel.favoriteMovies.observe(requireActivity()){ movie ->
             movieAdapter.setFavMovies(movie as ArrayList<MovieDetailData>)
 
             if (movieAdapter.itemCount < 1){
@@ -130,7 +124,7 @@ class FavoritesFragment : Fragment() {
             }
         }
 
-        viewModel.observerFavBookLiveData().observe(requireActivity()){book ->
+        viewModel.favoriteBooks.observe(requireActivity()){book ->
             bookAdapter.setFavBooks(book as ArrayList<BookDetailsData>)
             if (bookAdapter.itemCount < 1){
                 binding.seeAllFavBook.visibility = View.GONE
@@ -141,7 +135,7 @@ class FavoritesFragment : Fragment() {
             }
         }
 
-        viewModel.observerFavCharLiveData().observe(requireActivity()) { char ->
+        viewModel.favoriteCharacters.observe(requireActivity()) { char ->
             charAdapter.setFavChars(char as ArrayList<CharacterDetailsData>)
             if (charAdapter.itemCount < 1){
                 binding.seeAllFavChar.visibility = View.GONE

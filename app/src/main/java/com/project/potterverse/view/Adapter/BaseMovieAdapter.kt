@@ -57,7 +57,10 @@ class BaseMovieAdapter(var useFragmentBinding: Int): RecyclerView.Adapter<BaseMo
         val binding = holder.binding
 
         when(binding) {
-            is ItemMovieBinding -> setMovieImageResource(binding.itemImageView, currentMovie.attributes.title)
+            is ItemMovieBinding -> {
+                setMovieImageResource(binding.itemImageView, currentMovie.attributes.title)
+                binding.tvItemName.text = currentMovie.attributes.title
+            }
             is ItemMovieFragmentBinding -> {
                 setMovieImageResource(binding.itemImageView, currentMovie.attributes.title)
                 binding.movieTitle.text = currentMovie.attributes.title

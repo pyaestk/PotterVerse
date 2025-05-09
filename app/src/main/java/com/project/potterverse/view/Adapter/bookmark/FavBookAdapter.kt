@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.project.potterverse.data.model.BookDetailsData
+import com.project.potterverse.model.BookDetailsData
 import com.project.potterverse.databinding.ItemFavBinding
 
 
@@ -27,12 +27,13 @@ class FavBookAdapter: RecyclerView.Adapter<FavBookAdapter.FavBookViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: FavBookViewHolder, position: Int) {
-        val currentMovie = bookFavList[position]
+        val currentBook = bookFavList[position]
 
         Glide.with(holder.itemView)
-            .load(currentMovie.attributes.cover)
+            .load(currentBook.attributes.cover)
             .into(holder.binding.itemImageView)
 
+        holder.binding.tvItemName.text = currentBook.attributes.title
 
         holder.itemView.setOnClickListener {
             onItemClick.invoke(bookFavList[position])

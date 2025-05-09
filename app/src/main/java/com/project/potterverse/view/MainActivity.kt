@@ -7,13 +7,15 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.project.potterverse.R
 import com.google.android.material.tabs.TabLayoutMediator
+import com.project.potterverse.R
+import com.project.potterverse.data.datasource.PotterLocalDatasource
+import com.project.potterverse.data.datasource.PotterRemoteDataSource
+import com.project.potterverse.data.db.AppDatabase
+import com.project.potterverse.data.repository.PotterRepository
+import com.project.potterverse.data.service.RetrofitInstance
 import com.project.potterverse.view.Adapter.ViewPagerAdapter
 import com.project.potterverse.databinding.ActivityMainBinding
-import com.project.potterverse.data.room.bookDb.BookDatabase
-import com.project.potterverse.data.room.characterDb.CharacterDatabase
-import com.project.potterverse.data.room.movieDb.MovieDatabase
 import com.project.potterverse.view.viewModel.MainViewModel
 import com.project.potterverse.view.viewModel.MainViewModelFactory
 import com.project.potterverse.view.fragments.FavoritesFragment
@@ -38,10 +40,16 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     val viewModel: MainViewModel by lazy {
-        val movieDatabase = MovieDatabase.getInstance(this)
-        val bookDatabase = BookDatabase.getInstance(this)
-        val charDatabase = CharacterDatabase.getInstance(this)
-        val mainViewModelFactory = MainViewModelFactory(movieDatabase, bookDatabase, charDatabase)
+
+        val potterRepository = PotterRepository(
+            remoteDataSource = PotterRemoteDataSource(
+                RetrofitInstance.api
+            ),
+            localDataSource = PotterLocalDatasource(
+                AppDatabase.getInstance(this)
+            )
+        )
+        val mainViewModelFactory = MainViewModelFactory(potterRepository)
         ViewModelProvider(this, mainViewModelFactory)[MainViewModel::class.java]
     }
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,7 +58,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, 0)
             insets
         }
 
@@ -60,7 +68,6 @@ class MainActivity : AppCompatActivity() {
         binding.viewPager2.adapter = viewPagerAdapter
         binding.viewPager2.offscreenPageLimit = 1
         binding.viewPager2.isUserInputEnabled = false
-
 
         setUPFragments()
 

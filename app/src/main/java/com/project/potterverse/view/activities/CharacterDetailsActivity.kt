@@ -12,9 +12,13 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.project.potterverse.R
-import com.project.potterverse.data.model.CharacterDetailsData
+import com.project.potterverse.data.datasource.PotterLocalDatasource
+import com.project.potterverse.data.datasource.PotterRemoteDataSource
+import com.project.potterverse.model.CharacterDetailsData
+import com.project.potterverse.data.db.AppDatabase
+import com.project.potterverse.data.repository.PotterRepository
+import com.project.potterverse.data.service.RetrofitInstance
 import com.project.potterverse.databinding.ActivityCharacterDetailsBinding
-import com.project.potterverse.data.room.characterDb.CharacterDatabase
 import com.project.potterverse.utils.Constant
 import com.project.potterverse.view.viewModel.CharacterDetailViewModelFactory
 import com.project.potterverse.view.viewModel.CharacterDetailsViewModel
@@ -43,8 +47,15 @@ class CharacterDetailsActivity : AppCompatActivity() {
 
         showProgressBar()
 
-        val charDatabase = CharacterDatabase.getInstance(this)
-        val viewModelFactory = CharacterDetailViewModelFactory(charDatabase)
+        val potterRepository = PotterRepository(
+            remoteDataSource = PotterRemoteDataSource(
+                RetrofitInstance.api
+            ),
+            localDataSource = PotterLocalDatasource(
+                AppDatabase.getInstance(this)
+            )
+        )
+        val viewModelFactory = CharacterDetailViewModelFactory(potterRepository)
         viewModel = ViewModelProvider(this, viewModelFactory)[CharacterDetailsViewModel::class.java]
 
         val intent = intent
@@ -82,7 +93,7 @@ class CharacterDetailsActivity : AppCompatActivity() {
             observingDetails(chr)
             hideProgressBar()
         }
-        viewModel.getAllChars().observe(this) { charList ->
+        viewModel.getAllFavChar().observe(this) { charList ->
             isSaved = charList.any { it.id == chrId }
             if (isSaved == true) {
                 binding.btnBookmark.setImageResource(R.drawable.ic_bookmarked)

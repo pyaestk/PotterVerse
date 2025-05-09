@@ -6,22 +6,25 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.project.potterverse.data.model.CharacterDetails
-import com.project.potterverse.data.model.CharacterDetailsData
-import com.project.potterverse.retrofit.RetrofitInstance
-import com.project.potterverse.data.room.characterDb.CharacterDatabase
+import com.project.potterverse.model.CharacterDetails
+import com.project.potterverse.model.CharacterDetailsData
+import com.project.potterverse.data.db.AppDatabase
+import com.project.potterverse.data.repository.PotterRepository
+import com.project.potterverse.data.service.RetrofitInstance
 import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class CharacterDetailsViewModel(private val charDatabase: CharacterDatabase): ViewModel() {
+class CharacterDetailsViewModel(
+    private val potterRepository: PotterRepository
+): ViewModel() {
 
     private var characterDetailsLiveData = MutableLiveData<CharacterDetailsData>()
-    private var favCharLiveData = charDatabase.characterDao().getAllCharacters()
+
 
     fun fetchCharacterDetails(id: String) {
-        RetrofitInstance.api.getCharacterDetails(id).enqueue(object: Callback<CharacterDetails>{
+        potterRepository.getCharacterDetails(id).enqueue(object: Callback<CharacterDetails>{
             override fun onResponse(
                 call: Call<CharacterDetails>,
                 response: Response<CharacterDetails>
@@ -42,25 +45,28 @@ class CharacterDetailsViewModel(private val charDatabase: CharacterDatabase): Vi
         return characterDetailsLiveData
     }
 
-    fun insertChar(char: CharacterDetailsData) {
+    fun insertChar(character: CharacterDetailsData) {
         viewModelScope.launch {
-            charDatabase.characterDao().insertUpdateChar(char)
+            potterRepository.insertUpdateCharacter(character)
         }
     }
 
-    fun deleteChar(char: CharacterDetailsData) {
+    fun deleteChar(character: CharacterDetailsData) {
         viewModelScope.launch {
-            charDatabase.characterDao().deleteChar(char)
+           potterRepository.deleteCharacter(character)
         }
     }
 
-    fun getAllChars(): LiveData<List<CharacterDetailsData>> {
-        return favCharLiveData
+    fun getAllFavChar(): LiveData<List<CharacterDetailsData>> {
+        return potterRepository.getFavCharacters()
     }
+
 }
 
-class CharacterDetailViewModelFactory(private val charDatabase: CharacterDatabase): ViewModelProvider.Factory {
+class CharacterDetailViewModelFactory(
+    private val potterRepository: PotterRepository
+    ): ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return CharacterDetailsViewModel(charDatabase) as T
+        return CharacterDetailsViewModel(potterRepository) as T
     }
 }

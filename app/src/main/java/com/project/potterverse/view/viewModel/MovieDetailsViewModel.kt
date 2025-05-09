@@ -8,21 +8,23 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.project.potterverse.data.movieDetails.MovieDetailData
 import com.project.potterverse.data.movieDetails.MovieDetails
-import com.project.potterverse.retrofit.RetrofitInstance
-import com.project.potterverse.data.room.movieDb.MovieDatabase
+import com.project.potterverse.data.db.AppDatabase
+import com.project.potterverse.data.repository.PotterRepository
+import com.project.potterverse.data.service.RetrofitInstance
 import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 
-class MovieDetailsViewModel(private val movieDatabase: MovieDatabase): ViewModel() {
+class MovieDetailsViewModel(
+    private val potterRepository: PotterRepository
+): ViewModel() {
 
     private var movieDetailLiveData = MutableLiveData<MovieDetailData>()
-    private var favMovieLiveData = movieDatabase.movieDao().getAllMovies()
 
     fun fetchMovieDetails(id: String) {
-        RetrofitInstance.api.getMovieDetails(id).enqueue(object : Callback<MovieDetails> {
+        potterRepository.getMovieDetails(id).enqueue(object : Callback<MovieDetails> {
             override fun onResponse(call: Call<MovieDetails>, response: Response<MovieDetails>) {
                 response.body()?.let {
                     movieDetailLiveData.value = response.body()!!.data
@@ -41,22 +43,24 @@ class MovieDetailsViewModel(private val movieDatabase: MovieDatabase): ViewModel
 
     fun insertMovie(movie: MovieDetailData) {
         viewModelScope.launch {
-            movieDatabase.movieDao().insertUpdateMovie(movie)
+           potterRepository.insertUpdateMovie(movie)
         }
     }
 
     fun deleteMovies(movie: MovieDetailData) {
         viewModelScope.launch {
-            movieDatabase.movieDao().deleteMovie(movie)
+            potterRepository.deleteMovie(movie)
         }
     }
 
-    fun getAllMovies(): LiveData<List<MovieDetailData>> {
-        return favMovieLiveData
+    fun getAllFavMovie(): LiveData<List<MovieDetailData>> {
+        return potterRepository.getFavMovies()
     }
 }
-class MovieDetailViewModelFactory(private val movieDatabase: MovieDatabase): ViewModelProvider.Factory {
+class MovieDetailViewModelFactory(
+    private val potterRepository: PotterRepository
+): ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return MovieDetailsViewModel(movieDatabase) as T
+        return MovieDetailsViewModel(potterRepository) as T
     }
 }

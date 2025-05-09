@@ -12,8 +12,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.project.potterverse.view.Adapter.BaseBookAdapter
 import com.project.potterverse.view.Adapter.BaseCharacterAdapter
 import com.project.potterverse.view.Adapter.BaseMovieAdapter
-import com.project.potterverse.data.model.CharacterDetailsData
-import com.project.potterverse.data.model.BookDetailsData
+import com.project.potterverse.model.CharacterDetailsData
+import com.project.potterverse.model.BookDetailsData
 import com.project.potterverse.data.movieDetails.MovieDetailData
 import com.project.potterverse.databinding.FragmentHomeBinding
 import com.project.potterverse.utils.Constant
@@ -84,13 +84,13 @@ class homeFragment : Fragment() {
                     // End of the list reached, load more data
                     isLoading = true
                     pageNumber++
-                    viewModel.getCharacters(pageNumber)
+                    viewModel.fetchCharacters(pageNumber)
                 }
             }
         })
 
-        viewModel.getCharacters(pageNumber)
-        viewModel.getCharacterListLiveData().observe(viewLifecycleOwner) { character ->
+        viewModel.fetchCharacters(pageNumber)
+        viewModel.characterList.observe(viewLifecycleOwner) { character ->
             characterAdapter.addCharacters(character as ArrayList<CharacterDetailsData>)
             hideProgressBar()
             isLoading = false
@@ -112,8 +112,8 @@ class homeFragment : Fragment() {
             layoutManager = GridLayoutManager(activity, 2, GridLayoutManager.HORIZONTAL, false)
             adapter = bookAdapter
         }
-        viewModel.getBooks()
-        viewModel.getBookListLiveData().observe(viewLifecycleOwner) {book ->
+        viewModel.fetchBooks()
+        viewModel.bookList.observe(viewLifecycleOwner) {book ->
             bookAdapter.setBooks(book as ArrayList<BookDetailsData>)
             hideProgressBar()
         }
@@ -135,8 +135,8 @@ class homeFragment : Fragment() {
             layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
             adapter = movieAdapter
         }
-        viewModel.getMovies()
-        viewModel.getMovieListLiveData().observe(viewLifecycleOwner) {movie ->
+        viewModel.fetchMovies()
+        viewModel.movieList.observe(viewLifecycleOwner) {movie ->
             movieAdapter.setMovies(movie as ArrayList<MovieDetailData>)
         }
         movieAdapter.onItemClick = { movie ->

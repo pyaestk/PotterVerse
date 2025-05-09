@@ -30,6 +30,7 @@ class FavMovieAdapter: RecyclerView.Adapter<FavMovieAdapter.FavMovieViewHolder>(
         val currentMovie = movieFavList[position]
         val binding = holder.binding
 
+        binding.tvItemName.text = currentMovie.attributes.title
         setMovieImageResource(binding.itemImageView, currentMovie.attributes.title)
         
         holder.itemView.setOnClickListener {

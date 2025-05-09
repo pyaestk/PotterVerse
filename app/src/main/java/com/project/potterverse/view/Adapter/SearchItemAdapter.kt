@@ -8,8 +8,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.project.potterverse.R
-import com.project.potterverse.data.model.CharacterDetailsData
-import com.project.potterverse.data.model.BookDetailsData
+import com.project.potterverse.model.CharacterDetailsData
+import com.project.potterverse.model.BookDetailsData
 import com.project.potterverse.data.movieDetails.MovieDetailData
 import com.project.potterverse.databinding.ItemSearchMovieResultBinding
 
@@ -93,28 +93,6 @@ class SearchItemAdapter : RecyclerView.Adapter<SearchItemAdapter.SearchResultVie
         }
     }
 
-    private fun setMovieImageResource(itemImageView: ImageView, title: String?) {
-        title?.let {
-            val resourceId = when(it) {
-                "Harry Potter and the Philosopher's Stone" -> R.drawable.h1
-                "Harry Potter and the Chamber of Secrets" -> R.drawable.h2
-                "Harry Potter and the Prisoner of Azkaban" -> R.drawable.h3
-                "Harry Potter and the Goblet of Fire" -> R.drawable.h4
-                "Harry Potter and the Order of the Phoenix" -> R.drawable.h5
-                "Harry Potter and the Half-Blood Prince" -> R.drawable.h6
-                "Harry Potter and the Deathly Hallows - Part 1" -> R.drawable.h7
-                "Harry Potter and the Deathly Hallows – Part 2" -> R.drawable.h8
-                "Fantastic Beasts and Where to Find Them" -> R.drawable.f1
-                "Fantastic Beasts: The Crimes of Grindelwald" -> R.drawable.f2
-                "Fantastic Beasts: The Secrets of Dumbledore" -> R.drawable.f3
-                else -> 0
-            }
-            if (resourceId != 0) {
-                itemImageView.setImageResource(resourceId)
-            }
-        }
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchResultViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = ItemSearchMovieResultBinding.inflate(inflater, parent, false)
@@ -132,14 +110,6 @@ class SearchItemAdapter : RecyclerView.Adapter<SearchItemAdapter.SearchResultVie
         }
         holder.bind(currentItem)
     }
-
-//    private fun getItemId(item: SearchItem): Long {
-//        return when (item) {
-//            is SearchItem.Book -> item.data.id.hashCode().toLong()
-//            is SearchItem.Movie -> item.data.id.hashCode().toLong()
-//            is SearchItem.Character -> item.data.id.hashCode().toLong()
-//        }
-//    }
 
     private fun getItemId(item: SearchItem): String {
         return when (item) {

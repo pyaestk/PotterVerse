@@ -11,9 +11,13 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
 import com.project.potterverse.R
+import com.project.potterverse.data.datasource.PotterLocalDatasource
+import com.project.potterverse.data.datasource.PotterRemoteDataSource
 import com.project.potterverse.data.movieDetails.MovieDetailData
+import com.project.potterverse.data.db.AppDatabase
+import com.project.potterverse.data.repository.PotterRepository
+import com.project.potterverse.data.service.RetrofitInstance
 import com.project.potterverse.databinding.ActivityMovieDetailsBinding
-import com.project.potterverse.data.room.movieDb.MovieDatabase
 import com.project.potterverse.utils.Constant
 import com.project.potterverse.view.viewModel.MovieDetailViewModelFactory
 import com.project.potterverse.view.viewModel.MovieDetailsViewModel
@@ -43,8 +47,16 @@ class MovieDetailsActivity : AppCompatActivity() {
 
         showProgressBar()
 
-        val movieDatabase = MovieDatabase.getInstance(this)
-        val viewModelFactory = MovieDetailViewModelFactory(movieDatabase)
+        val potterRepository = PotterRepository(
+            remoteDataSource = PotterRemoteDataSource(
+                RetrofitInstance.api
+            ),
+            localDataSource = PotterLocalDatasource(
+                AppDatabase.getInstance(this)
+            )
+        )
+        val viewModelFactory = MovieDetailViewModelFactory(potterRepository)
+
         viewModel = ViewModelProvider(this, viewModelFactory)[MovieDetailsViewModel::class.java]
 
         val intent = intent
@@ -120,7 +132,7 @@ class MovieDetailsActivity : AppCompatActivity() {
             hideProgressBar()
         }
 
-        viewModel.getAllMovies().observe(this) { movieList ->
+        viewModel.getAllFavMovie().observe(this) { movieList ->
             isSaved = movieList.any { it.id == movieId }
             if (isSaved == true) {
                 binding.btnBookmark.setImageResource(R.drawable.ic_bookmarked)

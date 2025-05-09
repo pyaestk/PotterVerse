@@ -43,8 +43,8 @@ class MoviesFragment : Fragment() {
             adapter = movieAdapter
         }
 
-        viewModel.getMovies()
-        viewModel.getMovieListLiveData().observe(viewLifecycleOwner) { movie ->
+        viewModel.fetchMovies()
+        viewModel.movieList.observe(viewLifecycleOwner) { movie ->
             movieAdapter.setMovies(movie as ArrayList<MovieDetailData>)
             hideProgressBar()
         }

@@ -5,27 +5,32 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import com.project.potterverse.data.db.AppDatabase
 import com.project.potterverse.view.Adapter.SearchItem
-import com.project.potterverse.data.model.CharacterDetailsData
-import com.project.potterverse.data.model.CharactersList
-import com.project.potterverse.data.model.BookDetailsData
-import com.project.potterverse.data.model.BooksList
+import com.project.potterverse.model.CharacterDetailsData
+import com.project.potterverse.model.CharactersList
+import com.project.potterverse.model.BookDetailsData
+import com.project.potterverse.model.BooksList
 import com.project.potterverse.data.movieDetails.MovieDetailData
 import com.project.potterverse.data.movieDetails.MovieList
+import com.project.potterverse.data.repository.PotterRepository
 
-import com.project.potterverse.retrofit.RetrofitInstance
+import com.project.potterverse.data.service.RetrofitInstance
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class SearchViewModel : ViewModel() {
+class SearchViewModel(
+    private val potterRepository: PotterRepository
+) : ViewModel() {
 
     private var movieListLiveData = MutableLiveData<List<MovieDetailData>>()
     private var bookListLiveData = MutableLiveData<List<BookDetailsData>>()
     private var characterListLiveData = MutableLiveData<List<CharacterDetailsData>>()
 
     fun getMovies(query: String) {
-        RetrofitInstance.api.getMovieLists().enqueue(object : Callback<MovieList> {
+        potterRepository.getMovieList().enqueue(object : Callback<MovieList> {
             override fun onResponse(call: Call<MovieList>, response: Response<MovieList>) {
                 val movieList = response.body()?.data
                 movieList?.let {
@@ -47,7 +52,7 @@ class SearchViewModel : ViewModel() {
     }
 
     fun getBooks(query: String) {
-        RetrofitInstance.api.getBooksLists().enqueue(object : Callback<BooksList> {
+        potterRepository.getBookList().enqueue(object : Callback<BooksList> {
             override fun onResponse(call: Call<BooksList>, response: Response<BooksList>) {
                 val bookList = response.body()?.data
                 bookList?.let {
@@ -69,7 +74,7 @@ class SearchViewModel : ViewModel() {
     }
 
     fun searchCharacters(query: String) {
-        RetrofitInstance.api.getCharactersResults(query).enqueue(object : Callback<CharactersList>{
+        potterRepository.searchCharacters(query).enqueue(object : Callback<CharactersList>{
             override fun onResponse(
                 call: Call<CharactersList>,
                 response: Response<CharactersList>
@@ -119,5 +124,13 @@ class SearchViewModel : ViewModel() {
         }
 
         return combinedLiveData
+    }
+}
+
+class SearchViewModelFactory(
+    private val potterRepository: PotterRepository
+): ViewModelProvider.Factory {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        return SearchViewModel(potterRepository) as T
     }
 }

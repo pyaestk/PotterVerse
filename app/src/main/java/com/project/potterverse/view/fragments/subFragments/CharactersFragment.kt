@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.project.potterverse.view.Adapter.BaseCharacterAdapter
-import com.project.potterverse.data.model.CharacterDetailsData
+import com.project.potterverse.model.CharacterDetailsData
 import com.project.potterverse.databinding.FragmentCharactersBinding
 import com.project.potterverse.utils.Constant
 import com.project.potterverse.view.viewModel.MainViewModel
@@ -63,15 +63,15 @@ class CharactersFragment : Fragment() {
                     // End of the list reached, load more data
                     isLoading = true
                     pageNumber++
-                    viewModel.getCharacters(pageNumber)
+                    viewModel.fetchCharacters(pageNumber)
                 }
             }
 
 
         })
 
-        viewModel.getCharacters(pageNumber)
-        viewModel.getCharacterListLiveData().observe(viewLifecycleOwner) { character ->
+        viewModel.fetchCharacters(pageNumber)
+        viewModel.characterList.observe(viewLifecycleOwner) { character ->
             characterAdapter.addCharacters(character as ArrayList<CharacterDetailsData>)
             isLoading = false
             hideProgressBar()

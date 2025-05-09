@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import com.bumptech.glide.Glide
-import com.project.potterverse.data.model.BookDetailsData
+import com.project.potterverse.model.BookDetailsData
 import com.project.potterverse.databinding.ItemBookBinding
 import com.project.potterverse.databinding.ItemBookFragmentBinding
 import com.project.potterverse.databinding.ItemSearchMovieResultBinding

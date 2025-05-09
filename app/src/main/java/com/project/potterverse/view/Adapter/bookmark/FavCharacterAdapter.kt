@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.project.potterverse.R
-import com.project.potterverse.data.model.CharacterDetailsData
+import com.project.potterverse.model.CharacterDetailsData
 import com.project.potterverse.databinding.ItemCharacterFragmentBinding
 
 class FavCharacterAdapter: RecyclerView.Adapter<FavCharacterAdapter.FavCharacterViewHolder>() {
