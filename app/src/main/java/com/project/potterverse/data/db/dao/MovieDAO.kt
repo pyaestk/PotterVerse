@@ -19,4 +19,7 @@ interface MovieDAO {
 
     @Query("SELECT * FROM movieInformation")
     fun getAllMovies(): LiveData<List<MovieDetailData>>
+
+    @Query("DELETE FROM movieInformation")
+    suspend fun deleteAllMovies()
 }

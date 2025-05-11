@@ -88,12 +88,10 @@ class BookDetailsActivity : AppCompatActivity() {
                if (isSaved == true){
                    viewModel.deleteBook(book)
                    binding.btnBookmark.setImageResource(R.drawable.ic_bookmark_border)
-                   Toast.makeText(this, "Removed from Bookmark section", Toast.LENGTH_SHORT).show()
                } else {
                    book.bookmark = false
                    viewModel.insertBook(book)
                    binding.btnBookmark.setImageResource(R.drawable.ic_bookmarked)
-                   Toast.makeText(this, "Added to Bookmark section", Toast.LENGTH_SHORT).show()
                }
            }
         }

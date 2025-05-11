@@ -26,7 +26,6 @@ class PotterLocalDatasource(
     suspend fun insertUpdateMovie(movie: MovieDetailData){
         appDatabase.movieDao().insertUpdateMovie(movie)
     }
-
     suspend fun deleteMovie(movie: MovieDetailData){
         appDatabase.movieDao().deleteMovie(movie)
     }
@@ -34,7 +33,6 @@ class PotterLocalDatasource(
     suspend fun insertUpdateBook(book: BookDetailsData){
         appDatabase.bookDao().insertUpdateBook(book)
     }
-
     suspend fun deleteBook(book: BookDetailsData){
         appDatabase.bookDao().deleteBook(book)
     }
@@ -42,9 +40,17 @@ class PotterLocalDatasource(
     suspend fun insertUpdateCharacter(character: CharacterDetailsData){
         appDatabase.characterDao().insertUpdateChar(character)
     }
-
     suspend fun deleteCharacter(character: CharacterDetailsData){
         appDatabase.characterDao().deleteChar(character)
     }
 
+    suspend fun deleteAllMovies(){
+        appDatabase.movieDao().deleteAllMovies()
+    }
+    suspend fun deleteAllBooks(){
+        appDatabase.bookDao().deleteAllBooks()
+    }
+    suspend fun deleteAllCharacters(){
+        appDatabase.characterDao().deleteAllCharacters()
+    }
 }

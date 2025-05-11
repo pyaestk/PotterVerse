@@ -82,4 +82,16 @@ class PotterRepository(
     suspend fun deleteCharacter(character: CharacterDetailsData){
         localDataSource.deleteCharacter(character)
     }
+
+    //delete all
+    suspend fun deleteAllMovies(){
+        localDataSource.deleteAllMovies()
+    }
+    suspend fun deleteAllBooks(){
+        localDataSource.deleteAllBooks()
+    }
+    suspend fun deleteAllCharacters(){
+        localDataSource.deleteAllCharacters()
+
+    }
 }

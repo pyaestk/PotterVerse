@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import com.project.potterverse.model.CharacterDetailsData
 import com.project.potterverse.model.CharactersList
 import com.project.potterverse.model.BookDetailsData
@@ -14,6 +15,7 @@ import com.project.potterverse.data.movieDetails.MovieList
 import com.project.potterverse.data.db.AppDatabase
 import com.project.potterverse.data.repository.PotterRepository
 import com.project.potterverse.data.service.RetrofitInstance
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -80,6 +82,14 @@ class MainViewModel(
                 Log.e("MainViewModel", "Error fetching characters: ${t.message}")
             }
         })
+    }
+
+    fun removedAllBookMarks(){
+        viewModelScope.launch {
+            repository.deleteAllMovies()
+            repository.deleteAllBooks()
+            repository.deleteAllCharacters()
+        }
     }
 }
 

@@ -111,12 +111,10 @@ class CharacterDetailsActivity : AppCompatActivity() {
                 if (isSaved == true){
                     viewModel.deleteChar(char)
                     binding.btnBookmark.setImageResource(R.drawable.ic_bookmark_border)
-                    Toast.makeText(this, "Removed from Bookmark section", Toast.LENGTH_SHORT).show()
                 } else {
                     char.bookmark = false
                     viewModel.insertChar(char)
                     binding.btnBookmark.setImageResource(R.drawable.ic_bookmarked)
-                    Toast.makeText(this, "Added to Bookmark section", Toast.LENGTH_SHORT).show()
                 }
             }
         }

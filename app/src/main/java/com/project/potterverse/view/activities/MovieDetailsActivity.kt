@@ -112,13 +112,11 @@ class MovieDetailsActivity : AppCompatActivity() {
                     // Movie is already saved, delete it
                     viewModel.deleteMovies(movieDetailData)
                     binding.btnBookmark.setImageResource(R.drawable.ic_bookmark_border)
-                    Toast.makeText(this, "Removed from Bookmark section", Toast.LENGTH_SHORT).show()
                 } else {
                     // Movie is not saved, insert it
                     movieDetailData.bookmark = false
                     viewModel.insertMovie(movieDetailData)
                     binding.btnBookmark.setImageResource(R.drawable.ic_bookmarked)
-                    Toast.makeText(this, "Added to Bookmark section", Toast.LENGTH_SHORT).show()
                 }
             }
         }

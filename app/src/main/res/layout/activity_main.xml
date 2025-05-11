@@ -22,6 +22,7 @@
         app:tabIndicatorColor="@color/secondary_color"
         app:tabIndicatorFullWidth="false"
         app:tabMode="auto"
+        app:tabRippleColor="@android:color/transparent"
         app:tabSelectedTextColor="@color/white"
         app:tabTextColor="@color/white">
 

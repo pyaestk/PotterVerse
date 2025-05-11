@@ -19,4 +19,7 @@ interface BookDao {
 
     @Query("SELECT * FROM bookInformation")
     fun getAllBooks(): LiveData<List<BookDetailsData>>
+
+    @Query("DELETE FROM bookInformation")
+    suspend fun deleteAllBooks()
 }

@@ -12,13 +12,9 @@ import com.project.potterverse.model.CharacterDetailsData
 import com.project.potterverse.model.BookDetailsData
 import com.project.potterverse.data.movieDetails.MovieDetailData
 import com.project.potterverse.databinding.ItemSearchMovieResultBinding
+import com.project.potterverse.view.viewModel.SearchItem
 
 
-sealed class SearchItem {
-    data class Book(val data: BookDetailsData) : SearchItem()
-    data class Movie(val data: MovieDetailData) : SearchItem()
-    data class Character(val data: CharacterDetailsData) : SearchItem()
-}
 class SearchItemAdapter : RecyclerView.Adapter<SearchItemAdapter.SearchResultViewHolder>() {
 
     lateinit var onItemClick: ((SearchItem) -> Unit)

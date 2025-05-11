@@ -2,8 +2,6 @@ package com.project.potterverse.view.fragments
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -15,7 +13,6 @@ import com.project.potterverse.data.datasource.PotterRemoteDataSource
 import com.project.potterverse.data.db.AppDatabase
 import com.project.potterverse.data.repository.PotterRepository
 import com.project.potterverse.data.service.RetrofitInstance
-import com.project.potterverse.view.Adapter.SearchItem
 import com.project.potterverse.view.Adapter.SearchItemAdapter
 import com.project.potterverse.databinding.FragmentSearchBinding
 import com.project.potterverse.utils.Constant
@@ -23,6 +20,8 @@ import com.project.potterverse.view.viewModel.SearchViewModel
 import com.project.potterverse.view.activities.BookDetailsActivity
 import com.project.potterverse.view.activities.CharacterDetailsActivity
 import com.project.potterverse.view.activities.MovieDetailsActivity
+import com.project.potterverse.view.viewModel.FilterType
+import com.project.potterverse.view.viewModel.SearchItem
 import com.project.potterverse.view.viewModel.SearchViewModelFactory
 
 
@@ -66,29 +65,38 @@ class SearchFragment : Fragment() {
         }
         binding.itemResultRecycler.visibility = View.GONE
 
-        //for searchbar
         binding.searchbar.setOnQueryTextListener(object : androidx.appcompat.widget.SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {
-                if (query!!.isNotEmpty()){
-                    viewModel.searchCharacters(query)
-                    viewModel.getMovies(query)
-                    viewModel.getBooks(query)
-
-                    binding.itemResultRecycler.visibility = View.VISIBLE
+                query?.let {
+                    viewModel.searchAll(it)
                 }
                 return true
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                if (newText!!.isEmpty()) {
-                    binding.itemResultRecycler.visibility = View.GONE
+                newText?.let {
+                    viewModel.searchAll(it)
                 }
                 return true
             }
         })
 
-        itemObserver()
+        binding.allItemChip.isChecked = true
 
+        binding.allItemChip.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) viewModel.setFilter(FilterType.ALL)
+        }
+        binding.movieChip.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) viewModel.setFilter(FilterType.MOVIES)
+        }
+        binding.characterChip.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) viewModel.setFilter(FilterType.CHARACTERS)
+        }
+        binding.bookChip.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) viewModel.setFilter(FilterType.BOOKS)
+        }
+
+        itemObserver()
         OnItemClicked()
     }
 

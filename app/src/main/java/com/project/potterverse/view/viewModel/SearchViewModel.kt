@@ -6,8 +6,7 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.project.potterverse.data.db.AppDatabase
-import com.project.potterverse.view.Adapter.SearchItem
+import androidx.lifecycle.viewModelScope
 import com.project.potterverse.model.CharacterDetailsData
 import com.project.potterverse.model.CharactersList
 import com.project.potterverse.model.BookDetailsData
@@ -15,8 +14,9 @@ import com.project.potterverse.model.BooksList
 import com.project.potterverse.data.movieDetails.MovieDetailData
 import com.project.potterverse.data.movieDetails.MovieList
 import com.project.potterverse.data.repository.PotterRepository
-
-import com.project.potterverse.data.service.RetrofitInstance
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -28,6 +28,8 @@ class SearchViewModel(
     private var movieListLiveData = MutableLiveData<List<MovieDetailData>>()
     private var bookListLiveData = MutableLiveData<List<BookDetailsData>>()
     private var characterListLiveData = MutableLiveData<List<CharacterDetailsData>>()
+
+    private val selectedFilter = MutableLiveData<FilterType>(FilterType.ALL)
 
     fun getMovies(query: String) {
         potterRepository.getMovieList().enqueue(object : Callback<MovieList> {
@@ -93,38 +95,62 @@ class SearchViewModel(
 
     }
 
+    private var searchJob: Job? = null
+
+    fun searchAll(query: String) {
+        searchJob?.cancel()
+        searchJob = viewModelScope.launch {
+            delay(300) // debounce delay
+            if (query.isBlank()) {
+                // Clear all results
+                movieListLiveData.postValue(emptyList())
+                bookListLiveData.postValue(emptyList())
+                characterListLiveData.postValue(emptyList())
+            } else {
+                searchCharacters(query)
+                getMovies(query)
+                getBooks(query)
+            }
+        }
+    }
+
+    fun setFilter(filter: FilterType) {
+        selectedFilter.value = filter
+    }
+
     fun observeItemListLiveData(): LiveData<List<SearchItem>> {
         val combinedLiveData = MediatorLiveData<List<SearchItem>>()
 
-        combinedLiveData.addSource(movieListLiveData) { movieList ->
+        val updateCombinedList = {
+            val movieList = movieListLiveData.value ?: emptyList()
+            val bookList = bookListLiveData.value ?: emptyList()
+            val characterList = characterListLiveData.value ?: emptyList()
+            val filter = selectedFilter.value ?: FilterType.ALL
+
             val combinedList = ArrayList<SearchItem>().apply {
-                addAll(movieList?.map { SearchItem.Movie(it) } ?: emptyList())
-                addAll(bookListLiveData.value?.map { SearchItem.Book(it) } ?: emptyList())
-                addAll(characterListLiveData.value?.map { SearchItem.Character(it) } ?: emptyList())
+                when (filter) {
+                    FilterType.ALL -> {
+                        addAll(movieList.map { SearchItem.Movie(it) })
+                        addAll(bookList.map { SearchItem.Book(it) })
+                        addAll(characterList.map { SearchItem.Character(it) })
+                    }
+                    FilterType.MOVIES -> addAll(movieList.map { SearchItem.Movie(it) })
+                    FilterType.BOOKS -> addAll(bookList.map { SearchItem.Book(it) })
+                    FilterType.CHARACTERS -> addAll(characterList.map { SearchItem.Character(it) })
+                }
             }
+
             combinedLiveData.value = combinedList
         }
 
-        combinedLiveData.addSource(bookListLiveData) { bookList ->
-            val combinedList = ArrayList<SearchItem>().apply {
-                addAll(bookList?.map { SearchItem.Book(it) } ?: emptyList())
-                addAll(movieListLiveData.value?.map { SearchItem.Movie(it) } ?: emptyList())
-                addAll(characterListLiveData.value?.map { SearchItem.Character(it) } ?: emptyList())
-            }
-            combinedLiveData.value = combinedList
-        }
-
-        combinedLiveData.addSource(characterListLiveData) { characterList ->
-            val combinedList = ArrayList<SearchItem>().apply {
-                addAll(characterList?.map { SearchItem.Character(it) } ?: emptyList())
-                addAll(movieListLiveData.value?.map { SearchItem.Movie(it) } ?: emptyList())
-                addAll(bookListLiveData.value?.map { SearchItem.Book(it) } ?: emptyList())
-            }
-            combinedLiveData.value = combinedList
-        }
+        combinedLiveData.addSource(movieListLiveData) { updateCombinedList() }
+        combinedLiveData.addSource(bookListLiveData) { updateCombinedList() }
+        combinedLiveData.addSource(characterListLiveData) { updateCombinedList() }
+        combinedLiveData.addSource(selectedFilter) { updateCombinedList() }
 
         return combinedLiveData
     }
+
 }
 
 class SearchViewModelFactory(
@@ -133,4 +159,13 @@ class SearchViewModelFactory(
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return SearchViewModel(potterRepository) as T
     }
+}
+
+sealed class SearchItem {
+    data class Book(val data: BookDetailsData) : SearchItem()
+    data class Movie(val data: MovieDetailData) : SearchItem()
+    data class Character(val data: CharacterDetailsData) : SearchItem()
+}
+enum class FilterType {
+    ALL, MOVIES, BOOKS, CHARACTERS
 }

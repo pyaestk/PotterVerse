@@ -30,6 +30,7 @@ abstract class AppDatabase: RoomDatabase() {
     abstract fun movieDao(): MovieDAO
 
     companion object {
+
         @Volatile
         var INSTANCE: AppDatabase? = null
         @Synchronized

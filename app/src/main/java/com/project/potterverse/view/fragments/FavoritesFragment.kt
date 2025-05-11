@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.project.potterverse.R
 import com.project.potterverse.view.Adapter.bookmark.FavBookAdapter
 import com.project.potterverse.view.Adapter.bookmark.FavCharacterAdapter
 import com.project.potterverse.view.Adapter.bookmark.FavMovieAdapter
@@ -36,9 +38,9 @@ class FavoritesFragment : Fragment() {
         bookAdapter = FavBookAdapter()
         charAdapter = FavCharacterAdapter()
     }
+
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         binding = FragmentFavoritesBinding.inflate(inflater, container, false)
         return binding.root
@@ -63,13 +65,31 @@ class FavoritesFragment : Fragment() {
             adapter = charAdapter
         }
 
-        //for movie
+        binding.topAppBar.setOnMenuItemClickListener {
+            when (it.itemId) {
+                R.id.delete -> {
+                    MaterialAlertDialogBuilder(
+                        requireContext(), R.style.ThemeOverlay_App_MaterialAlertDialog
+                    ).setTitle("Remove all bookmarks!")
+                        .setMessage("Are you sure you want to remove all your bookmarked items?")
+                        .setNegativeButton("No") { dialog, which ->
+                            // Respond to negative button press
+                        }.setPositiveButton("Yes") { dialog, which ->
+                            // Respond to positive button press
+                            viewModel.removedAllBookMarks()
+                        }.show()
+                    true
+                }
+
+                else -> false
+            }
+        }
+
         observeFavitem()
         onFavMovieClick()
         onFavBookClick()
         onFavCharClick()
     }
-
 
 
     //onItemClick
@@ -85,6 +105,7 @@ class FavoritesFragment : Fragment() {
             startActivity(intent)
         }
     }
+
     private fun onFavMovieClick() {
         movieAdapter.onItemClick = { movie ->
             val intent = Intent(requireContext(), MovieDetailsActivity::class.java)
@@ -98,6 +119,7 @@ class FavoritesFragment : Fragment() {
             startActivity(intent)
         }
     }
+
     private fun onFavCharClick() {
         charAdapter.onItemClick = { chr ->
             val intent = Intent(activity, CharacterDetailsActivity::class.java)
@@ -112,40 +134,41 @@ class FavoritesFragment : Fragment() {
 
     //observer
     private fun observeFavitem() {
-        viewModel.favoriteMovies.observe(requireActivity()){ movie ->
+        viewModel.favoriteMovies.observe(requireActivity()) { movie ->
             movieAdapter.setFavMovies(movie as ArrayList<MovieDetailData>)
+            binding.seeAllFavMovie.visibility =
+                if (movieAdapter.itemCount > 0) View.VISIBLE else View.GONE
+            binding.movieFavRecycler.visibility = binding.seeAllFavMovie.visibility
 
-            if (movieAdapter.itemCount < 1){
-                binding.seeAllFavMovie.visibility = View.GONE
-                binding.movieFavRecycler.visibility = View.GONE
-            } else {
-                binding.seeAllFavMovie.visibility = View.VISIBLE
-                binding.movieFavRecycler.visibility = View.VISIBLE
-            }
+            checkIfAllFavoritesEmpty()
         }
 
-        viewModel.favoriteBooks.observe(requireActivity()){book ->
+        viewModel.favoriteBooks.observe(requireActivity()) { book ->
             bookAdapter.setFavBooks(book as ArrayList<BookDetailsData>)
-            if (bookAdapter.itemCount < 1){
-                binding.seeAllFavBook.visibility = View.GONE
-                binding.bookFavRecycler.visibility = View.GONE
-            } else {
-                binding.seeAllFavBook.visibility = View.VISIBLE
-                binding.bookFavRecycler.visibility = View.VISIBLE
-            }
+            binding.seeAllFavBook.visibility =
+                if (bookAdapter.itemCount > 0) View.VISIBLE else View.GONE
+            binding.bookFavRecycler.visibility = binding.seeAllFavBook.visibility
+
+            checkIfAllFavoritesEmpty()
         }
 
         viewModel.favoriteCharacters.observe(requireActivity()) { char ->
             charAdapter.setFavChars(char as ArrayList<CharacterDetailsData>)
-            if (charAdapter.itemCount < 1){
-                binding.seeAllFavChar.visibility = View.GONE
-                binding.charFavRecycler.visibility = View.GONE
-            } else {
-                binding.seeAllFavChar.visibility = View.VISIBLE
-                binding.charFavRecycler.visibility = View.VISIBLE
-            }
-        }
+            binding.seeAllFavChar.visibility =
+                if (charAdapter.itemCount > 0) View.VISIBLE else View.GONE
+            binding.charFavRecycler.visibility = binding.seeAllFavChar.visibility
 
+            checkIfAllFavoritesEmpty()
+        }
     }
+
+    private fun checkIfAllFavoritesEmpty() {
+        val allEmpty =
+            movieAdapter.itemCount == 0 && bookAdapter.itemCount == 0 && charAdapter.itemCount == 0
+
+        binding.tvNoBookmarks.visibility = if (allEmpty) View.VISIBLE else View.GONE
+        binding.ivNoBookmarks.visibility = if (allEmpty) View.VISIBLE else View.GONE
+    }
+
 
 }
