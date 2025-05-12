@@ -1,23 +1,13 @@
 package com.project.potterverse.view
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.tabs.TabLayoutMediator
 import com.project.potterverse.R
-import com.project.potterverse.data.datasource.PotterLocalDatasource
-import com.project.potterverse.data.datasource.PotterRemoteDataSource
-import com.project.potterverse.data.db.AppDatabase
-import com.project.potterverse.data.repository.PotterRepository
-import com.project.potterverse.data.service.RetrofitInstance
-import com.project.potterverse.view.Adapter.ViewPagerAdapter
 import com.project.potterverse.databinding.ActivityMainBinding
-import com.project.potterverse.view.viewModel.MainViewModel
-import com.project.potterverse.view.viewModel.MainViewModelFactory
+import com.project.potterverse.view.Adapter.ViewPagerAdapter
 import com.project.potterverse.view.fragments.FavoritesFragment
 import com.project.potterverse.view.fragments.SearchFragment
 import com.project.potterverse.view.fragments.homeFragment
@@ -39,19 +29,6 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
-    val viewModel: MainViewModel by lazy {
-
-        val potterRepository = PotterRepository(
-            remoteDataSource = PotterRemoteDataSource(
-                RetrofitInstance.api
-            ),
-            localDataSource = PotterLocalDatasource(
-                AppDatabase.getInstance(this)
-            )
-        )
-        val mainViewModelFactory = MainViewModelFactory(potterRepository)
-        ViewModelProvider(this, mainViewModelFactory)[MainViewModel::class.java]
-    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -164,8 +141,5 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
-
-
-
 
 }

@@ -2,30 +2,29 @@ package com.project.potterverse.view.fragments.subFragments
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.project.potterverse.view.Adapter.BaseCharacterAdapter
-import com.project.potterverse.model.CharacterDetailsData
 import com.project.potterverse.databinding.FragmentCharactersBinding
+import com.project.potterverse.model.CharacterDetailsData
 import com.project.potterverse.utils.Constant
-import com.project.potterverse.view.viewModel.MainViewModel
-import com.project.potterverse.view.MainActivity
+import com.project.potterverse.view.Adapter.BaseCharacterAdapter
 import com.project.potterverse.view.activities.CharacterDetailsActivity
+import com.project.potterverse.view.viewModel.MainViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class CharactersFragment : Fragment() {
 
-    lateinit var characterAdapter: BaseCharacterAdapter
-    lateinit var viewModel: MainViewModel
-    lateinit var binding: FragmentCharactersBinding
+    private lateinit var characterAdapter: BaseCharacterAdapter
+    private val viewModel: MainViewModel by viewModel()
+    private lateinit var binding: FragmentCharactersBinding
     private var pageNumber = 1
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = (activity as MainActivity).viewModel
         characterAdapter = BaseCharacterAdapter(true)
     }
 

@@ -29,21 +29,21 @@ abstract class AppDatabase: RoomDatabase() {
     abstract fun bookDao(): BookDao
     abstract fun movieDao(): MovieDAO
 
-    companion object {
-
-        @Volatile
-        var INSTANCE: AppDatabase? = null
-        @Synchronized
-        fun getInstance(context: Context): AppDatabase {
-            if (INSTANCE == null) {
-                INSTANCE = Room.databaseBuilder(
-                    context,
-                    AppDatabase::class.java,
-                    "character.db"
-                ).build()
-            }
-            return INSTANCE as AppDatabase
-        }
-    }
+//    companion object {
+//
+//        @Volatile
+//        var INSTANCE: AppDatabase? = null
+//        @Synchronized
+//        fun getInstance(context: Context): AppDatabase {
+//            if (INSTANCE == null) {
+//                INSTANCE = Room.databaseBuilder(
+//                    context,
+//                    AppDatabase::class.java,
+//                    "character.db"
+//                ).build()
+//            }
+//            return INSTANCE as AppDatabase
+//        }
+//    }
 
 }

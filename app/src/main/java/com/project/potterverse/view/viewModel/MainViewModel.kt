@@ -6,15 +6,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.project.potterverse.model.CharacterDetailsData
-import com.project.potterverse.model.CharactersList
-import com.project.potterverse.model.BookDetailsData
-import com.project.potterverse.model.BooksList
 import com.project.potterverse.data.movieDetails.MovieDetailData
 import com.project.potterverse.data.movieDetails.MovieList
-import com.project.potterverse.data.db.AppDatabase
 import com.project.potterverse.data.repository.PotterRepository
-import com.project.potterverse.data.service.RetrofitInstance
+import com.project.potterverse.model.BookDetailsData
+import com.project.potterverse.model.BooksList
+import com.project.potterverse.model.CharacterDetailsData
+import com.project.potterverse.model.CharactersList
 import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
@@ -93,11 +91,3 @@ class MainViewModel(
     }
 }
 
-class MainViewModelFactory(
-    private val repository: PotterRepository
-) : ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        @Suppress("UNCHECKED_CAST")
-        return MainViewModel(repository) as T
-    }
-}

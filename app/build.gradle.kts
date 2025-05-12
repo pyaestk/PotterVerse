@@ -83,6 +83,9 @@ dependencies {
     implementation("pl.droidsonroids.gif:android-gif-drawable:1.2.29")
     //paging
     val paging_version = "3.3.6"
-
     implementation("androidx.paging:paging-runtime-ktx:$paging_version")
+
+    //koin
+    implementation("io.insert-koin:koin-core:4.0.4")
+    implementation("io.insert-koin:koin-android:4.0.4")
 }

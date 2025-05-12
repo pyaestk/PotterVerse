@@ -8,9 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.project.potterverse.data.movieDetails.MovieDetailData
 import com.project.potterverse.data.movieDetails.MovieDetails
-import com.project.potterverse.data.db.AppDatabase
 import com.project.potterverse.data.repository.PotterRepository
-import com.project.potterverse.data.service.RetrofitInstance
 import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
@@ -55,12 +53,5 @@ class MovieDetailsViewModel(
 
     fun getAllFavMovie(): LiveData<List<MovieDetailData>> {
         return potterRepository.getFavMovies()
-    }
-}
-class MovieDetailViewModelFactory(
-    private val potterRepository: PotterRepository
-): ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return MovieDetailsViewModel(potterRepository) as T
     }
 }

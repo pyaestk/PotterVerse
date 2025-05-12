@@ -2,27 +2,26 @@ package com.project.potterverse.view.fragments.subFragments
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
-import com.project.potterverse.view.Adapter.BaseBookAdapter
-import com.project.potterverse.model.BookDetailsData
 import com.project.potterverse.databinding.FragmentBooksBinding
+import com.project.potterverse.model.BookDetailsData
 import com.project.potterverse.utils.Constant
-import com.project.potterverse.view.viewModel.MainViewModel
-import com.project.potterverse.view.MainActivity
+import com.project.potterverse.view.Adapter.BaseBookAdapter
 import com.project.potterverse.view.activities.BookDetailsActivity
+import com.project.potterverse.view.viewModel.MainViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class BooksFragment : Fragment() {
 
     lateinit var binding: FragmentBooksBinding
     lateinit var bookAdapter: BaseBookAdapter
-    lateinit var viewModel: MainViewModel
+    private val viewModel: MainViewModel by viewModel()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = (activity as MainActivity).viewModel
         bookAdapter = BaseBookAdapter(1)
     }
 

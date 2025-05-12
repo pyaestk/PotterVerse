@@ -3,29 +3,22 @@ package com.project.potterverse.view.activities
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.lifecycle.ViewModelProvider
 import com.project.potterverse.R
-import com.project.potterverse.data.datasource.PotterLocalDatasource
-import com.project.potterverse.data.datasource.PotterRemoteDataSource
 import com.project.potterverse.data.movieDetails.MovieDetailData
-import com.project.potterverse.data.db.AppDatabase
-import com.project.potterverse.data.repository.PotterRepository
-import com.project.potterverse.data.service.RetrofitInstance
 import com.project.potterverse.databinding.ActivityMovieDetailsBinding
 import com.project.potterverse.utils.Constant
-import com.project.potterverse.view.viewModel.MovieDetailViewModelFactory
 import com.project.potterverse.view.viewModel.MovieDetailsViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MovieDetailsActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMovieDetailsBinding
-    private lateinit var viewModel: MovieDetailsViewModel
+    private val viewModel: MovieDetailsViewModel by viewModel()
 
     private lateinit var moviePoster: String
     private lateinit var movieId: String
@@ -46,18 +39,6 @@ class MovieDetailsActivity : AppCompatActivity() {
         }
 
         showProgressBar()
-
-        val potterRepository = PotterRepository(
-            remoteDataSource = PotterRemoteDataSource(
-                RetrofitInstance.api
-            ),
-            localDataSource = PotterLocalDatasource(
-                AppDatabase.getInstance(this)
-            )
-        )
-        val viewModelFactory = MovieDetailViewModelFactory(potterRepository)
-
-        viewModel = ViewModelProvider(this, viewModelFactory)[MovieDetailsViewModel::class.java]
 
         val intent = intent
         movieId = intent.getStringExtra(Constant.movieID)!!

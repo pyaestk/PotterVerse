@@ -7,13 +7,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.project.potterverse.model.CharacterDetailsData
-import com.project.potterverse.model.CharactersList
-import com.project.potterverse.model.BookDetailsData
-import com.project.potterverse.model.BooksList
 import com.project.potterverse.data.movieDetails.MovieDetailData
 import com.project.potterverse.data.movieDetails.MovieList
 import com.project.potterverse.data.repository.PotterRepository
+import com.project.potterverse.model.BookDetailsData
+import com.project.potterverse.model.BooksList
+import com.project.potterverse.model.CharacterDetailsData
+import com.project.potterverse.model.CharactersList
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -151,14 +151,6 @@ class SearchViewModel(
         return combinedLiveData
     }
 
-}
-
-class SearchViewModelFactory(
-    private val potterRepository: PotterRepository
-): ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return SearchViewModel(potterRepository) as T
-    }
 }
 
 sealed class SearchItem {

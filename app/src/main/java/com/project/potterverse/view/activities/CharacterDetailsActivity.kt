@@ -3,30 +3,23 @@ package com.project.potterverse.view.activities
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.project.potterverse.R
-import com.project.potterverse.data.datasource.PotterLocalDatasource
-import com.project.potterverse.data.datasource.PotterRemoteDataSource
-import com.project.potterverse.model.CharacterDetailsData
-import com.project.potterverse.data.db.AppDatabase
-import com.project.potterverse.data.repository.PotterRepository
-import com.project.potterverse.data.service.RetrofitInstance
 import com.project.potterverse.databinding.ActivityCharacterDetailsBinding
+import com.project.potterverse.model.CharacterDetailsData
 import com.project.potterverse.utils.Constant
-import com.project.potterverse.view.viewModel.CharacterDetailViewModelFactory
 import com.project.potterverse.view.viewModel.CharacterDetailsViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CharacterDetailsActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityCharacterDetailsBinding
-    private lateinit var viewModel: CharacterDetailsViewModel
+    private val viewModel: CharacterDetailsViewModel by viewModel()
 
     private lateinit var chrId: String
     private var chrImg: String ?= null
@@ -46,17 +39,6 @@ class CharacterDetailsActivity : AppCompatActivity() {
         }
 
         showProgressBar()
-
-        val potterRepository = PotterRepository(
-            remoteDataSource = PotterRemoteDataSource(
-                RetrofitInstance.api
-            ),
-            localDataSource = PotterLocalDatasource(
-                AppDatabase.getInstance(this)
-            )
-        )
-        val viewModelFactory = CharacterDetailViewModelFactory(potterRepository)
-        viewModel = ViewModelProvider(this, viewModelFactory)[CharacterDetailsViewModel::class.java]
 
         val intent = intent
         chrId = intent.getStringExtra(Constant.chrId)!!

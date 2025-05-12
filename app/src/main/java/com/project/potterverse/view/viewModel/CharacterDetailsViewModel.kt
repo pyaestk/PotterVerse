@@ -6,11 +6,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.project.potterverse.data.repository.PotterRepository
 import com.project.potterverse.model.CharacterDetails
 import com.project.potterverse.model.CharacterDetailsData
-import com.project.potterverse.data.db.AppDatabase
-import com.project.potterverse.data.repository.PotterRepository
-import com.project.potterverse.data.service.RetrofitInstance
 import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
@@ -63,10 +61,3 @@ class CharacterDetailsViewModel(
 
 }
 
-class CharacterDetailViewModelFactory(
-    private val potterRepository: PotterRepository
-    ): ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return CharacterDetailsViewModel(potterRepository) as T
-    }
-}

@@ -1,15 +1,20 @@
-package com.project.potterverse.data.service
+package com.project.potterverse.di
 
+import com.project.potterverse.data.service.PotterApi
 import com.project.potterverse.utils.Constant
+import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-object RetrofitInstance {
-    val api: PotterApi by lazy {
+val networkModule = module {
+    single {
         Retrofit.Builder()
             .baseUrl(Constant.baseUrl)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-            .create(PotterApi::class.java)
+    }
+
+    single<PotterApi> {
+        get<Retrofit>().create(PotterApi::class.java)
     }
 }

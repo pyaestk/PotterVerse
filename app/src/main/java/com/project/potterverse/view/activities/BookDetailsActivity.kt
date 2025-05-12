@@ -2,36 +2,30 @@ package com.project.potterverse.view.activities
 
 import android.content.Intent
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.project.potterverse.R
-import com.project.potterverse.data.datasource.PotterLocalDatasource
-import com.project.potterverse.data.datasource.PotterRemoteDataSource
-import com.project.potterverse.model.BookDetailsData
-import com.project.potterverse.data.db.AppDatabase
-import com.project.potterverse.data.repository.PotterRepository
-import com.project.potterverse.data.service.RetrofitInstance
 import com.project.potterverse.databinding.ActivityBookDetailsBinding
+import com.project.potterverse.model.BookDetailsData
 import com.project.potterverse.utils.Constant
-import com.project.potterverse.view.viewModel.BookDetailViewModelFactory
 import com.project.potterverse.view.viewModel.BookDetailsViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class BookDetailsActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityBookDetailsBinding
-    private lateinit var viewModel: BookDetailsViewModel
 
     private lateinit var bookId: String
     private lateinit var bookImage: String
 
     private lateinit var bookLink: String
     private var isSaved: Boolean? = null
+
+    private val viewModel: BookDetailsViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,17 +38,6 @@ class BookDetailsActivity : AppCompatActivity() {
         }
 
         showProgressBar()
-
-        val potterRepository = PotterRepository(
-            remoteDataSource = PotterRemoteDataSource(
-                RetrofitInstance.api
-            ),
-            localDataSource = PotterLocalDatasource(
-                AppDatabase.getInstance(this)
-            )
-        )
-        val viewModelFactory = BookDetailViewModelFactory(potterRepository)
-        viewModel = ViewModelProvider(this, viewModelFactory)[BookDetailsViewModel::class.java]
 
         val intent = intent
 
