@@ -95,16 +95,3 @@
     </ul>
   </li>
 </ol>
-
-<h2>📁 Project Structure</h2>
-<pre><code>PotterVerse/
-├── data/           # Network models, API service, repository
-├── ui/             # Activities, Fragments, Adapters
-├── viewmodel/      # ViewModels for UI
-├── utils/          # Helper classes (e.g. Constants, Extensions)
-└── model/          # Data classes
-</code></pre>
-
-<h2>📎 GitHub Repository</h2>
-<p>Check out the full source code:  
-👉 <a href="https://github.com/pyaestk/PotterVerse" target="_blank"><strong>https://github.com/pyaestk/PotterVerse</strong></a></p>
