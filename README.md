@@ -41,6 +41,19 @@
   </li>
 </ol>
 
+<h2>📸 Screenshots</h2>
+
+<img src="https://github.com/user-attachments/assets/3685d0b9-12dc-4d42-8655-08be7e6f0d8c" width="200"/>
+<img src="https://github.com/user-attachments/assets/4a5801c3-43db-4255-a50e-fa3957abc0bb" width="200"/>
+<img src="https://github.com/user-attachments/assets/db51fa4d-26b1-445b-aee5-506977bcbce1" width="200"/>
+<img src="https://github.com/user-attachments/assets/42b4e56e-be37-44e7-8c0d-2f54605c8fce" width="200"/>
+<img src="https://github.com/user-attachments/assets/0cfb9893-e437-460b-805e-b12c844987a3" width="200"/>
+<img src="https://github.com/user-attachments/assets/3f6b93e6-7562-41aa-9fde-054fafd85e4a" width="200"/>
+<img src="https://github.com/user-attachments/assets/600a72f0-d3ee-4401-b328-be6bbedbf61b" width="200"/>
+<img src="https://github.com/user-attachments/assets/a46b6875-d5f9-4559-afda-b2e2ec17c4f6" width="200"/>
+<img src="https://github.com/user-attachments/assets/eaa5eaea-e8ed-49ff-ae37-3cde24be0c2a" width="200"/>
+
+
 
 <h2>🛠️ Technologies Used</h2>
 <table>
