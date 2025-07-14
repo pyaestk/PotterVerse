@@ -2,6 +2,9 @@
 
 <p><strong>Potter Verse</strong> is an Android application that provides users with detailed information about the Harry Potter universe. The app allows users to explore and discover released <strong>movies</strong>, <strong>books</strong>, and various <strong>characters</strong> from the magical world created by J.K. Rowling.</p>
 
+<img width="1512" height="982" alt="Potterverse 1" src="https://github.com/user-attachments/assets/79c60463-3ea8-468e-bc4f-a97520c0ca5c" />
+<img width="1512" height="982" alt="Potterverse 2" src="https://github.com/user-attachments/assets/8e5bf363-6e97-49a6-ac7c-4766e6920b49" />
+
 <h2>✨ Features</h2>
 <ol>
   <li>
@@ -40,20 +43,6 @@
     Users can apply filters to limit search results to only <em>Books</em>, <em>Movies</em>, or <em>Characters</em>, making it easier to find relevant content quickly.
   </li>
 </ol>
-
-<h2>📸 Screenshots</h2>
-
-<img src="https://github.com/user-attachments/assets/3685d0b9-12dc-4d42-8655-08be7e6f0d8c" width="200"/>
-<img src="https://github.com/user-attachments/assets/4a5801c3-43db-4255-a50e-fa3957abc0bb" width="200"/>
-<img src="https://github.com/user-attachments/assets/db51fa4d-26b1-445b-aee5-506977bcbce1" width="200"/>
-<img src="https://github.com/user-attachments/assets/42b4e56e-be37-44e7-8c0d-2f54605c8fce" width="200"/>
-<img src="https://github.com/user-attachments/assets/0cfb9893-e437-460b-805e-b12c844987a3" width="200"/>
-<img src="https://github.com/user-attachments/assets/3f6b93e6-7562-41aa-9fde-054fafd85e4a" width="200"/>
-<img src="https://github.com/user-attachments/assets/600a72f0-d3ee-4401-b328-be6bbedbf61b" width="200"/>
-<img src="https://github.com/user-attachments/assets/a46b6875-d5f9-4559-afda-b2e2ec17c4f6" width="200"/>
-<img src="https://github.com/user-attachments/assets/eaa5eaea-e8ed-49ff-ae37-3cde24be0c2a" width="200"/>
-
-
 
 <h2>🛠️ Technologies Used</h2>
 <table>
